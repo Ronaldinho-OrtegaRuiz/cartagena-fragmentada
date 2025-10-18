@@ -1,7 +1,6 @@
 import { Playfair_Display, Lora, Raleway, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/ui/Header";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
@@ -40,12 +39,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${playfairDisplay.variable} ${lora.variable} ${raleway.variable} ${cormorantGaramond.variable} antialiased`}
       >
-        <ThemeProvider>
-          <Header />
-          <main className="pt-16">
-            {children}
-          </main>
-        </ThemeProvider>
+        <Header />
+        <main className="min-h-[94vh]">
+          {children}
+        </main>
       </body>
     </html>
   );

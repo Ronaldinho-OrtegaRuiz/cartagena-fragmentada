@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Discover Cartagena
 
-## Getting Started
+Una aplicación web moderna y optimizada para descubrir la belleza de Cartagena de Indias, Colombia.
 
-First, run the development server:
+## 🚀 Características
+
+- **Rendimiento optimizado**: Sin animaciones pesadas ni efectos innecesarios
+- **Diseño responsivo**: Funciona perfectamente en dispositivos móviles y desktop
+- **Navegación fluida**: Experiencia de usuario rápida y eficiente
+- **Contenido rico**: Información detallada sobre sitios turísticos, historia, museos y más
+
+## 🛠️ Tecnologías
+
+- **Next.js 15.5.4** - Framework React con App Router
+- **React 19.1.0** - Biblioteca de interfaz de usuario
+- **Tailwind CSS 4** - Framework de CSS utilitario
+- **Turbopack** - Bundler ultra-rápido para desarrollo
+
+## 📦 Instalación
 
 ```bash
+# Instalar dependencias
+npm install
+
+# Ejecutar en modo desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Construir para producción
+npm run build
+
+# Ejecutar en producción
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏗️ Estructura del Proyecto
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```
+src/
+├── app/                    # Páginas de la aplicación
+│   ├── inicio/            # Página principal
+│   ├── historia/          # Página de historia
+│   ├── sitios-turisticos/ # Sitios turísticos
+│   ├── museos/            # Museos
+│   ├── playas/            # Playas
+│   ├── centros-comerciales/ # Centros comerciales
+│   └── lugares-poco-conocidos/ # Lugares ocultos
+├── components/            # Componentes reutilizables
+│   └── ui/               # Componentes de interfaz
+├── data/                 # Datos estáticos
+└── hooks/               # Hooks personalizados
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Optimizaciones Implementadas
 
-## Learn More
+- ✅ Eliminación de animaciones pesadas (bandera, iconos flotantes)
+- ✅ Reducción de efectos parallax complejos
+- ✅ Limpieza de dependencias no utilizadas
+- ✅ Optimización de CSS y eliminación de keyframes innecesarios
+- ✅ Estructura de archivos simplificada
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Rendimiento
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Carga inicial**: Optimizada para velocidad
+- **Tamaño del bundle**: Reducido significativamente
+- **Experiencia móvil**: Mejorada sin animaciones pesadas
+- **SEO**: Optimizado para motores de búsqueda
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📱 Responsive Design
 
-## Deploy on Vercel
+La aplicación está completamente optimizada para:
+- 📱 Móviles (320px+)
+- 📱 Tablets (768px+)
+- 💻 Desktop (1024px+)
+- 🖥️ Pantallas grandes (1440px+)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🌐 Despliegue
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La aplicación está lista para desplegar en:
+- **Vercel** (recomendado)
+- **Netlify**
+- **AWS Amplify**
+- **Cualquier plataforma que soporte Next.js**
+
+## 📄 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la licencia MIT.
