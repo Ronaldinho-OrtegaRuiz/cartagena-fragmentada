@@ -464,3 +464,258 @@ html {
   background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
 }
 */
+
+/* Beach Background Animations - Improved atmospheric effect */
+.beach-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.wave-layer {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  animation: waveMove 8s linear infinite;
+}
+
+.wave-1 {
+  top: 0;
+  animation-duration: 8s;
+  animation-delay: 0s;
+  background: linear-gradient(45deg, transparent 30%, rgba(135, 206, 235, 0.2) 50%, transparent 70%);
+}
+
+.wave-2 {
+  top: 20%;
+  animation-duration: 12s;
+  animation-delay: -2s;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 182, 193, 0.15) 50%, transparent 70%);
+}
+
+.wave-3 {
+  top: 40%;
+  animation-duration: 16s;
+  animation-delay: -4s;
+  background: linear-gradient(45deg, transparent 30%, rgba(173, 216, 230, 0.1) 50%, transparent 70%);
+}
+
+.wave-4 {
+  top: 60%;
+  animation-duration: 20s;
+  animation-delay: -6s;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 218, 185, 0.12) 50%, transparent 70%);
+}
+
+/* Beach Cards Animation - Improved cards with gentle wave effect */
+.beach-card {
+  animation: gentleWave 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+.beach-card:nth-child(1) { animation-delay: 0s; }
+.beach-card:nth-child(2) { animation-delay: 1s; }
+.beach-card:nth-child(3) { animation-delay: 2s; }
+.beach-card:nth-child(4) { animation-delay: 3s; }
+.beach-card:nth-child(5) { animation-delay: 4s; }
+.beach-card:nth-child(6) { animation-delay: 5s; }
+
+/* Beach Cards Compact - New design for two-block layout */
+.beach-card-compact {
+  animation: gentleFloat 4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.beach-card-compact:nth-child(1) { animation-delay: 0s; }
+.beach-card-compact:nth-child(2) { animation-delay: 0.1s; }
+.beach-card-compact:nth-child(3) { animation-delay: 0.2s; }
+.beach-card-compact:nth-child(4) { animation-delay: 0.3s; }
+.beach-card-compact:nth-child(5) { animation-delay: 0.4s; }
+.beach-card-compact:nth-child(6) { animation-delay: 0.5s; }
+
+/* Beach Cards Floating - Enhanced floating effect for coastal narrative */
+.beach-card-floating {
+  animation: floatingWave 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.beach-card-floating:nth-child(1) { animation-delay: 0s; }
+.beach-card-floating:nth-child(2) { animation-delay: 0.15s; }
+.beach-card-floating:nth-child(3) { animation-delay: 0.3s; }
+.beach-card-floating:nth-child(4) { animation-delay: 0.45s; }
+.beach-card-floating:nth-child(5) { animation-delay: 0.6s; }
+.beach-card-floating:nth-child(6) { animation-delay: 0.75s; }
+
+/* Floating Beach Cards Animation - Small cards that move around the screen */
+.floating-beach-card {
+  animation: floatBeachCard 8s ease-in-out infinite;
+  will-change: transform;
+  width: 100px;
+  height: 80px;
+}
+
+.floating-beach-card:nth-child(1) { animation-delay: 0s; }
+.floating-beach-card:nth-child(2) { animation-delay: 1s; }
+.floating-beach-card:nth-child(3) { animation-delay: 2s; }
+.floating-beach-card:nth-child(4) { animation-delay: 3s; }
+.floating-beach-card:nth-child(5) { animation-delay: 4s; }
+.floating-beach-card:nth-child(6) { animation-delay: 5s; }
+
+/* Breeze SVG Animations */
+.animate-breeze {
+  animation: breeze 6s ease-in-out infinite;
+}
+
+.animate-breeze-delayed {
+  animation: breeze 6s ease-in-out infinite 3s;
+}
+
+/* Keyframe Animations for Waves and Cards */
+@keyframes waveBackground {
+  0% { 
+    background-position: 0% 50%; 
+  }
+  50% { 
+    background-position: 100% 50%; 
+  }
+  100% { 
+    background-position: 0% 50%; 
+  }
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-8px) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-8px) rotate(-0.5deg);
+  }
+}
+
+@keyframes gentleWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(0.3deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-0.3deg);
+  }
+}
+
+@keyframes gentleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-3px) rotate(0.2deg);
+  }
+}
+
+@keyframes floatingWave {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-4px) rotate(0.3deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-4px) rotate(-0.3deg);
+  }
+}
+
+@keyframes textBreeze {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px);
+  }
+  25% {
+    transform: translateX(1px) translateY(-0.5px);
+  }
+  50% {
+    transform: translateX(0px) translateY(-1px);
+  }
+  75% {
+    transform: translateX(-1px) translateY(-0.5px);
+  }
+}
+
+@keyframes floatBeachCard {
+  0% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+  20% {
+    transform: translate(20px, -15px) rotate(2deg);
+  }
+  40% {
+    transform: translate(-10px, -25px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(15px, -10px) rotate(1deg);
+  }
+  80% {
+    transform: translate(-5px, -20px) rotate(-0.5deg);
+  }
+  100% {
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+@keyframes breeze {
+  0%, 100% {
+    transform: translateX(0px) translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateX(5px) translateY(-3px) rotate(1deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(10px) translateY(-5px) rotate(0deg);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateX(5px) translateY(-2px) rotate(-1deg);
+    opacity: 0.6;
+  }
+}
+
+/* Enhanced shadow for floating cards */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Custom scale for beach cards */
+.hover\:scale-103:hover {
+  transform: scale(1.03);
+}
+
+/* Text breeze animations for coastal narrative */
+.animate-text-breeze {
+  animation: textBreeze 8s ease-in-out infinite;
+}
+
+.animate-text-breeze-delayed {
+  animation: textBreeze 8s ease-in-out infinite 2s;
+}

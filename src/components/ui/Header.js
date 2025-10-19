@@ -61,21 +61,22 @@ export default function Header() {
                     opacity: 0.9,
                     textColor: 'white'
                 })
-            } else if (scrollY < windowHeight * 5.8) {
-                // Centros Comerciales - Fondo azul/púrpura, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            } else if (scrollY < windowHeight * 6.8) {
-                // Lugares Poco Conocidos - Fondo esmeralda/teal, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
             } else {
+                // } else if (scrollY < windowHeight * 5.8) {
+                //     // Centros Comerciales - Fondo azul/púrpura, texto blanco
+                //     setHeaderStyle({
+                //         background: 'transparent',
+                //         opacity: 0.9,
+                //         textColor: 'white'
+                //     })
+                // } else if (scrollY < windowHeight * 6.8) {
+                //     // Lugares Poco Conocidos - Fondo esmeralda/teal, texto blanco
+                //     setHeaderStyle({
+                //         background: 'transparent',
+                //         opacity: 0.9,
+                //         textColor: 'white'
+                //     })
+                // } else {
                 // Sección Final - Fondo dorado/naranja, texto blanco
                 setHeaderStyle({
                     background: 'transparent',

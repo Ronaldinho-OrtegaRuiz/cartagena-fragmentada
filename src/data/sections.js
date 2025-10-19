@@ -28,20 +28,20 @@ export const sections = [
         href: "/museos",
         highlights: ["Museo del Oro", "Museo Naval", "Casa Rafael Núñez", "Museo Histórico"]
     },
-    {
-        id: 5,
-        title: "Centros Comerciales",
-        description: "Encuentra las mejores opciones de compras y entretenimiento.",
-        href: "/centros-comerciales",
-        highlights: ["Centro Comercial Caribe Plaza", "Plaza Bocagrande", "Centro Histórico"]
-    },
-    {
-        id: 6,
-        title: "Lugares Poco Conocidos",
-        description: "Explora los rincones secretos y auténticos que solo los locales conocen.",
-        href: "/lugares-poco-conocidos",
-        highlights: ["Getsemaní", "Mercado Bazurto", "Volcán Totumo", "Palenque"]
-    }
+    // {
+    //     id: 5,
+    //     title: "Centros Comerciales",
+    //     description: "Encuentra las mejores opciones de compras y entretenimiento.",
+    //     href: "/centros-comerciales",
+    //     highlights: ["Centro Comercial Caribe Plaza", "Plaza Bocagrande", "Centro Histórico"]
+    // },
+    // {
+    //     id: 6,
+    //     title: "Lugares Poco Conocidos",
+    //     description: "Explora los rincones secretos y auténticos que solo los locales conocen.",
+    //     href: "/lugares-poco-conocidos",
+    //     highlights: ["Getsemaní", "Mercado Bazurto", "Volcán Totumo", "Palenque"]
+    // }
 ]
 
 export const menuItems = [
@@ -49,7 +49,7 @@ export const menuItems = [
     { name: "Historia", href: "/historia" },
     { name: "Sitios Turísticos", href: "/sitios-turisticos" },
     { name: "Playas", href: "/playas" },
-    { name: "Museos", href: "/museos" },
-    { name: "Centros Comerciales", href: "/centros-comerciales" },
-    { name: "Lugares Poco Conocidos", href: "/lugares-poco-conocidos" }
+    { name: "Museos", href: "/museos" }
+    // { name: "Centros Comerciales", href: "/centros-comerciales" },
+    // { name: "Lugares Poco Conocidos", href: "/lugares-poco-conocidos" }
 ]
