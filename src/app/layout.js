@@ -29,8 +29,8 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata = {
-  title: "Discover Cartagena",
-  description: "Descubre los mejores lugares de Cartagena de Indias",
+  title: "Cartagena Fragmentada",
+  description: "Descubre los fragmentos de historia y cultura de Cartagena de Indias",
 };
 
 export default function RootLayout({ children }) {

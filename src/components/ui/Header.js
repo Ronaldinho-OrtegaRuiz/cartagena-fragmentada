@@ -135,7 +135,7 @@ export default function Header() {
                             letterSpacing: '0.05em'
                         }}
                     >
-                        <span style={{ color: '#FFD700' }}>Discover</span> Cartagena
+                        <span style={{ color: '#FFD700' }}>Cartagena</span> Fragmentada
                     </Link>
 
                     {/* Desktop Menu */}

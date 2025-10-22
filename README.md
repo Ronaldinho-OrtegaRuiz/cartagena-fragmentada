@@ -1,6 +1,6 @@
-# Discover Cartagena
+# Cartagena Fragmentada
 
-Una aplicación web moderna y optimizada para descubrir la belleza de Cartagena de Indias, Colombia.
+Una aplicación web que fragmenta y reconstruye la experiencia de Cartagena de Indias, revelando sus historias ocultas y rincones secretos.
 
 ## 🚀 Características
 

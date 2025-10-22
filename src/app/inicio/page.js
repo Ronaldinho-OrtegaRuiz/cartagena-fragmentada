@@ -46,46 +46,63 @@ export default function Inicio() {
 
     return (
         <div className="relative overflow-hidden">
-            {/* Hero Section con Parallax */}
-            <section className="relative h-screen flex items-center justify-center overflow-hidden">
-                <div 
-                    ref={addToRefs}
-                    className="absolute inset-0 bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 parallax-bg"
-                    style={{
-                        backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23FFD700" stop-opacity="0.8"/><stop offset="100%" stop-color="%23FF6B6B" stop-opacity="0.4"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23a)"/></svg>')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}
-                />
+            {/* Postal Animada - Estilo Costero */}
+            <section className="relative overflow-hidden min-h-screen">
+                {/* Imagen aérea de Cartagena */}
+                <div className="absolute inset-0">
+                    <img 
+                        src="https://www.uncharted101.com/wp-content/uploads/image03.jpeg"
+                        alt="Cartagena de Indias - Vista panorámica"
+                        className="w-full h-full object-cover"
+                    />
+                    {/* Overlay con gradiente desde negro translúcido abajo hacia transparente arriba */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                </div>
                 
-                {/* Overlay con patrón */}
-                <div className="absolute inset-0 bg-black/20" />
-                
-                {/* Contenido Hero */}
-                <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-                    <h1 className="text-6xl md:text-8xl font-title font-bold mb-6 drop-shadow-2xl animate-fade-in-up">
-                        <span className="block text-yellow-300 animate-glow">Discover</span>
-                        <span className="block text-white">Cartagena</span>
-                    </h1>
-                    <p className="text-xl md:text-2xl font-body mb-8 text-yellow-100 drop-shadow-lg animate-fade-in-up-delayed">
-                        La Heroica Ciudad Amurallada te espera
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
-                        <button className="px-8 py-4 bg-yellow-400 text-black font-ui font-semibold rounded-full hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                            Explorar Ahora
-                        </button>
-                        <button className="px-8 py-4 border-2 border-white text-white font-ui font-semibold rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 glass">
-                            Ver Historia
-                        </button>
+                {/* Contenido flotante sobre el gradiente */}
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-4xl mx-auto text-center">
+                        {/* Texto principal con tipografía serif elegante */}
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 animate-fade-in leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                            Cartagena vibra entre historia y mar
+                        </h1>
+                        
+                        {/* Subtítulo más ligero */}
+                        <p className="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-12 animate-fade-in-delay leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                            Donde el mar abraza la historia y las palmas susurran leyendas, Cartagena vibra con alma propia. Déjate llevar por sus colores, sus calles y sus memorias.
+                        </p>
+                        
+                        {/* Botones con estilo costero */}
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-delay">
+                            {sections.map((section, index) => (
+                                <button
+                                    key={section.id}
+                                    onClick={() => {
+                                        const element = document.getElementById(`section-${section.id}`)
+                                        if (element) {
+                                            element.scrollIntoView({ behavior: 'smooth' })
+                                        }
+                                    }}
+                                    className="px-6 py-3 bg-white/20 rounded-full text-white font-medium hover:bg-white/30 transition-all duration-300 transform hover:scale-105 backdrop-blur-sm border border-white/30"
+                                    style={{ 
+                                        animationDelay: `${0.8 + index * 0.1}s`,
+                                        textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
+                                        boxShadow: '0 4px 8px rgba(0,0,0,0.3)'
+                                    }}
+                                >
+                                    {section.title}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
-
-                {/* Elementos decorativos flotantes */}
-                <div className="absolute top-20 left-10 w-20 h-20 bg-yellow-300/20 rounded-full blur-xl animate-float" />
-                <div className="absolute bottom-20 right-10 w-32 h-32 bg-orange-400/20 rounded-full blur-xl animate-float-delayed" />
-                <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-red-400/20 rounded-full blur-xl animate-float" />
-                <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-yellow-200/30 rounded-full blur-lg animate-float-delayed" />
+                
+                {/* Elementos decorativos flotantes sutiles */}
+                <div className="absolute top-10 left-10 w-16 h-16 bg-white/10 rounded-full blur-xl animate-float hidden sm:block" />
+                <div className="absolute bottom-10 right-10 w-20 h-20 bg-white/10 rounded-full blur-xl animate-float-delayed hidden sm:block" />
+                <div className="absolute top-1/2 left-1/4 w-12 h-12 bg-white/10 rounded-full blur-xl animate-float hidden sm:block" />
             </section>
+
 
             {/* Secciones */}
             {sections.map((section, index) => {
@@ -93,6 +110,7 @@ export default function Inicio() {
                 if (section.title === "Historia") {
                     return (
                         <section 
+                            id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-amber-800 via-orange-700 to-red-800"
                         >
@@ -173,6 +191,7 @@ export default function Inicio() {
                 if (section.title === "Playas") {
                     return (
                         <section 
+                            id={`section-${section.id}`}
                             key={section.id} 
                             className="relative min-h-screen overflow-hidden"
                             style={{
@@ -315,6 +334,7 @@ export default function Inicio() {
 
                     return (
                         <section 
+                            id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200"
                         >
@@ -435,6 +455,7 @@ export default function Inicio() {
                 if (section.title === "Sitios Turísticos") {
                     return (
                         <section 
+                            id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-slate-800 via-gray-700 to-stone-800"
                         >
@@ -482,15 +503,15 @@ export default function Inicio() {
                                             </h2>
                                             
                                             <div className="space-y-6 mb-8">
-                                                <p className="text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s', color: '#FFFFFF !important' }}>
+                                                <p className="text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.2s' }}>
                                                     {section.description}
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s', color: '#FFFFFF !important' }}>
+                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.4s' }}>
                                                     Desde las majestuosas murallas que han resistido siglos de historia hasta las plazas coloniales que susurran secretos del pasado, cada rincón de Cartagena cuenta una historia única.
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.6s', color: '#FFFFFF !important' }}>
+                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.6s' }}>
                                                     Descubre la magia de la Heroica Ciudad Amurallada, donde la arquitectura colonial se funde con la brisa caribeña y cada calle empedrada te lleva a un nuevo descubrimiento.
                                                 </p>
                                             </div>
@@ -535,6 +556,7 @@ export default function Inicio() {
                 // Secciones normales para el resto
                 return (
                     <section 
+                        id={`section-${section.id}`}
                         key={section.id}
                         className={`relative min-h-screen flex items-center justify-center ${
                             index % 2 === 0 ? 'bg-gradient-to-br from-blue-600 to-purple-700' : 'bg-gradient-to-br from-emerald-600 to-teal-700'
