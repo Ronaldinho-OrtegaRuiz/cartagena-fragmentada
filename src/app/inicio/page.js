@@ -51,7 +51,7 @@ export default function Inicio() {
                 {/* Imagen aérea de Cartagena */}
                 <div className="absolute inset-0">
                     <img 
-                        src="https://www.uncharted101.com/wp-content/uploads/image03.jpeg"
+                        src="https://i.pinimg.com/1200x/bd/7e/bb/bd7ebb2044ce209a0f6579d3138eb108.jpg"
                         alt="Cartagena de Indias - Vista panorámica"
                         className="w-full h-full object-cover"
                     />
