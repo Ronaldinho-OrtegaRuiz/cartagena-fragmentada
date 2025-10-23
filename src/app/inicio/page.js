@@ -1,12 +1,14 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { sections } from "@/data/sections"
 import HistorySlider from "@/components/ui/HistorySlider"
 
 export default function Inicio() {
     const parallaxRefs = useRef([])
+    const sectionRefs = useRef([])
+    const [visibleSections, setVisibleSections] = useState(new Set())
     const router = useRouter()
 
     useEffect(() => {
@@ -15,26 +17,92 @@ export default function Inicio() {
             const windowHeight = window.innerHeight
             const documentHeight = document.documentElement.scrollHeight
 
+            // Efecto parallax para fondos
             parallaxRefs.current.forEach((ref, index) => {
                 if (ref) {
-                    // Limitar el efecto parallax para evitar scroll infinito
                     const maxScroll = documentHeight - windowHeight
                     const limitedScroll = Math.min(scrolled, maxScroll)
                     
-                    // Velocidad más sutil para evitar problemas
                     const speed = 0.1 + (index * 0.05)
                     const translateY = limitedScroll * speed
                     
-                    // Limitar el movimiento para evitar que se salga del viewport
                     const maxTranslate = windowHeight * 0.5
                     const limitedTranslate = Math.min(Math.max(translateY, -maxTranslate), maxTranslate)
                     
                     ref.style.transform = `translateY(${limitedTranslate}px)`
                 }
             })
+
+            // Detectar secciones visibles para animaciones
+            const newVisibleSections = new Set()
+            sectionRefs.current.forEach((section, index) => {
+                if (section) {
+                    const rect = section.getBoundingClientRect()
+                    const isVisible = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2
+                    const wasVisible = visibleSections.has(index)
+                    
+                    if (isVisible) {
+                        newVisibleSections.add(index)
+                        
+                        // Aplicar animaciones cada vez que la sección sea visible
+                        const animatedElements = section.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right, .animate-fade-in-up, .animate-fade-in-up-delayed, .animate-scale-in')
+                        const elementsArray = Array.from(animatedElements)
+                        
+                        // Detectar dirección del scroll
+                        const scrollDirection = scrolled > (section.dataset.lastScroll || 0) ? 'down' : 'up'
+                        section.dataset.lastScroll = scrolled
+                        
+                        elementsArray.forEach((element, elementIndex) => {
+                            // Aplicar animación con delay según la dirección
+                            const delay = scrollDirection === 'down' 
+                                ? elementIndex * 200  // Orden normal al bajar
+                                : (elementsArray.length - 1 - elementIndex) * 200  // Orden invertido al subir
+                            
+                            setTimeout(() => {
+                                if (element.classList.contains('animate-slide-in-left')) {
+                                    element.style.opacity = '1'
+                                    element.style.transform = 'translateX(0)'
+                                } else if (element.classList.contains('animate-slide-in-right')) {
+                                    element.style.opacity = '1'
+                                    element.style.transform = 'translateX(0)'
+                                } else if (element.classList.contains('animate-scale-in')) {
+                                    element.style.opacity = '1'
+                                    element.style.transform = 'scale(1)'
+                                } else {
+                                    element.style.opacity = '1'
+                                    element.style.transform = 'translateY(0)'
+                                }
+                            }, delay)
+                        })
+                    } else {
+                        // Ocultar elementos cuando no son visibles
+                        const animatedElements = section.querySelectorAll('.animate-slide-in-left, .animate-slide-in-right, .animate-fade-in-up, .animate-fade-in-up-delayed, .animate-scale-in')
+                        
+                        animatedElements.forEach((element) => {
+                            if (element.classList.contains('animate-slide-in-left')) {
+                                element.style.opacity = '0'
+                                element.style.transform = 'translateX(-50px)'
+                            } else if (element.classList.contains('animate-slide-in-right')) {
+                                element.style.opacity = '0'
+                                element.style.transform = 'translateX(50px)'
+                            } else if (element.classList.contains('animate-scale-in')) {
+                                element.style.opacity = '0'
+                                element.style.transform = 'scale(0.8)'
+                            } else {
+                                element.style.opacity = '0'
+                                element.style.transform = 'translateY(30px)'
+                            }
+                        })
+                    }
+                }
+            })
+            
+            setVisibleSections(newVisibleSections)
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true })
+        handleScroll() // Llamar una vez al montar
+        
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
@@ -47,7 +115,14 @@ export default function Inicio() {
     return (
         <div className="relative overflow-hidden">
             {/* Postal Animada - Estilo Costero */}
-            <section className="relative overflow-hidden min-h-screen">
+            <section 
+                ref={(el) => {
+                    if (el && !sectionRefs.current.includes(el)) {
+                        sectionRefs.current.push(el)
+                    }
+                }}
+                className="relative overflow-hidden min-h-screen"
+            >
                 {/* Imagen aérea de Cartagena */}
                 <div className="absolute inset-0">
                     <img 
@@ -63,17 +138,17 @@ export default function Inicio() {
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
                     <div className="max-w-4xl mx-auto text-center">
                         {/* Texto principal con tipografía serif elegante */}
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 animate-fade-in leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 animate-fade-in-up leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
                             Cartagena vibra entre historia y mar
                         </h1>
                         
                         {/* Subtítulo más ligero */}
-                        <p className="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-12 animate-fade-in-delay leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                        <p className="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-12 animate-fade-in-up-delayed leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
                             Donde el mar abraza la historia y las palmas susurran leyendas, Cartagena vibra con alma propia. Déjate llevar por sus colores, sus calles y sus memorias.
                         </p>
                         
                         {/* Botones con estilo costero */}
-                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-delay">
+                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-up-delayed">
                             {sections.map((section, index) => (
                                 <button
                                     key={section.id}
@@ -110,6 +185,11 @@ export default function Inicio() {
                 if (section.title === "Historia") {
                     return (
                         <section 
+                            ref={(el) => {
+                                if (el && !sectionRefs.current.includes(el)) {
+                                    sectionRefs.current.push(el)
+                                }
+                            }}
                             id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-amber-800 via-orange-700 to-red-800"
@@ -138,11 +218,11 @@ export default function Inicio() {
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                         
                                         {/* Mitad izquierda - Texto introductorio */}
-                                        <div className="text-white animate-slide-in-left">
-                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl">
+                                        <div className="text-white">
+                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl animate-fade-in-up">
                                                 {section.title}
                                             </h2>
-                                            <p className="text-lg md:text-xl font-body mb-8 text-yellow-100 drop-shadow-lg leading-relaxed">
+                                            <p className="text-lg md:text-xl font-body mb-8 text-yellow-100 drop-shadow-lg leading-relaxed animate-fade-in-up">
                                                 {section.description}
                                             </p>
                                             
@@ -152,7 +232,7 @@ export default function Inicio() {
                                                     <div 
                                                         key={highlightIndex}
                                                         className="glass rounded-lg p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
-                                                        style={{ animationDelay: `${highlightIndex * 0.2}s` }}
+                                                        style={{ animationDelay: `${highlightIndex * 0.1}s` }}
                                                     >
                                                         <span className="text-base md:text-lg font-ui font-medium flex items-center">
                                                             <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
@@ -165,14 +245,15 @@ export default function Inicio() {
                                             {/* Botón CTA */}
                                             <button 
                                                 onClick={() => router.push('/historia')}
-                                                className="px-8 py-4 glass border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up-delayed"
+                                                className="px-8 py-4 glass border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
+                                                style={{ animationDelay: '0.4s' }}
                                             >
                                                 Explorar Historia Completa
                                             </button>
                                         </div>
                                         
                                         {/* Mitad derecha - Slider de fotos */}
-                                        <div className="animate-slide-in-right">
+                                        <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                                             <HistorySlider />
                                         </div>
                                     </div>
@@ -191,6 +272,11 @@ export default function Inicio() {
                 if (section.title === "Playas") {
                     return (
                         <section 
+                            ref={(el) => {
+                                if (el && !sectionRefs.current.includes(el)) {
+                                    sectionRefs.current.push(el)
+                                }
+                            }}
                             id={`section-${section.id}`}
                             key={section.id} 
                             className="relative min-h-screen overflow-hidden"
@@ -272,7 +358,7 @@ export default function Inicio() {
                                     ].map((beach, index) => (
                                         <div 
                                             key={index}
-                                            className={`h-52 ${beach.position} beach-card-floating rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30`}
+                                            className={`h-52 ${beach.position} beach-card-floating rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30 animate-fade-in-up`}
                                             onClick={() => router.push('/playas')}
                                             style={{ 
                                                 animationDelay: beach.delay,
@@ -307,7 +393,7 @@ export default function Inicio() {
                                 <div className="flex justify-center pb-8">
                                     <button 
                                         onClick={() => router.push('/playas')}
-                                        className="px-10 py-4 bg-white/30 backdrop-blur-sm border-2 border-white/60 text-white font-ui font-semibold rounded-full hover:bg-white/40 hover:border-white/80 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl beach-card-floating"
+                                        className="px-10 py-4 bg-white/30 backdrop-blur-sm border-2 border-white/60 text-white font-ui font-semibold rounded-full hover:bg-white/40 hover:border-white/80 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl beach-card-floating animate-fade-in-up"
                                         style={{
                                             animationDelay: '3s',
                                             filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.2))'
@@ -334,6 +420,11 @@ export default function Inicio() {
 
                     return (
                         <section 
+                            ref={(el) => {
+                                if (el && !sectionRefs.current.includes(el)) {
+                                    sectionRefs.current.push(el)
+                                }
+                            }}
                             id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200"
@@ -368,11 +459,10 @@ export default function Inicio() {
                                         {allMuseums.map((museum, index) => (
                                             <div 
                                                 key={index}
-                                                className="group relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 cursor-pointer h-72 flex flex-col border-4 border-white hover:border-gray-300"
+                                                className="group relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 cursor-pointer h-72 flex flex-col border-4 border-white hover:border-gray-300 animate-fade-in-up"
                                                 onClick={() => router.push('/museos')}
                                                 style={{ 
-                                                    animationDelay: `${index * 0.1}s`,
-                                                    animation: 'fadeInUp 0.8s ease-out forwards'
+                                                    animationDelay: `${index * 0.1}s`
                                                 }}
                                             >
                                                 {/* Imagen de fondo */}
@@ -455,6 +545,11 @@ export default function Inicio() {
                 if (section.title === "Sitios Turísticos") {
                     return (
                         <section 
+                            ref={(el) => {
+                                if (el && !sectionRefs.current.includes(el)) {
+                                    sectionRefs.current.push(el)
+                                }
+                            }}
                             id={`section-${section.id}`}
                             key={section.id}
                             className="relative min-h-screen bg-gradient-to-br from-slate-800 via-gray-700 to-stone-800"
@@ -478,7 +573,7 @@ export default function Inicio() {
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                         
                                         {/* Mitad izquierda - Imagen fija */}
-                                        <div className="relative animate-slide-in-left">
+                                        <div className="relative animate-fade-in-up">
                                             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                                                 <img
                                                     src="https://i.pinimg.com/1200x/0f/29/12/0f291208d9653b3bad8f6fc44c1f32e1.jpg"
@@ -497,21 +592,21 @@ export default function Inicio() {
                                         </div>
                                         
                                         {/* Mitad derecha - Narrativa fluida */}
-                                        <div className="text-white animate-slide-in-right">
-                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl">
+                                        <div className="text-white">
+                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                                                 {section.title}
                                             </h2>
                                             
                                             <div className="space-y-6 mb-8">
-                                                <p className="text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.2s' }}>
+                                                <p className="text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s', color: 'white' }}>
                                                     {section.description}
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.4s' }}>
+                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.3s', color: 'white' }}>
                                                     Desde las majestuosas murallas que han resistido siglos de historia hasta las plazas coloniales que susurran secretos del pasado, cada rincón de Cartagena cuenta una historia única.
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up-white" style={{ animationDelay: '0.6s' }}>
+                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s', color: 'white' }}>
                                                     Descubre la magia de la Heroica Ciudad Amurallada, donde la arquitectura colonial se funde con la brisa caribeña y cada calle empedrada te lleva a un nuevo descubrimiento.
                                                 </p>
                                             </div>
@@ -522,7 +617,7 @@ export default function Inicio() {
                                                     <div 
                                                         key={highlightIndex}
                                                         className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
-                                                        style={{ animationDelay: `${0.8 + highlightIndex * 0.1}s` }}
+                                                        style={{ animationDelay: `${0.5 + highlightIndex * 0.1}s` }}
                                                     >
                                                         <span className="text-base md:text-lg font-ui font-medium flex items-center text-white">
                                                             <span className="w-2 h-2 bg-amber-400 rounded-full mr-3 animate-pulse"></span>
@@ -536,7 +631,7 @@ export default function Inicio() {
                                             <button 
                                                 onClick={() => router.push('/sitios-turisticos')}
                                                 className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
-                                                style={{ animationDelay: '1.2s' }}
+                                                style={{ animationDelay: '0.8s' }}
                                             >
                                                 Explorar Sitios Turísticos
                                             </button>
@@ -556,6 +651,11 @@ export default function Inicio() {
                 // Secciones normales para el resto
                 return (
                     <section 
+                        ref={(el) => {
+                            if (el && !sectionRefs.current.includes(el)) {
+                                sectionRefs.current.push(el)
+                            }
+                        }}
                         id={`section-${section.id}`}
                         key={section.id}
                         className={`relative min-h-screen flex items-center justify-center ${
@@ -636,43 +736,112 @@ export default function Inicio() {
                 )
             })}
 
-            {/* Sección Final con Call to Action */}
-            <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-500 via-orange-600 to-red-600">
+            {/* Sección Final "Volver Pronto" - Estilo Atardecer Costero */}
+            <section 
+                ref={(el) => {
+                    if (el && !sectionRefs.current.includes(el)) {
+                        sectionRefs.current.push(el)
+                    }
+                }}
+                className="relative min-h-screen flex items-center justify-center overflow-hidden"
+            >
+                {/* Fondo Base con Gradiente Sutil */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white via-gray-50 to-blue-50" />
+                
+                {/* Olas con Colores de la Bandera de Cartagena */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <div className="wave-layer wave-sunset-1"></div>
+                    <div className="wave-layer wave-sunset-2"></div>
+                    <div className="wave-layer wave-sunset-3"></div>
+                </div>
+                
+                {/* Textura de Papel Envejecido/Arena */}
                 <div 
-                    ref={addToRefs}
-                    className="absolute inset-0 opacity-20 parallax-bg"
+                    className="absolute inset-0 opacity-25"
                     style={{
-                        backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="b" cx="50%" cy="50%"><stop offset="0%" stop-color="%23FFD700" stop-opacity="0.6"/><stop offset="100%" stop-color="%23FF6B6B" stop-opacity="0.2"/></radialGradient></defs><rect width="100%" height="100%" fill="url(%23b)"/></svg>')`,
-                        backgroundSize: 'cover'
+                        backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><filter id="paper"><feTurbulence baseFrequency="0.8" numOctaves="3" result="noise"/><feColorMatrix in="noise" type="saturate" values="0.3"/></filter><pattern id="agedPaper" width="300" height="300" patternUnits="userSpaceOnUse"><rect width="300" height="300" fill="%23F4E4BC" filter="url(%23paper)"/><path d="M0 0 L300 0 L300 300 L0 300 Z" fill="none" stroke="%23D4C4A8" stroke-width="0.5" opacity="0.4"/><circle cx="80" cy="80" r="1.5" fill="%23B8A082" opacity="0.6"/><circle cx="220" cy="150" r="1" fill="%23B8A082" opacity="0.5"/><circle cx="150" cy="220" r="2" fill="%23B8A082" opacity="0.4"/><circle cx="50" cy="250" r="1.5" fill="%23B8A082" opacity="0.7"/><circle cx="250" cy="50" r="1" fill="%23B8A082" opacity="0.3"/><path d="M20 20 Q50 30 80 20 Q110 30 140 20" stroke="%23B8A082" stroke-width="0.3" opacity="0.4" fill="none"/><path d="M200 200 Q230 210 260 200 Q290 210 280 200" stroke="%23B8A082" stroke-width="0.2" opacity="0.3" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(%23agedPaper)"/></svg>')`,
+                        backgroundSize: '600px 600px',
+                        backgroundRepeat: 'repeat'
                     }}
                 />
                 
-                <div className="absolute inset-0 bg-black/30" />
+                {/* Overlay Sutil para Contraste */}
+                <div className="absolute inset-0 bg-gray-100/30" />
                 
-                <div className="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-title font-bold mb-4 md:mb-6 drop-shadow-2xl animate-fade-in-up">
-                        ¿Listo para la Aventura?
-                    </h2>
-                    <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-body mb-6 md:mb-8 text-yellow-100 drop-shadow-lg max-w-2xl mx-auto animate-fade-in-up-delayed px-4">
-                        Cartagena de Indias te espera con sus historias, colores y magia caribeña
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center animate-scale-in px-4">
-                        <button className="px-6 md:px-10 py-3 md:py-5 bg-yellow-400 text-black font-ui font-bold text-sm md:text-lg rounded-full hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-2xl animate-glow">
-                            Comenzar Viaje
-                        </button>
-                        <button className="px-6 md:px-10 py-3 md:py-5 border-2 border-white text-white font-ui font-bold text-sm md:text-lg rounded-full hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-105 glass">
-                            Ver Galería
-                        </button>
+                {/* Palmas Animadas */}
+                <div className="absolute top-10 left-10 w-32 h-32 opacity-20 animate-palm-sway">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-white">
+                        <path d="M50 10 Q30 20 20 40 Q15 50 20 60 Q25 70 30 80 Q35 85 40 90 Q45 95 50 100 Q55 95 60 90 Q65 85 70 80 Q75 70 80 60 Q85 50 80 40 Q70 20 50 10" fill="currentColor" opacity="0.6"/>
+                        <path d="M50 15 Q35 25 25 45 Q20 55 25 65 Q30 75 35 85 Q40 90 45 95 Q50 100 55 95 Q60 90 65 85 Q70 75 75 65 Q80 55 75 45 Q65 25 50 15" fill="currentColor" opacity="0.4"/>
+                    </svg>
+                </div>
+                
+                <div className="absolute top-20 right-16 w-24 h-24 opacity-15 animate-palm-sway-delayed">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-white">
+                        <path d="M50 10 Q30 20 20 40 Q15 50 20 60 Q25 70 30 80 Q35 85 40 90 Q45 95 50 100 Q55 95 60 90 Q65 85 70 80 Q75 70 80 60 Q85 50 80 40 Q70 20 50 10" fill="currentColor" opacity="0.5"/>
+                    </svg>
+                </div>
+                
+                <div className="absolute bottom-20 left-20 w-28 h-28 opacity-18 animate-palm-sway">
+                    <svg viewBox="0 0 100 100" className="w-full h-full text-white">
+                        <path d="M50 10 Q30 20 20 40 Q15 50 20 60 Q25 70 30 80 Q35 85 40 90 Q45 95 50 100 Q55 95 60 90 Q65 85 70 80 Q75 70 80 60 Q85 50 80 40 Q70 20 50 10" fill="currentColor" opacity="0.4"/>
+                    </svg>
+                </div>
+                
+                {/* Brisa Animada */}
+                <div className="absolute top-1/4 left-1/4 w-full h-1 opacity-20 animate-breeze">
+                    <svg viewBox="0 0 1000 10" className="w-full h-full text-white">
+                        <path d="M0 5 Q100 2 200 5 Q300 8 400 5 Q500 2 600 5 Q700 8 800 5 Q900 2 1000 5" stroke="currentColor" strokeWidth="1" fill="none"/>
+                    </svg>
+                </div>
+                
+                <div className="absolute top-1/3 right-1/4 w-full h-1 opacity-15 animate-breeze-delayed">
+                    <svg viewBox="0 0 1000 10" className="w-full h-full text-white">
+                        <path d="M0 5 Q150 3 300 5 Q450 7 600 5 Q750 3 900 5 Q950 7 1000 5" stroke="currentColor" strokeWidth="1" fill="none"/>
+                    </svg>
+                </div>
+                
+                {/* Contenido Principal */}
+                <div className="relative z-10 text-center text-gray-800 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+                    {/* Mensaje Principal */}
+                    <div className="mb-8">
+                        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 drop-shadow-2xl animate-fade-in-up leading-tight">
+                            Esto es solo el inicio
+                        </h2>
+                        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-serif font-light mb-4 drop-shadow-lg animate-fade-in-up-delayed leading-relaxed text-gray-700">
+                            Cartagena te espera con nuevas atmósferas
+                        </p>
+                        <p className="text-lg sm:text-xl md:text-2xl font-body mb-8 text-gray-600 drop-shadow-md animate-fade-in-up-delayed max-w-3xl mx-auto leading-relaxed">
+                            Muchas más secciones nos esperan. Más playas, más museos, más alma caribeña por descubrir.
+                        </p>
+                    </div>
+                    
+                    {/* Logo Desvaneciéndose */}
+                    <div className="mb-12 animate-logo-fade">
+                        <div className="inline-block px-8 py-4 bg-gray-100/80 backdrop-blur-sm rounded-full border border-gray-300/50 shadow-lg">
+                            <span className="text-2xl sm:text-3xl font-serif font-bold text-gray-800">
+                                <span style={{ color: '#FFD700' }}>Cartagena</span> Fragmentada
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {/* Mensaje Final */}
+                    <div className="animate-fade-in-up-delayed">
+                        <p className="text-base sm:text-lg md:text-xl font-body text-gray-600 drop-shadow-md italic max-w-2xl mx-auto leading-relaxed">
+                            "Donde cada rincón cuenta una historia, cada ola susurra un secreto, y cada atardecer promete un nuevo amanecer."
+                        </p>
                     </div>
                 </div>
-
-                {/* Elementos decorativos finales - Responsive */}
-                <div className="absolute top-10 md:top-20 left-10 md:left-20 w-16 md:w-24 h-16 md:h-24 bg-yellow-300/30 rounded-full blur-xl animate-float hidden sm:block" />
-                <div className="absolute bottom-10 md:bottom-20 right-10 md:right-20 w-20 md:w-32 h-20 md:h-32 bg-orange-400/30 rounded-full blur-xl animate-float-delayed hidden sm:block" />
-                <div className="absolute top-1/2 left-1/3 w-12 md:w-20 h-12 md:h-20 bg-red-400/30 rounded-full blur-xl animate-float hidden sm:block" />
-                <div className="absolute top-1/3 right-1/3 w-10 md:w-16 h-10 md:h-16 bg-yellow-200/30 rounded-full blur-xl animate-float-delayed hidden sm:block" />
-                <div className="absolute top-1/4 left-1/2 w-8 md:w-14 h-8 md:h-14 bg-orange-300/25 rounded-full blur-lg animate-float hidden sm:block" />
-                <div className="absolute bottom-1/4 left-1/5 w-12 md:w-18 h-12 md:h-18 bg-red-300/25 rounded-full blur-lg animate-float-delayed hidden sm:block" />
+                
+                {/* Partículas de Arena Flotantes */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                    <div className="absolute top-20 left-1/4 w-1 h-1 bg-gray-400/40 rounded-full animate-float" style={{ animationDelay: '0s' }}></div>
+                    <div className="absolute top-40 right-1/3 w-1.5 h-1.5 bg-gray-500/35 rounded-full animate-float-delayed" style={{ animationDelay: '1s' }}></div>
+                    <div className="absolute bottom-40 left-1/3 w-1 h-1 bg-gray-400/45 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+                    <div className="absolute bottom-20 right-1/4 w-1.5 h-1.5 bg-gray-500/30 rounded-full animate-float-delayed" style={{ animationDelay: '3s' }}></div>
+                    <div className="absolute top-1/2 left-1/5 w-1 h-1 bg-gray-400/50 rounded-full animate-float" style={{ animationDelay: '4s' }}></div>
+                    <div className="absolute top-1/3 right-1/5 w-1.5 h-1.5 bg-gray-500/35 rounded-full animate-float-delayed" style={{ animationDelay: '5s' }}></div>
+                </div>
             </section>
         </div>
     )

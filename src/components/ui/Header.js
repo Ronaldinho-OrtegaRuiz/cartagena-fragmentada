@@ -1,111 +1,66 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { menuItems } from "@/data/sections"
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const [headerStyle, setHeaderStyle] = useState({
-        background: 'transparent',
-        opacity: 0,
-        textColor: 'white'
-    })
-    const [isHeaderVisible, setIsHeaderVisible] = useState(false)
+    const [isHeaderVisible, setIsHeaderVisible] = useState(true) // Siempre visible por defecto
+    const [isHydrated, setIsHydrated] = useState(false)
+    const timeoutRef = useRef(null)
     const pathname = usePathname()
 
-    // Función para detectar el color dominante del contenido y mostrar header
-    const updateHeaderStyle = () => {
-        const scrollY = window.scrollY
-        const windowHeight = window.innerHeight
-        const threshold = windowHeight * 0.1 // 10vh threshold - más temprano
-        
-        // Mostrar header después del threshold con transparencia
-        if (scrollY > threshold) {
-            setIsHeaderVisible(true)
-            
-            // Detectar en qué sección estamos basado en el scroll y ajustar color del texto según el fondo
-            if (scrollY < windowHeight * 0.8) {
-                // Hero Section - Fondo dorado/naranja, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.95,
-                    textColor: 'white'
-                })
-            } else if (scrollY < windowHeight * 1.8) {
-                // Historia - Fondo azul/púrpura, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            } else if (scrollY < windowHeight * 2.8) {
-                // Sitios Turísticos - Fondo esmeralda/teal, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            } else if (scrollY < windowHeight * 3.8) {
-                // Playas - Fondo azul/púrpura, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            } else if (scrollY < windowHeight * 4.8) {
-                // Museos - Fondo esmeralda/teal, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            } else {
-                // } else if (scrollY < windowHeight * 5.8) {
-                //     // Centros Comerciales - Fondo azul/púrpura, texto blanco
-                //     setHeaderStyle({
-                //         background: 'transparent',
-                //         opacity: 0.9,
-                //         textColor: 'white'
-                //     })
-                // } else if (scrollY < windowHeight * 6.8) {
-                //     // Lugares Poco Conocidos - Fondo esmeralda/teal, texto blanco
-                //     setHeaderStyle({
-                //         background: 'transparent',
-                //         opacity: 0.9,
-                //         textColor: 'white'
-                //     })
-                // } else {
-                // Sección Final - Fondo dorado/naranja, texto blanco
-                setHeaderStyle({
-                    background: 'transparent',
-                    opacity: 0.9,
-                    textColor: 'white'
-                })
-            }
-        } else {
-            setIsHeaderVisible(false)
-            setHeaderStyle({
-                background: 'transparent',
-                opacity: 0,
-                textColor: 'white'
-            })
-        }
-    }
-
+    // Hidratación simple
     useEffect(() => {
+        setIsHydrated(true)
+    }, [])
+
+    // Lógica simple del header
+    useEffect(() => {
+        if (!isHydrated) return
+
         const handleScroll = () => {
-            updateHeaderStyle()
+            const scrollY = window.scrollY
+            const windowHeight = window.innerHeight
+            
+            // Si estamos en el inicio (primeros 10% de la pantalla), header siempre visible
+            if (scrollY < windowHeight * 0.1) {
+                setIsHeaderVisible(true)
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current)
+                    timeoutRef.current = null
+                }
+                return
+            }
+            
+            // Si estamos en una sección, mostrar header y programar ocultar
+            if (scrollY >= windowHeight * 0.1) {
+                setIsHeaderVisible(true)
+                
+                // Limpiar timeout anterior
+                if (timeoutRef.current) {
+                    clearTimeout(timeoutRef.current)
+                }
+                
+                // Programar ocultar después de 2 segundos
+                timeoutRef.current = setTimeout(() => {
+                    setIsHeaderVisible(false)
+                }, 2000)
+            }
         }
 
         window.addEventListener('scroll', handleScroll)
-        updateHeaderStyle() // Llamar una vez al montar
-
+        
+        // Limpiar al desmontar
         return () => {
             window.removeEventListener('scroll', handleScroll)
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
         }
-    }, [])
+    }, [isHydrated])
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen)
@@ -114,13 +69,13 @@ export default function Header() {
     return (
         <header 
             className={`fixed top-0 left-0 right-0 z-50 h-16 transition-all duration-500 ease-in-out ${
-                isHeaderVisible ? 'translate-y-0' : '-translate-y-full'
+                isHydrated && isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
             }`}
             style={{ 
-                background: 'transparent',
-                backdropFilter: isHeaderVisible ? 'blur(8px)' : 'none',
-                WebkitBackdropFilter: isHeaderVisible ? 'blur(8px)' : 'none',
-                borderBottom: isHeaderVisible ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
+                background: isHydrated ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
+                backdropFilter: isHydrated && isHeaderVisible ? 'blur(8px)' : 'none',
+                WebkitBackdropFilter: isHydrated && isHeaderVisible ? 'blur(8px)' : 'none',
+                borderBottom: isHydrated && isHeaderVisible ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
             }}
         >
             <div className="max-w-6xl mx-auto px-6 h-full">
@@ -130,7 +85,7 @@ export default function Header() {
                         href="/" 
                         className="text-xl font-bold transition-colors duration-300"
                         style={{ 
-                            color: headerStyle.textColor,
+                            color: isHydrated ? 'white' : 'white',
                             fontFamily: 'var(--font-playfair), serif',
                             letterSpacing: '0.05em'
                         }}
@@ -148,7 +103,7 @@ export default function Header() {
                                     href={item.href}
                                     className="text-sm font-medium transition-colors duration-300 hover:text-yellow-400"
                                     style={{ 
-                                        color: isActive ? '#FFD700' : headerStyle.textColor,
+                                        color: isActive ? '#FFD700' : (isHydrated ? 'white' : 'white'),
                                         fontFamily: 'var(--font-raleway), sans-serif'
                                     }}
                                 >
@@ -162,7 +117,7 @@ export default function Header() {
                     <button
                         onClick={toggleMenu}
                         className="md:hidden p-2 transition-colors duration-300"
-                        style={{ color: headerStyle.textColor }}
+                        style={{ color: isHydrated ? 'white' : 'white' }}
                         aria-label="Toggle menu"
                     >
                         <svg
@@ -202,7 +157,7 @@ export default function Header() {
                                     href={item.href}
                                     className="block text-sm font-medium transition-colors duration-300 hover:text-yellow-400"
                                     style={{ 
-                                        color: isActive ? '#FFD700' : headerStyle.textColor,
+                                        color: isActive ? '#FFD700' : (isHydrated ? 'white' : 'white'),
                                         fontFamily: 'var(--font-raleway), sans-serif'
                                     }}
                                     onClick={() => setIsMenuOpen(false)}
