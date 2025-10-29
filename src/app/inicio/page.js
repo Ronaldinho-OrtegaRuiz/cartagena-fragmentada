@@ -135,20 +135,20 @@ export default function Inicio() {
                 </div>
                 
                 {/* Contenido flotante sobre el gradiente */}
-                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+                <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
                     <div className="max-w-4xl mx-auto text-center">
                         {/* Texto principal con tipografía serif elegante */}
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-serif font-bold text-white mb-6 animate-fade-in-up leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-4 sm:mb-6 animate-fade-in-up leading-tight" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
                             Cartagena vibra entre historia y mar
                         </h1>
                         
                         {/* Subtítulo más ligero */}
-                        <p className="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-12 animate-fade-in-up-delayed leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
+                        <p className="text-lg md:text-xl font-light text-white/90 max-w-2xl mx-auto mb-8 sm:mb-12 animate-fade-in-up-delayed leading-relaxed" style={{ textShadow: '1px 1px 3px rgba(0,0,0,0.8)' }}>
                             Donde el mar abraza la historia y las palmas susurran leyendas, Cartagena vibra con alma propia. Déjate llevar por sus colores, sus calles y sus memorias.
                         </p>
                         
                         {/* Botones con estilo costero */}
-                        <div className="flex flex-wrap justify-center gap-4 md:gap-6 animate-fade-in-up-delayed">
+                        <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6 animate-fade-in-up-delayed">
                             {sections.map((section, index) => (
                                 <button
                                     key={section.id}
@@ -158,7 +158,7 @@ export default function Inicio() {
                                             element.scrollIntoView({ behavior: 'smooth' })
                                         }
                                     }}
-                                    className="px-6 py-3 bg-white/20 rounded-full text-white font-medium hover:bg-white/30 transition-all duration-300 transform hover:scale-105 backdrop-blur-sm border border-white/30"
+                                    className="px-4 sm:px-6 py-2 sm:py-3 bg-white/20 rounded-full text-white font-medium hover:bg-white/30 transition-all duration-300 transform hover:scale-105 backdrop-blur-sm border border-white/30 text-sm sm:text-base"
                                     style={{ 
                                         animationDelay: `${0.8 + index * 0.1}s`,
                                         textShadow: '1px 1px 3px rgba(0,0,0,0.8)',
@@ -213,28 +213,28 @@ export default function Inicio() {
                             <div className="absolute inset-0 bg-black/30" />
                             
                             {/* Contenido dividido en dos mitades */}
-                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8">
+                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
                                 <div className="max-w-7xl mx-auto w-full">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                         
                                         {/* Mitad izquierda - Texto introductorio */}
                                         <div className="text-white">
-                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl animate-fade-in-up">
+                                            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-title font-bold mb-4 sm:mb-6 drop-shadow-2xl animate-fade-in-up">
                                                 {section.title}
                                             </h2>
-                                            <p className="text-lg md:text-xl font-body mb-8 text-yellow-100 drop-shadow-lg leading-relaxed animate-fade-in-up">
+                                            <p className="text-lg sm:text-xl md:text-2xl font-body mb-6 sm:mb-8 text-yellow-100 drop-shadow-lg leading-relaxed animate-fade-in-up">
                                                 {section.description}
                                             </p>
                                             
                                             {/* Highlights en formato vertical */}
-                                            <div className="space-y-4 mb-8">
+                                            <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
                                                 {section.highlights.map((highlight, highlightIndex) => (
                                                     <div 
                                                         key={highlightIndex}
-                                                        className="glass rounded-lg p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
+                                                        className="glass rounded-lg p-3 sm:p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
                                                         style={{ animationDelay: `${highlightIndex * 0.1}s` }}
                                                     >
-                                                        <span className="text-base md:text-lg font-ui font-medium flex items-center">
+                                                        <span className="text-sm sm:text-lg md:text-xl font-ui font-medium flex items-center text-white">
                                                             <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
                                                             {highlight}
                                                         </span>
@@ -242,10 +242,10 @@ export default function Inicio() {
                                                 ))}
                                             </div>
                                             
-                                            {/* Botón CTA */}
+                                            {/* Botón CTA - Solo visible en desktop */}
                                             <button 
                                                 onClick={() => router.push('/historia')}
-                                                className="px-8 py-4 glass border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
+                                                className="hidden lg:block px-6 sm:px-8 py-3 sm:py-4 glass border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up text-sm sm:text-base"
                                                 style={{ animationDelay: '0.4s' }}
                                             >
                                                 Explorar Historia Completa
@@ -255,6 +255,17 @@ export default function Inicio() {
                                         {/* Mitad derecha - Slider de fotos */}
                                         <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                                             <HistorySlider />
+                                            
+                                            {/* Botón CTA - Solo visible en móviles, debajo del slider */}
+                                            <div className="lg:hidden mt-6 text-center">
+                                                <button 
+                                                    onClick={() => router.push('/historia')}
+                                                    className="px-6 py-3 glass border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up text-sm"
+                                                    style={{ animationDelay: '0.6s' }}
+                                                >
+                                                    Explorar Historia Completa
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -279,7 +290,7 @@ export default function Inicio() {
                             }}
                             id={`section-${section.id}`}
                             key={section.id} 
-                            className="relative min-h-screen overflow-hidden"
+                            className="relative min-h-screen lg:min-h-screen overflow-hidden pb-48 sm:pb-56 md:pb-64 lg:pb-0"
                             style={{
                                 background: 'linear-gradient(135deg, #A7E3E2 0%, #8DD4D0 25%, #7FD1C3 50%, #6BC5D6 75%, #5BC0DE 100%)',
                                 animation: 'waveBackground 18s ease-in-out infinite'
@@ -326,18 +337,18 @@ export default function Inicio() {
                             </div>
                             
                             {/* TEXTO EN LA TIERRA */}
-                            <div className="relative z-10 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-16" style={{ height: '40vh' }}>
+                            <div className="relative z-10 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16" style={{ height: '40vh' }}>
                                 <div className="text-left max-w-2xl">
-                                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-bold mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
+                                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-title font-bold mb-4 sm:mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
                                         {section.title}
                                     </h2>
                                     
                                     {/* Texto introductorio con efecto de brisa sutil */}
-                                    <div className="space-y-4 animate-fade-in-up-delayed">
-                                        <p className="text-lg md:text-xl font-body text-amber-800 drop-shadow-md leading-relaxed animate-text-breeze">
+                                    <div className="space-y-3 sm:space-y-4 animate-fade-in-up-delayed">
+                                        <p className="text-base sm:text-lg md:text-xl font-body text-amber-800 drop-shadow-md leading-relaxed animate-text-breeze">
                                             Aquí el mar no solo se ve, se siente.
                                         </p>
-                                        <p className="text-base md:text-lg font-body text-amber-700 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
+                                        <p className="text-sm sm:text-base md:text-lg font-body text-amber-700 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
                                             Descubre las playas que hacen de Cartagena un suspiro del Caribe.
                                         </p>
                                     </div>
@@ -347,7 +358,7 @@ export default function Inicio() {
                             {/* CARDS EN EL MAR - Distribuidas con flex-wrap */}
                             <div className="absolute z-20 w-full h-full flex flex-col" style={{ top: '40vh', height: '60vh' }}>
                                 {/* Contenedor dividido en 6 columnas */}
-                                <div className="flex-1 grid grid-cols-6 gap-4 px-8 pt-16 pb-20">
+                                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4 sm:px-6 md:px-8 pt-8 sm:pt-12 md:pt-16 pb-20 sm:pb-24 md:pb-28 lg:pb-20">
                                     {[
                                         { name: "Bocagrande", category: "Urbana", image: "https://blog.redbus.co/wp-content/uploads/2020/06/BOCAGRANDE-5.jpg", position: "self-start", delay: "0s" },
                                         { name: "Marbella", category: "Local", image: "https://www.isouthamerica.com/wp-content/uploads/2021/11/marbella-beach-cartagena.jpg", position: "self-end", delay: "0.5s" },
@@ -358,7 +369,7 @@ export default function Inicio() {
                                     ].map((beach, index) => (
                                         <div 
                                             key={index}
-                                            className={`h-52 ${beach.position} beach-card-floating rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30 animate-fade-in-up`}
+                                            className={`h-48 sm:h-52 ${beach.position} beach-card-floating rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30 animate-fade-in-up`}
                                             onClick={() => router.push('/playas')}
                                             style={{ 
                                                 animationDelay: beach.delay,
@@ -368,7 +379,7 @@ export default function Inicio() {
                                             }}
                                         >
                                             {/* Imagen real de la playa */}
-                                            <div className="h-28 rounded-2xl mb-4 relative overflow-hidden">
+                                            <div className="h-24 sm:h-28 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 relative overflow-hidden">
                                                 <img 
                                                     src={beach.image}
                                                     alt={beach.name}
@@ -379,10 +390,10 @@ export default function Inicio() {
                                             </div>
                                             
                                             {/* Texto con categoría */}
-                                            <h3 className="text-base font-title font-bold text-white mb-3 text-center leading-tight drop-shadow-lg">
+                                            <h3 className="text-sm sm:text-base font-title font-bold text-white mb-2 sm:mb-3 text-center leading-tight drop-shadow-lg">
                                                 {beach.name}
                                             </h3>
-                                            <p className="text-sm font-ui font-semibold text-yellow-300 text-center mb-2 drop-shadow-md">
+                                            <p className="text-xs sm:text-sm font-ui font-semibold text-yellow-300 text-center mb-2 drop-shadow-md">
                                                 {beach.category}
                                             </p>
                                         </div>
@@ -390,10 +401,10 @@ export default function Inicio() {
                                 </div>
                                 
                                 {/* Botón CTA con separación adecuada */}
-                                <div className="flex justify-center pb-8">
+                                <div className="flex justify-center pb-8 sm:pb-12">
                                     <button 
                                         onClick={() => router.push('/playas')}
-                                        className="px-10 py-4 bg-white/30 backdrop-blur-sm border-2 border-white/60 text-white font-ui font-semibold rounded-full hover:bg-white/40 hover:border-white/80 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl beach-card-floating animate-fade-in-up"
+                                        className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 bg-white/30 backdrop-blur-sm border-2 border-white/60 text-white font-ui font-semibold rounded-full hover:bg-white/40 hover:border-white/80 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl beach-card-floating animate-fade-in-up text-sm sm:text-base"
                                         style={{
                                             animationDelay: '3s',
                                             filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.2))'
@@ -442,24 +453,24 @@ export default function Inicio() {
                             <div className="absolute inset-0 bg-gradient-to-b from-gray-900/20 via-transparent to-gray-800/30" />
                             
                             {/* Contenido principal */}
-                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 pt-20">
+                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
                                 <div className="max-w-7xl mx-auto w-full">
                                     {/* Título principal elegante */}
-                                    <div className="text-center mb-6" style={{ marginTop: '-2rem' }}>
-                                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-light mb-4 text-gray-800 animate-fade-in-up tracking-wide">
+                                    <div className="text-center mb-8 sm:mb-12">
+                                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-title font-light mb-4 sm:mb-6 text-gray-800 animate-fade-in-up tracking-wide">
                                             {section.title}
                                         </h2>
-                                        <p className="text-base md:text-lg font-body text-gray-600 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delayed">
+                                        <p className="text-base sm:text-lg md:text-xl font-body text-gray-600 max-w-3xl mx-auto leading-relaxed animate-fade-in-up-delayed">
                                             {section.description}
                                         </p>
                                     </div>
 
                                     {/* Galería de museos - Grid uniforme */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 mb-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-6 mb-8 sm:mb-12">
                                         {allMuseums.map((museum, index) => (
                                             <div 
                                                 key={index}
-                                                className="group relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 cursor-pointer h-72 flex flex-col border-4 border-white hover:border-gray-300 animate-fade-in-up"
+                                                className="group relative overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 cursor-pointer h-64 sm:h-72 flex flex-col border-4 border-white hover:border-gray-300 animate-fade-in-up"
                                                 onClick={() => router.push('/museos')}
                                                 style={{ 
                                                     animationDelay: `${index * 0.1}s`
@@ -476,10 +487,10 @@ export default function Inicio() {
                                                 </div>
 
                                                 {/* Contenido superpuesto */}
-                                                <div className="relative z-10 h-full flex flex-col justify-between p-4">
+                                                <div className="relative z-10 h-full flex flex-col justify-between p-3 sm:p-4">
                                                     {/* Etiqueta de categoría */}
                                                     <div 
-                                                        className="self-start px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border"
+                                                        className="self-start px-2 sm:px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border"
                                                         style={{ 
                                                             backgroundColor: `${museum.categoryColor}80`,
                                                             borderColor: `${museum.categoryColor}60`,
@@ -491,17 +502,17 @@ export default function Inicio() {
 
                                                     {/* Texto superpuesto en la parte inferior */}
                                                     <div className="text-white">
-                                                        <h3 className="text-lg font-title font-bold mb-2 drop-shadow-lg group-hover:text-amber-300 transition-colors duration-300 leading-tight">
+                                                        <h3 className="text-base sm:text-lg font-title font-bold mb-2 drop-shadow-lg group-hover:text-amber-300 transition-colors duration-300 leading-tight">
                                                             {museum.name}
                                                         </h3>
-                                                        <p className="text-sm font-body leading-relaxed mb-3 drop-shadow-md">
+                                                        <p className="text-xs sm:text-sm font-body leading-relaxed mb-2 sm:mb-3 drop-shadow-md">
                                                             {museum.description}
                                                         </p>
                                                         
                                                         {/* Indicador de hover */}
                                                         <div className="flex items-center text-amber-300 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                                                            <span className="text-sm font-medium mr-2">Explorar</span>
-                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <span className="text-xs sm:text-sm font-medium mr-2">Explorar</span>
+                                                            <svg className="w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                                             </svg>
                                                         </div>
@@ -518,12 +529,12 @@ export default function Inicio() {
                                     <div className="text-center">
                                         <button 
                                             onClick={() => router.push('/museos')}
-                                            className="group relative px-12 py-5 bg-gradient-to-r from-gray-700 to-gray-800 backdrop-blur-sm border-2 border-gray-600 text-white font-ui font-medium rounded-full hover:from-gray-600 hover:to-gray-700 hover:border-gray-500 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-gray-500/25 animate-fade-in-up overflow-hidden"
+                                            className="group relative px-8 sm:px-10 md:px-12 py-3 sm:py-4 md:py-5 bg-gradient-to-r from-gray-700 to-gray-800 backdrop-blur-sm border-2 border-gray-600 text-white font-ui font-medium rounded-full hover:from-gray-600 hover:to-gray-700 hover:border-gray-500 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-gray-500/25 animate-fade-in-up overflow-hidden text-sm sm:text-base"
                                             style={{ animationDelay: '0.8s' }}
                                         >
                                             <span className="relative z-10 flex items-center">
                                                 Explorar Todos los Museos
-                                                <svg className="w-5 h-5 ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <svg className="w-4 sm:w-5 h-4 sm:h-5 ml-2 sm:ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                                 </svg>
                                             </span>
@@ -568,7 +579,7 @@ export default function Inicio() {
                             <div className="absolute inset-0 bg-black/30" />
                             
                             {/* Contenido dividido en dos mitades */}
-                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8">
+                            <div className="relative z-10 min-h-screen flex items-center px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
                                 <div className="max-w-7xl mx-auto w-full">
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                                         
@@ -578,13 +589,13 @@ export default function Inicio() {
                                                 <img
                                                     src="https://i.pinimg.com/1200x/0f/29/12/0f291208d9653b3bad8f6fc44c1f32e1.jpg"
                                                     alt="Cartagena de Indias - Vista panorámica de las murallas y el mar"
-                                                    className="w-full h-96 md:h-[500px] object-cover transition-all duration-1000 ease-in-out hover:scale-105"
+                                                    className="w-full h-80 sm:h-96 md:h-[500px] object-cover transition-all duration-1000 ease-in-out hover:scale-105"
                                                 />
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                                                 
                                                 {/* Overlay con información de la imagen */}
                                                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                                                    <p className="text-sm font-ui opacity-90">
+                                                    <p className="text-xs sm:text-sm font-ui opacity-90">
                                                         Vista panorámica de Cartagena de Indias
                                                     </p>
                                                 </div>
@@ -593,33 +604,33 @@ export default function Inicio() {
                                         
                                         {/* Mitad derecha - Narrativa fluida */}
                                         <div className="text-white">
-                                            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-title font-bold mb-6 drop-shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                                            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-title font-bold mb-4 sm:mb-6 drop-shadow-2xl animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                                                 {section.title}
                                             </h2>
                                             
-                                            <div className="space-y-6 mb-8">
-                                                <p className="text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s', color: 'white' }}>
+                                            <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+                                                <p className="text-lg sm:text-xl md:text-2xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s', color: 'white' }}>
                                                     {section.description}
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.3s', color: 'white' }}>
+                                                <p className="text-sm sm:text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.3s', color: 'white' }}>
                                                     Desde las majestuosas murallas que han resistido siglos de historia hasta las plazas coloniales que susurran secretos del pasado, cada rincón de Cartagena cuenta una historia única.
                                                 </p>
                                                 
-                                                <p className="text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s', color: 'white' }}>
+                                                <p className="text-sm sm:text-lg md:text-xl font-body drop-shadow-lg leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.4s', color: 'white' }}>
                                                     Descubre la magia de la Heroica Ciudad Amurallada, donde la arquitectura colonial se funde con la brisa caribeña y cada calle empedrada te lleva a un nuevo descubrimiento.
                                                 </p>
                                             </div>
                                             
                                             {/* Highlights en formato narrativo */}
-                                            <div className="space-y-3 mb-8">
+                                            <div className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
                                                 {section.highlights.map((highlight, highlightIndex) => (
                                                     <div 
                                                         key={highlightIndex}
-                                                        className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
+                                                        className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-3 sm:p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
                                                         style={{ animationDelay: `${0.5 + highlightIndex * 0.1}s` }}
                                                     >
-                                                        <span className="text-base md:text-lg font-ui font-medium flex items-center text-white">
+                                                        <span className="text-sm sm:text-lg md:text-xl font-ui font-medium flex items-center text-white">
                                                             <span className="w-2 h-2 bg-amber-400 rounded-full mr-3 animate-pulse"></span>
                                                             {highlight}
                                                         </span>
@@ -630,7 +641,7 @@ export default function Inicio() {
                                             {/* Botón CTA */}
                                             <button 
                                                 onClick={() => router.push('/sitios-turisticos')}
-                                                className="px-8 py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
+                                                className="px-6 sm:px-8 py-3 sm:py-4 bg-white/10 backdrop-blur-sm border border-white/30 text-white font-ui font-semibold rounded-full hover:bg-white/30 transition-all duration-300 transform hover:scale-105 animate-fade-in-up text-sm sm:text-base"
                                                 style={{ animationDelay: '0.8s' }}
                                             >
                                                 Explorar Sitios Turísticos

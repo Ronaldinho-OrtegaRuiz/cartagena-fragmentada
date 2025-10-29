@@ -24,7 +24,15 @@ export default function Header() {
         const handleScroll = () => {
             const scrollY = window.scrollY
             const windowHeight = window.innerHeight
+            const isMobile = window.innerWidth < 768 // md breakpoint
             
+            // En móviles, header siempre visible para mejor UX
+            if (isMobile) {
+                setIsHeaderVisible(true)
+                return
+            }
+            
+            // En desktop, mantener lógica original
             // Si estamos en el inicio (primeros 10% de la pantalla), header siempre visible
             if (scrollY < windowHeight * 0.1) {
                 setIsHeaderVisible(true)
@@ -78,7 +86,7 @@ export default function Header() {
                 borderBottom: isHydrated && isHeaderVisible ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
             }}
         >
-            <div className="max-w-6xl mx-auto px-6 h-full">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 h-full">
                 <div className="flex justify-between items-center h-full">
                     {/* Logo */}
                     <Link 
