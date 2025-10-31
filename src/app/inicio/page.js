@@ -290,7 +290,7 @@ export default function Inicio() {
                             }}
                             id={`section-${section.id}`}
                             key={section.id} 
-                            className="relative min-h-screen lg:min-h-screen overflow-hidden pb-48 sm:pb-56 md:pb-64 lg:pb-0"
+                            className="relative min-h-screen overflow-hidden"
                             style={{
                                 background: 'linear-gradient(135deg, #A7E3E2 0%, #8DD4D0 25%, #7FD1C3 50%, #6BC5D6 75%, #5BC0DE 100%)',
                                 animation: 'waveBackground 18s ease-in-out infinite'
@@ -304,72 +304,83 @@ export default function Inicio() {
                                 <div className="wave-layer wave-4"></div>
                             </div>
                             
-                            {/* CAPA DE TIERRA - Gradiente para la orilla */}
-                            <div 
-                                className="absolute top-0 left-0 w-full"
-                                style={{
-                                    height: '40vh',
-                                    background: 'linear-gradient(to bottom, #F5E6D3 0%, #E8D5B7 30%, #D4C4A8 60%, transparent 100%)'
-                                }}
-                            >
-                                {/* Partículas de arena flotantes */}
-                                <div className="absolute inset-0 overflow-hidden">
-                                    <div className="absolute top-16 left-12 w-1.5 h-1.5 bg-white/50 rounded-full animate-float" style={{ animationDelay: '0s' }}></div>
-                                    <div className="absolute top-24 right-16 w-1 h-1 bg-white/40 rounded-full animate-float-delayed" style={{ animationDelay: '1.5s' }}></div>
-                                    <div className="absolute bottom-24 left-1/3 w-1.5 h-1.5 bg-white/45 rounded-full animate-float" style={{ animationDelay: '3s' }}></div>
-                                    <div className="absolute bottom-16 right-1/4 w-1 h-1 bg-white/35 rounded-full animate-float-delayed" style={{ animationDelay: '4.5s' }}></div>
-                                </div>
+                            {/* CONTENEDOR PRINCIPAL - Comportamiento diferente en móvil vs desktop */}
+                            {/* En móvil: flex column normal, en desktop: posicionamiento absoluto para efecto */}
+                            <div className="relative flex flex-col lg:block min-h-screen">
                                 
-                                {/* Elementos SVG de brisa */}
-                                <div className="absolute top-20 left-16 w-16 h-16 opacity-20 animate-breeze">
-                                    <svg viewBox="0 0 100 100" className="w-full h-full text-amber-600">
-                                        <path d="M10 40 Q25 25 40 40 T70 40" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6"/>
-                                        <path d="M10 50 Q25 35 40 50 T70 50" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.4"/>
-                                    </svg>
-                                </div>
-                                
-                                <div className="absolute top-32 right-20 w-12 h-12 opacity-15 animate-breeze-delayed">
-                                    <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
-                                        <path d="M10 35 Q20 20 35 35 T60 35" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
-                                        <path d="M10 45 Q20 30 35 45 T60 45" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            
-                            {/* TEXTO EN LA TIERRA */}
-                            <div className="relative z-10 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16" style={{ height: '40vh' }}>
-                                <div className="text-left max-w-2xl">
-                                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-title font-bold mb-4 sm:mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
-                                        {section.title}
-                                    </h2>
+                                {/* CAPA DE TIERRA - Gradiente para la orilla */}
+                                <div 
+                                    className="relative lg:absolute top-0 left-0 w-full z-20"
+                                    style={{
+                                        minHeight: '40vh',
+                                        background: 'linear-gradient(to bottom, #F5E6D3 0%, #E8D5B7 30%, #D4C4A8 60%, transparent 100%)'
+                                    }}
+                                >
+                                    {/* Partículas de arena flotantes */}
+                                    <div className="absolute inset-0 overflow-hidden">
+                                        <div className="absolute top-16 left-12 w-1.5 h-1.5 bg-white/50 rounded-full animate-float" style={{ animationDelay: '0s' }}></div>
+                                        <div className="absolute top-24 right-16 w-1 h-1 bg-white/40 rounded-full animate-float-delayed" style={{ animationDelay: '1.5s' }}></div>
+                                        <div className="absolute bottom-24 left-1/3 w-1.5 h-1.5 bg-white/45 rounded-full animate-float" style={{ animationDelay: '3s' }}></div>
+                                        <div className="absolute bottom-16 right-1/4 w-1 h-1 bg-white/35 rounded-full animate-float-delayed" style={{ animationDelay: '4.5s' }}></div>
+                                    </div>
                                     
-                                    {/* Texto introductorio con efecto de brisa sutil */}
-                                    <div className="space-y-3 sm:space-y-4 animate-fade-in-up-delayed">
-                                        <p className="text-base sm:text-lg md:text-xl font-body text-amber-800 drop-shadow-md leading-relaxed animate-text-breeze">
-                                            Aquí el mar no solo se ve, se siente.
-                                        </p>
-                                        <p className="text-sm sm:text-base md:text-lg font-body text-amber-700 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
-                                            Descubre las playas que hacen de Cartagena un suspiro del Caribe.
-                                        </p>
+                                    {/* Elementos SVG de brisa */}
+                                    <div className="absolute top-20 left-16 w-16 h-16 opacity-20 animate-breeze hidden sm:block">
+                                        <svg viewBox="0 0 100 100" className="w-full h-full text-amber-600">
+                                            <path d="M10 40 Q25 25 40 40 T70 40" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.6"/>
+                                            <path d="M10 50 Q25 35 40 50 T70 50" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.4"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    <div className="absolute top-32 right-20 w-12 h-12 opacity-15 animate-breeze-delayed hidden sm:block">
+                                        <svg viewBox="0 0 100 100" className="w-full h-full text-amber-500">
+                                            <path d="M10 35 Q20 20 35 35 T60 35" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.5"/>
+                                            <path d="M10 45 Q20 30 35 45 T60 45" stroke="currentColor" strokeWidth="0.8" fill="none" opacity="0.3"/>
+                                        </svg>
+                                    </div>
+                                    
+                                    {/* TEXTO EN LA TIERRA */}
+                                    <div className="relative z-30 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-8 sm:pb-12 lg:pb-0" style={{ minHeight: '40vh' }}>
+                                        <div className="text-left max-w-2xl">
+                                            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-title font-bold mb-4 sm:mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
+                                                {section.title}
+                                            </h2>
+                                            
+                                            {/* Texto introductorio con efecto de brisa sutil */}
+                                            <div className="space-y-3 sm:space-y-4 animate-fade-in-up-delayed">
+                                                <p className="text-base sm:text-lg md:text-xl font-body text-amber-800 drop-shadow-md leading-relaxed animate-text-breeze">
+                                                    Aquí el mar no solo se ve, se siente.
+                                                </p>
+                                                <p className="text-sm sm:text-base md:text-lg font-body text-amber-700 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
+                                                    Descubre las playas que hacen de Cartagena un suspiro del Caribe.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            
-                            {/* CARDS EN EL MAR - Distribuidas con flex-wrap */}
-                            <div className="absolute z-20 w-full h-full flex flex-col" style={{ top: '40vh', height: '60vh' }}>
+                                
+                                {/* CARDS EN EL MAR - En móvil: flujo normal, en desktop: posición absoluta */}
+                                <div className="relative lg:absolute z-20 w-full lg:top-[40vh] lg:h-[60vh] flex flex-col lg:justify-center">
                                 {/* Contenedor dividido en 6 columnas */}
-                                <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4 sm:px-6 md:px-8 pt-8 sm:pt-12 md:pt-16 pb-20 sm:pb-24 md:pb-28 lg:pb-20">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4 sm:px-6 md:px-8 py-8 sm:py-12 lg:py-8 lg:items-start lg:h-full">
                                     {[
-                                        { name: "Bocagrande", category: "Urbana", image: "https://blog.redbus.co/wp-content/uploads/2020/06/BOCAGRANDE-5.jpg", position: "self-start", delay: "0s" },
-                                        { name: "Marbella", category: "Local", image: "https://www.isouthamerica.com/wp-content/uploads/2021/11/marbella-beach-cartagena.jpg", position: "self-end", delay: "0.5s" },
-                                        { name: "La Boquilla", category: "Tradicional", image: "https://i.pinimg.com/originals/c4/47/92/c44792992dd71bb3924fce6eafb5b99c.jpg", position: "self-center", delay: "1s" },
-                                        { name: "Islas del Rosario", category: "Cristalina", image: "https://www.cartagenaexplorer.com/wp-content/uploads/2020/07/Depositphotos_156273740_xl-2015-scaled.jpg", position: "self-end", delay: "1.5s" },
-                                        { name: "Playa Blanca", category: "Paradisíaca", image: "https://i.pinimg.com/736x/1b/a1/66/1ba166f7b8e21c1e28eeb4a4760f8baa.jpg", position: "self-start", delay: "2s" },
-                                        { name: "Cholón", category: "Fiesta", image: "https://cdn.yate.co/img/blog/2024/17/cholon-75t.jpg", position: "self-center", delay: "2.5s" }
-                                    ].map((beach, index) => (
+                                        { name: "Bocagrande", category: "Urbana", image: "https://blog.redbus.co/wp-content/uploads/2020/06/BOCAGRANDE-5.jpg", position: "self-start", height: "h-44", delay: "0s" },
+                                        { name: "Marbella", category: "Local", image: "https://www.isouthamerica.com/wp-content/uploads/2021/11/marbella-beach-cartagena.jpg", position: "self-end", height: "h-56", delay: "0.5s" },
+                                        { name: "La Boquilla", category: "Tradicional", image: "https://i.pinimg.com/originals/c4/47/92/c44792992dd71bb3924fce6eafb5b99c.jpg", position: "self-center", height: "h-52", delay: "1s" },
+                                        { name: "Islas del Rosario", category: "Cristalina", image: "https://www.cartagenaexplorer.com/wp-content/uploads/2020/07/Depositphotos_156273740_xl-2015-scaled.jpg", position: "self-end", height: "h-48", delay: "1.5s" },
+                                        { name: "Playa Blanca", category: "Paradisíaca", image: "https://i.pinimg.com/736x/1b/a1/66/1ba166f7b8e21c1e28eeb4a4760f8baa.jpg", position: "self-start", height: "h-60", delay: "2s" },
+                                        { name: "Cholón", category: "Fiesta", image: "https://cdn.yate.co/img/blog/2024/17/cholon-75t.jpg", position: "self-center", height: "h-50", delay: "2.5s" }
+                                    ].map((beach, index) => {
+                                        // Aplicar posicionamiento solo en desktop (lg y superiores)
+                                        const positionClass = beach.position === 'self-start' ? 'lg:self-start' : 
+                                                             beach.position === 'self-end' ? 'lg:self-end' : 
+                                                             'lg:self-center';
+                                        // Altura: en móvil todas iguales, en desktop diferentes
+                                        const heightClass = `h-48 sm:h-52 lg:${beach.height}`;
+                                        return (
                                         <div 
                                             key={index}
-                                            className={`h-48 sm:h-52 ${beach.position} beach-card-floating rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30 animate-fade-in-up`}
+                                            className={`${heightClass} ${positionClass} beach-card-floating rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 cursor-pointer border border-white/30 animate-fade-in-up`}
                                             onClick={() => router.push('/playas')}
                                             style={{ 
                                                 animationDelay: beach.delay,
@@ -397,11 +408,12 @@ export default function Inicio() {
                                                 {beach.category}
                                             </p>
                                         </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                                 
                                 {/* Botón CTA con separación adecuada */}
-                                <div className="flex justify-center pb-8 sm:pb-12">
+                                <div className="flex justify-center px-4 sm:px-6 py-8 sm:py-12 lg:py-4">
                                     <button 
                                         onClick={() => router.push('/playas')}
                                         className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 bg-white/30 backdrop-blur-sm border-2 border-white/60 text-white font-ui font-semibold rounded-full hover:bg-white/40 hover:border-white/80 transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-3xl beach-card-floating animate-fade-in-up text-sm sm:text-base"
@@ -413,6 +425,7 @@ export default function Inicio() {
                                         Explorar Todas las Playas
                                     </button>
                                 </div>
+                            </div>
                             </div>
                         </section>
                     )
