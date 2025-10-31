@@ -351,7 +351,7 @@ export default function Inicio() {
                                                 <p className="text-base sm:text-lg md:text-xl font-body text-amber-800 drop-shadow-md leading-relaxed animate-text-breeze">
                                                     Aquí el mar no solo se ve, se siente.
                                                 </p>
-                                                <p className="text-sm sm:text-base md:text-lg font-body text-amber-700 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
+                                                <p className="text-sm sm:text-base md:text-lg font-body text-amber-800 drop-shadow-sm leading-relaxed animate-text-breeze-delayed">
                                                     Descubre las playas que hacen de Cartagena un suspiro del Caribe.
                                                 </p>
                                             </div>
@@ -515,15 +515,25 @@ export default function Inicio() {
 
                                                     {/* Texto superpuesto en la parte inferior */}
                                                     <div className="text-white">
-                                                        <h3 className="text-base sm:text-lg font-title font-bold mb-2 drop-shadow-lg group-hover:text-amber-300 transition-colors duration-300 leading-tight">
+                                                        <h3 className="text-base sm:text-lg font-title font-bold mb-2 group-hover:text-amber-200 transition-colors duration-300 leading-tight" 
+                                                            style={{
+                                                                color: '#FFFFFF',
+                                                                textShadow: '2px 2px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5)'
+                                                            }}>
                                                             {museum.name}
                                                         </h3>
-                                                        <p className="text-xs sm:text-sm font-body leading-relaxed mb-2 sm:mb-3 drop-shadow-md">
+                                                        <p className="text-xs sm:text-sm font-body leading-relaxed mb-2 sm:mb-3 text-white" 
+                                                            style={{
+                                                                textShadow: '1px 1px 6px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.4)'
+                                                            }}>
                                                             {museum.description}
                                                         </p>
                                                         
                                                         {/* Indicador de hover */}
-                                                        <div className="flex items-center text-amber-300 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                                                        <div className="flex items-center text-amber-200 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0" 
+                                                            style={{
+                                                                textShadow: '1px 1px 4px rgba(0, 0, 0, 0.8)'
+                                                            }}>
                                                             <span className="text-xs sm:text-sm font-medium mr-2">Explorar</span>
                                                             <svg className="w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
