@@ -15,33 +15,39 @@ export default function Historia() {
             period: "1533–1810",
             subtitle: "Cartagena, bastión del Caribe español",
             colorTheme: "colonial",
-            heroGradient: "from-[#2f1b12] via-[#1f2b45] to-[#705232]",
-            heroTaglineClass: "text-[#f6d8a6]",
-            headerGradientCss: "linear-gradient(135deg, #2f1b12 0%, #1f2b45 55%, #705232 100%)",
-            headerBorderColor: "rgba(246, 197, 107, 0.35)",
+            heroGradient: "",
+            heroTaglineClass: "text-[#f0e4cf]",
+            headerGradientCss: "linear-gradient(135deg, #463729 0%, #7a5b36 55%, #d6b98c 100%)",
+            headerBackgroundColor: "rgba(70, 55, 41, 0.95)",
+            headerBorderColor: "rgba(214, 185, 140, 0.45)",
             headerTextColor: "#f8ead3",
             headerAccentColor: "#f6c56b",
             headerHoverColor: "#ffe3a1",
             headerMenuTextColor: "#f8ead3",
             headerMenuActiveColor: "#f6c56b",
             headerMenuHoverColor: "#ffe3a1",
-            bgGradient: "from-[#1f242d] via-[#121822] to-[#3d2a1a]",
+            bgGradient: "from-[#3b2b20] via-[#2d2018] to-[#15100d]",
+            pageBackgroundColor: "#2d2018",
+            texture: "colonialPaper",
             textColor: "text-[#f8ead3]",
             accentColor: "text-[#f6c56b]",
-            texture: "paper",
             fontClass: "font-title",
-            yearBadgeClass: "bg-[#f6c56b] text-[#2d1606]",
-            timelineGradient: "before:bg-gradient-to-r before:from-[#7c512d]/90 before:via-[#c89f5a]/75 before:to-[#1f426e]/90",
-            timelineDotClass: "bg-[#f6c56b]",
-            timelineDotActiveClass: "scale-125 sm:scale-150 ring-4 ring-[#f9e6c6] shadow-xl",
-            timelineDotHoverClass: "scale-110 ring-2 ring-[#f6c56b] shadow-lg",
-            timelineActiveTitleClass: "text-[#f6c56b]",
-            timelineHoverTitleClass: "text-[#f6c56b]/80",
+            yearBadgeClass: "bg-[#d6b98c] text-[#2d1606]",
+            timelineGradient: "before:bg-[#d6b98c]/60",
+            timelineDotClass: "bg-[#d6b98c]",
+            timelineDotActiveClass: "scale-125 sm:scale-150 ring-4 ring-[#f0e4cf] shadow-xl",
+            timelineDotHoverClass: "scale-110 ring-2 ring-[#d6b98c] shadow-lg",
+            timelineActiveTitleClass: "text-[#d6b98c]",
+            timelineHoverTitleClass: "text-[#d6b98c]/80",
             timelineInactiveTitleClass: "text-white/70",
-            decorativeAccentClass: "bg-[#f6c56b]",
-            timelineCardBg: "linear-gradient(160deg, rgba(14,16,22,0.92) 0%, rgba(28,20,14,0.85) 100%)",
-            timelineCardBorder: "rgba(246, 197, 107, 0.25)",
-            timelineCardShadow: "0 30px 80px -32px rgba(12, 10, 6, 0.85)",
+            decorativeAccentClass: "bg-[#d6b98c]",
+            timelineCardBg: "rgba(70, 55, 41, 0.94)",
+            timelineCardBorder: "rgba(214, 185, 140, 0.4)",
+            timelineCardShadow: "0 30px 80px -32px rgba(20, 12, 6, 0.85)",
+            timelineFooterBorderColor: "#d6b98c",
+            textPrimary: "#f8ead3",
+            textSecondary: "#e3cda4",
+            textMuted: "#c7a979",
             events: [
                 {
                     year: "1533",
@@ -278,6 +284,10 @@ export default function Historia() {
                 backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><pattern id="paper" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%23D4AF37" opacity="0.1"/><path d="M0 0 L100 0 L100 100 L0 100 Z" fill="none" stroke="%23C19A6B" stroke-width="0.5" opacity="0.2"/><circle cx="20" cy="20" r="1" fill="%23B8860B" opacity="0.3"/><circle cx="80" cy="60" r="1.5" fill="%23B8860B" opacity="0.2"/><path d="M10 50 Q30 40 50 50 Q70 60 90 50" stroke="%23C19A6B" stroke-width="0.3" opacity="0.15" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(%23paper)"/></svg>')`,
                 backgroundSize: '200px 200px'
             },
+            colonialPaper: {
+                backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="colonialPaper" width="52" height="52" patternUnits="userSpaceOnUse"><rect width="52" height="52" fill="%23f6e5c8" opacity="0.65"/><path d="M0 0 L52 0 L52 52 L0 52 Z" fill="none" stroke="%23b48a4f" stroke-width="0.5" opacity="0.55"/><path d="M0 13 L52 13 M0 26 L52 26 M0 39 L52 39" stroke="%23d4b27a" stroke-width="0.35" opacity="0.45"/><path d="M13 0 L13 52 M26 0 L26 52 M39 0 L39 52" stroke="%23d4b27a" stroke-width="0.35" opacity="0.45"/><circle cx="10" cy="8" r="1.4" fill="%23cfa669" opacity="0.6"/><circle cx="40" cy="32" r="1.6" fill="%23a0743f" opacity="0.5"/><path d="M4 45 Q26 38 48 45" stroke="%23a0743f" stroke-width="0.6" opacity="0.4" fill="none"/><path d="M6 4 Q26 10 46 4" stroke="%23a0743f" stroke-width="0.4" opacity="0.35" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(%23colonialPaper)"/></svg>')`,
+                backgroundSize: '180px 180px'
+            },
             wood: {
                 backgroundImage: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="wood" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="%238B0000" opacity="0.1"/><path d="M0 0 L40 0 M0 10 L40 10 M0 20 L40 20 M0 30 L40 30" stroke="%23A52A2A" stroke-width="0.5" opacity="0.3"/><path d="M0 5 L40 5 M0 15 L40 15 M0 25 L40 25 M0 35 L40 35" stroke="%23DC143C" stroke-width="0.3" opacity="0.2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23wood)"/></svg>')`,
                 backgroundSize: '80px 80px'
@@ -323,7 +333,7 @@ export default function Historia() {
 
     const currentPalette = useMemo(() => ({
         header: {
-            background: currentPeriod.headerGradientCss,
+            background: currentPeriod.headerBackgroundColor || currentPeriod.headerGradientCss,
             border: currentPeriod.headerBorderColor,
             text: currentPeriod.headerTextColor,
             accent: currentPeriod.headerAccentColor,
@@ -335,8 +345,16 @@ export default function Historia() {
         timeline: {
             surface: currentPeriod.timelineCardBg,
             border: currentPeriod.timelineCardBorder,
-            shadow: currentPeriod.timelineCardShadow
+            shadow: currentPeriod.timelineCardShadow,
+            footerBorder: currentPeriod.timelineFooterBorderColor || '#facc15'
         }
+    }), [currentPeriod])
+
+    const pageTextureStyle = useMemo(() => getTextureStyle(currentPeriod.texture), [currentPeriod])
+    const textPalette = useMemo(() => ({
+        primary: currentPeriod.textPrimary || '#ffffff',
+        secondary: currentPeriod.textSecondary || 'rgba(255,255,255,0.85)',
+        muted: currentPeriod.textMuted || 'rgba(255,255,255,0.6)'
     }), [currentPeriod])
 
     useEffect(() => {
@@ -452,41 +470,65 @@ export default function Historia() {
     }, [activeEventIndex, totalEvents])
 
     return (
-        <div className="fixed inset-0 flex flex-col overflow-hidden z-0" style={{ height: '100vh', paddingTop: '64px' }}>
+        <div
+            className="fixed inset-0 flex flex-col overflow-hidden z-0"
+            style={{
+                height: '100vh',
+                paddingTop: '64px',
+                backgroundColor: currentPeriod.pageBackgroundColor || '#1a1a1a',
+                backgroundImage: pageTextureStyle?.backgroundImage,
+                backgroundSize: pageTextureStyle?.backgroundSize || '200px 200px',
+                backgroundRepeat: 'repeat'
+            }}
+        >
             {/* Contenido principal */}
             <section className="flex-1 relative overflow-hidden min-h-0">
                 <div className="relative h-full w-full">
-                    {/* Fondo del período activo */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${currentPeriod.bgGradient} transition-all duration-700`}>
-                        <div 
-                            className="absolute inset-0 opacity-30 transition-opacity duration-700"
-                            style={getTextureStyle(currentPeriod.texture)}
-                        />
-                        <div className="absolute inset-0 bg-black/20" />
-                    </div>
+            {/* Fondo del período activo */}
+            <div className="absolute inset-0 transition-all duration-700" style={{ background: currentPeriod.pageBackgroundColor || '#1f242d' }}>
+                <div 
+                    className="absolute inset-0 opacity-25 transition-opacity duration-700"
+                    style={pageTextureStyle}
+                />
+            </div>
                     
                     {/* Contenido principal unificado */}
-                    <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col">
-                        <div className="max-w-6xl mx-auto h-full w-full flex flex-col gap-6">
-                            <div className="flex flex-col items-center text-center gap-2">
-                                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold text-white drop-shadow-2xl">
+                    <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 flex flex-col">
+                        <div className="max-w-6xl mx-auto h-full w-full flex flex-col gap-8">
+                            <div className="flex flex-col items-center text-center gap-2 mt-8 sm:mt-10">
+                                <h1
+                                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl"
+                                    style={{ color: textPalette.primary }}
+                                >
                                     Historia de Cartagena
                                 </h1>
-                                <p className={`text-base sm:text-lg md:text-xl font-body ${currentPeriod.heroTaglineClass} drop-shadow-lg`}>
+                                <p
+                                    className="text-base sm:text-lg md:text-xl font-body drop-shadow-lg"
+                                    style={{ color: textPalette.secondary }}
+                                >
                                     Un viaje a través de los siglos
                                 </p>
                             </div>
 
-                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-12">
+                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-12 mt-8 sm:mt-10">
                                 <aside className="lg:w-4/12 xl:w-1/3 flex flex-col gap-3 lg:pl-2">
                                     <div className="flex flex-col items-start gap-2 text-left">
-                                        <h2 className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold text-white drop-shadow-xl`}>
+                                        <h2
+                                            className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold drop-shadow-xl"
+                                            style={{ color: textPalette.primary }}
+                                        >
                                             {currentPeriod.title}
                                         </h2>
-                                        <p className={`text-sm sm:text-base md:text-lg font-body text-white/80 drop-shadow-lg leading-relaxed`}>
+                                        <p
+                                            className="text-sm sm:text-base md:text-lg font-body drop-shadow-lg leading-relaxed"
+                                            style={{ color: textPalette.secondary }}
+                                        >
                                             {currentPeriod.subtitle}
                                         </p>
-                                        <p className={`text-xs sm:text-sm md:text-base font-body text-white/70 drop-shadow-md tracking-wide`}>
+                                        <p
+                                            className="text-xs sm:text-sm md:text-base font-body drop-shadow-md tracking-wide uppercase"
+                                            style={{ color: textPalette.muted, letterSpacing: '0.18em' }}
+                                        >
                                             {currentPeriod.period}
                                         </p>
                                     </div>
@@ -495,39 +537,37 @@ export default function Historia() {
                                 {/* Eventos históricos - Slider (un evento a la vez) */}
                                 <div className="flex-1 min-h-0 flex items-center md:items-stretch justify-center px-1 sm:px-2">
                                     {currentEvent && (
-                                        <div className="w-full max-w-5xl mx-auto">
-                                            <div
-                                                className="rounded-2xl border overflow-hidden transition-all duration-500 flex flex-col md:flex-row md:items-stretch h-full backdrop-blur-sm"
-                                                style={{
-                                                    background: currentPalette.timeline.surface,
-                                                    borderColor: currentPalette.timeline.border,
-                                                    boxShadow: currentPalette.timeline.shadow
-                                                }}
-                                            >
-                                                {/* Año */}
-                                                <div className="flex-shrink-0 md:w-40 lg:w-48 flex md:flex-col md:justify-center bg-white/5 md:bg-white/10 px-5 sm:px-6 md:px-7 lg:px-8 py-4 sm:py-5 md:py-6 lg:py-8">
-                                                    <div className={`px-4 sm:px-5 md:px-6 py-2 sm:py-3 rounded-full text-base sm:text-lg md:text-xl font-ui font-bold inline-flex justify-center md:text-2xl ${currentPeriod.yearBadgeClass}`}>
-                                                        <span className="tracking-wide">{currentEvent.year}</span>
+                                        <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row md:items-stretch gap-6 lg:gap-10">
+                                            {/* Contenido */}
+                                            <div className="flex-1 flex flex-col gap-4">
+                                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                                    <h3
+                                                        className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]`}
+                                                        style={{ color: textPalette.primary }}
+                                                    >
+                                                        {currentEvent.title}
+                                                    </h3>
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="hidden sm:block h-px bg-white/30 w-12" />
+                                                        <p
+                                                            className="text-xs sm:text-sm font-ui uppercase tracking-[0.3em] whitespace-nowrap"
+                                                            style={{ color: textPalette.muted }}
+                                                        >
+                                                            {currentPeriod.period}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                
-                                                {/* Contenido */}
-                                                <div className="flex-1 flex flex-col gap-4 px-5 sm:px-6 md:px-7 lg:px-8 py-5 sm:py-6 md:py-7 lg:py-8">
-                                                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                                                        <h3 className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold text-white drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]`}>
-                                                            {currentEvent.title}
-                                                        </h3>
-                                                        <div className="flex items-center gap-3">
-                                                            <span className="hidden sm:block h-px bg-white/20 w-12" />
-                                                            <p className={`text-xs sm:text-sm font-ui uppercase tracking-[0.3em] text-white/50 whitespace-nowrap`}>
-                                                                {currentPeriod.period}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <p className={`text-base sm:text-lg md:text-[1.05rem] font-body text-white/90 leading-relaxed drop-shadow-md`}>
-                                                        {currentEvent.description}
-                                                    </p>
+                                                <div>
+                                                    <span className={`inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-sm sm:text-base font-ui font-semibold tracking-wide ${currentPeriod.yearBadgeClass}`}>
+                                                        {currentEvent.year}
+                                                    </span>
                                                 </div>
+                                                <p
+                                                    className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
+                                                    style={{ color: textPalette.secondary }}
+                                                >
+                                                    {currentEvent.description}
+                                                </p>
                                             </div>
                                         </div>
                                     )}
@@ -537,12 +577,19 @@ export default function Historia() {
                     </div>
 
                     {/* Elementos decorativos */}
-                    <div className={`absolute top-3 right-3 w-10 h-10 rounded-full blur-xl animate-float hidden sm:block opacity-30 ${currentPeriod.decorativeAccentClass}`} />
                 </div>
             </section>
 
             {/* Línea de tiempo horizontal - Control del slider */}
-            <section className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t-4 border-yellow-400 flex-shrink-0 pb-4" style={{ minHeight: '260px', maxHeight: '280px' }}>
+            <section
+                className="relative border-t-4 flex-shrink-0 pb-4 transition-colors duration-500"
+                style={{
+                    minHeight: '260px',
+                    maxHeight: '280px',
+                    borderTopColor: currentPalette.timeline.footerBorder,
+                    background: currentPeriod.footerBackground || currentPeriod.timelineCardBg
+                }}
+            >
                 <div className="max-w-6xl mx-auto h-full w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col justify-center gap-3">
                     {/* Contenedor de timeline - Auto-scroll */}
                     <div className="relative h-full rounded-2xl backdrop-blur-sm max-w-5xl mx-auto"
