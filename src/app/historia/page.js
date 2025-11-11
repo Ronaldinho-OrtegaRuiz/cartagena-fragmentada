@@ -453,40 +453,7 @@ export default function Historia() {
 
     return (
         <div className="fixed inset-0 flex flex-col overflow-hidden z-0" style={{ height: '100vh', paddingTop: '64px' }}>
-            {/* Título principal - Compacto (continuación del header) */}
-            <section className={`relative bg-gradient-to-br ${currentPeriod.heroGradient} py-3 sm:py-4 flex-shrink-0 z-0 border-t border-white/10`}>
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-3">
-                        <h1 className="text-xl sm:text-2xl md:text-3xl font-title font-bold text-white mb-1 drop-shadow-2xl">
-                            Historia de Cartagena
-                        </h1>
-                        <p className={`text-xs sm:text-sm font-body ${currentPeriod.heroTaglineClass} drop-shadow-lg`}>
-                            Un viaje a través de los siglos
-                        </p>
-                    </div>
-                    
-                    {/* Tabs/Pestañas para cambiar entre períodos */}
-                    <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
-                        {periods.map((period, index) => (
-                            <button
-                                key={period.id}
-                                onClick={() => scrollToPeriod(period.id)}
-                                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-ui font-medium transition-all duration-300 backdrop-blur-sm border ${
-                                    activePeriodIndex === index
-                                        ? 'bg-white/30 text-white border-white/50 scale-105'
-                                        : 'bg-white/10 text-white/80 border-white/20 hover:bg-white/20'
-                                }`}
-                            >
-                                <span className="mr-1.5">{period.icon}</span>
-                                <span className="hidden sm:inline">{period.title}</span>
-                                <span className="sm:hidden">{period.period}</span>
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
-            {/* Contenido - Centro (sin scroll horizontal) */}
+            {/* Contenido principal */}
             <section className="flex-1 relative overflow-hidden min-h-0">
                 <div className="relative h-full w-full">
                     {/* Fondo del período activo */}
@@ -498,51 +465,73 @@ export default function Historia() {
                         <div className="absolute inset-0 bg-black/20" />
                     </div>
                     
-                    {/* Contenido del período activo */}
-                    <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex flex-col">
-                        <div className="max-w-full mx-auto h-full flex flex-col">
-                            {/* Encabezado del período */}
-                            <div className="mb-3 sm:mb-4 flex-shrink-0">
-                                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
-                                    <span className="text-2xl sm:text-3xl md:text-4xl">{currentPeriod.icon}</span>
-                                    <div className="flex-1">
-                                        <h2 className={`text-lg sm:text-xl md:text-2xl lg:text-3xl ${currentPeriod.fontClass} font-bold ${currentPeriod.textColor} drop-shadow-xl mb-0.5`}>
+                    {/* Contenido principal unificado */}
+                    <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-5 sm:py-6 flex flex-col">
+                        <div className="max-w-6xl mx-auto h-full w-full flex flex-col gap-6">
+                            <div className="flex flex-col items-center text-center gap-2">
+                                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold text-white drop-shadow-2xl">
+                                    Historia de Cartagena
+                                </h1>
+                                <p className={`text-base sm:text-lg md:text-xl font-body ${currentPeriod.heroTaglineClass} drop-shadow-lg`}>
+                                    Un viaje a través de los siglos
+                                </p>
+                            </div>
+
+                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-12">
+                                <aside className="lg:w-4/12 xl:w-1/3 flex flex-col gap-3 lg:pl-2">
+                                    <div className="flex flex-col items-start gap-2 text-left">
+                                        <h2 className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold text-white drop-shadow-xl`}>
                                             {currentPeriod.title}
                                         </h2>
-                                        <p className={`text-sm sm:text-base md:text-lg font-body ${currentPeriod.accentColor} drop-shadow-lg mb-0.5`}>
+                                        <p className={`text-sm sm:text-base md:text-lg font-body text-white/80 drop-shadow-lg leading-relaxed`}>
                                             {currentPeriod.subtitle}
                                         </p>
-                                        <p className={`text-xs sm:text-sm md:text-base font-body ${currentPeriod.textColor} drop-shadow-md opacity-90`}>
+                                        <p className={`text-xs sm:text-sm md:text-base font-body text-white/70 drop-shadow-md tracking-wide`}>
                                             {currentPeriod.period}
                                         </p>
                                     </div>
-                                </div>
-                            </div>
+                                </aside>
 
-                            {/* Eventos históricos - Slider (un evento a la vez) */}
-                            <div className="flex-1 min-h-0 flex items-center justify-center">
-                                {currentEvent && (
-                                    <div className="w-full max-w-4xl mx-auto px-4">
-                                        <div className="glass rounded-xl p-6 sm:p-8 md:p-10 hover:bg-white/20 transition-all duration-500 flex flex-col h-full">
-                                            {/* Año */}
-                                            <div className="flex-shrink-0 mb-4 sm:mb-6">
-                                                <div className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full text-base sm:text-lg md:text-xl font-ui font-bold inline-block ${currentPeriod.yearBadgeClass}`}>
-                                                    {currentEvent.year}
+                                {/* Eventos históricos - Slider (un evento a la vez) */}
+                                <div className="flex-1 min-h-0 flex items-center md:items-stretch justify-center px-1 sm:px-2">
+                                    {currentEvent && (
+                                        <div className="w-full max-w-5xl mx-auto">
+                                            <div
+                                                className="rounded-2xl border overflow-hidden transition-all duration-500 flex flex-col md:flex-row md:items-stretch h-full backdrop-blur-sm"
+                                                style={{
+                                                    background: currentPalette.timeline.surface,
+                                                    borderColor: currentPalette.timeline.border,
+                                                    boxShadow: currentPalette.timeline.shadow
+                                                }}
+                                            >
+                                                {/* Año */}
+                                                <div className="flex-shrink-0 md:w-40 lg:w-48 flex md:flex-col md:justify-center bg-white/5 md:bg-white/10 px-5 sm:px-6 md:px-7 lg:px-8 py-4 sm:py-5 md:py-6 lg:py-8">
+                                                    <div className={`px-4 sm:px-5 md:px-6 py-2 sm:py-3 rounded-full text-base sm:text-lg md:text-xl font-ui font-bold inline-flex justify-center md:text-2xl ${currentPeriod.yearBadgeClass}`}>
+                                                        <span className="tracking-wide">{currentEvent.year}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                {/* Contenido */}
+                                                <div className="flex-1 flex flex-col gap-4 px-5 sm:px-6 md:px-7 lg:px-8 py-5 sm:py-6 md:py-7 lg:py-8">
+                                                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                                        <h3 className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold text-white drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]`}>
+                                                            {currentEvent.title}
+                                                        </h3>
+                                                        <div className="flex items-center gap-3">
+                                                            <span className="hidden sm:block h-px bg-white/20 w-12" />
+                                                            <p className={`text-xs sm:text-sm font-ui uppercase tracking-[0.3em] text-white/50 whitespace-nowrap`}>
+                                                                {currentPeriod.period}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <p className={`text-base sm:text-lg md:text-[1.05rem] font-body text-white/90 leading-relaxed drop-shadow-md`}>
+                                                        {currentEvent.description}
+                                                    </p>
                                                 </div>
                                             </div>
-                                            
-                                            {/* Contenido */}
-                                            <div className="flex-1 flex flex-col">
-                                                <h3 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl ${currentPeriod.fontClass} font-semibold ${currentPeriod.textColor} mb-4 sm:mb-6 drop-shadow-lg`}>
-                                                    {currentEvent.title}
-                                                </h3>
-                                                <p className={`text-base sm:text-lg md:text-xl font-body ${currentPeriod.textColor} leading-relaxed drop-shadow-md`}>
-                                                    {currentEvent.description}
-                                                </p>
-                                            </div>
                                         </div>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -553,31 +542,26 @@ export default function Historia() {
             </section>
 
             {/* Línea de tiempo horizontal - Control del slider */}
-            <section className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t-4 border-yellow-400 flex-shrink-0 pb-12" style={{ minHeight: '360px', maxHeight: '380px' }}>
-                <div className="max-w-6xl mx-auto h-full w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-12 flex flex-col justify-center gap-8">
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-center sm:text-left">
-                        <h2 className="text-base sm:text-lg font-title font-bold text-white">
-                            Línea de Tiempo · {currentPeriod.title}
-                    </h2>
-                    </div>
-                    
+            <section className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-t-4 border-yellow-400 flex-shrink-0 pb-4" style={{ minHeight: '260px', maxHeight: '280px' }}>
+                <div className="max-w-6xl mx-auto h-full w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col justify-center gap-3">
                     {/* Contenedor de timeline - Auto-scroll */}
                     <div className="relative h-full rounded-2xl backdrop-blur-sm max-w-5xl mx-auto"
                         style={{
-                            background: currentPeriod.timelineCardBg,
-                            border: `1px solid ${currentPeriod.timelineCardBorder}`,
-                            boxShadow: currentPeriod.timelineCardShadow
+                        background: currentPeriod.timelineCardBg,
+                        border: `1px solid ${currentPeriod.timelineCardBorder}`,
+                        boxShadow: currentPeriod.timelineCardShadow,
+                        minHeight: '200px'
                         }}
                     >
                         <div 
                             ref={timelineRef}
-                            className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-6 -mb-6"
+                        className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-1.5 -mb-1.5"
                             style={{
                                 scrollBehavior: 'smooth'
                             }}
                         >
                             <div
-                                className="relative h-full flex items-center px-6 sm:px-8 py-6"
+                                className="relative h-full flex items-center px-4 sm:px-5 py-2.5"
                                 style={{ width: 'max-content', minWidth: '100%' }}
                             >
                                 {/* Línea de tiempo horizontal y eventos */}
@@ -587,8 +571,6 @@ export default function Historia() {
                                      {enhancedEvents.map((event, index) => {
                                          const isActive = activeEventIndex === event.globalIndex
                                          const isHovered = hoveredTimeline === event.globalIndex
-                                         const showPeriodLabel = index === 0 || enhancedEvents[index - 1].periodIndex !== event.periodIndex
-
                                          const titleText = event.title.length > 36 ? `${event.title.substring(0, 36)}…` : event.title
                                          const dotBaseClass = currentPeriod.timelineDotClass
                                          const dotActiveClass = currentPeriod.timelineDotActiveClass
@@ -607,30 +589,8 @@ export default function Historia() {
                                             onMouseLeave={() => setHoveredTimeline(null)}
                                                  onClick={() => handleEventChange(event.globalIndex)}
                                              >
-                                                 {showPeriodLabel && (
-                                                     <div className="absolute top-0 flex -translate-y-full flex-col items-center text-center space-y-1">
-                                                         <span className="text-[10px] uppercase tracking-[0.35em] text-white/40 font-ui">
-                                                             Período
-                                                         </span>
-                                                         <button
-                                                             type="button"
-                                                             onClick={(e) => {
-                                                                 e.stopPropagation()
-                                                                 scrollToPeriod(event.periodId)
-                                                             }}
-                                                             className={`px-3 py-1 rounded-full text-[11px] sm:text-xs font-ui font-medium transition-all duration-300 border ${
-                                                                 event.periodIndex === activePeriodIndex
-                                                                     ? 'bg-white/20 text-white border-white/40'
-                                                                     : 'bg-white/5 text-white/70 border-white/15 hover:bg-white/10'
-                                                             }`}
-                                                         >
-                                                             {event.periodTitle}
-                                                         </button>
-                                                     </div>
-                                                 )}
-
-                                                 <div className="grid h-full grid-rows-[72px_72px_72px] items-center justify-items-center gap-y-2 px-1 py-3">
-                                                     <div className="flex w-full flex-col items-center justify-center gap-1 text-center">
+                                                <div className="grid h-full grid-rows-[54px_54px_54px] items-center justify-items-center gap-y-1.5 px-1 py-2">
+                                                     <div className="flex w-full flex-col items-center justify-center text-center">
                                                          <span
                                                              className={`text-sm font-ui font-semibold transition-colors duration-300 ${
                                                                  isActive
@@ -641,9 +601,6 @@ export default function Historia() {
                                                              }`}
                                                          >
                                                              {event.year}
-                                                         </span>
-                                                         <span className="text-[10px] font-ui uppercase tracking-[0.3em] text-white/40 whitespace-nowrap truncate max-w-[8rem]">
-                                                             {event.periodLabel}
                                                          </span>
                                                      </div>
 
@@ -661,7 +618,7 @@ export default function Historia() {
                                                          />
                                                 </div>
                                                 
-                                                     <div className="flex w-full items-center justify-center px-2 text-center">
+                                                    <div className="flex w-full items-center justify-center px-1.5 text-center">
                                                          <span
                                                              className={`text-[11px] sm:text-xs font-ui font-medium leading-tight transition-colors duration-300 ${
                                                                  isActive ? activeTitleClass : inactiveTitleClass
