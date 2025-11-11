@@ -185,8 +185,8 @@ export default function Historia() {
             timelineCardBorder: "rgba(147, 167, 192, 0.4)",
             timelineCardShadow: "0 30px 80px -32px rgba(11, 21, 32, 0.8)",
             timelineFooterBorderColor: "#405b7c",
-            textPrimary: "#e3dcd3",
-            textSecondary: "#cbd4db",
+            textPrimary: "#dde6ef",
+            textSecondary: "#c0ccd9",
             textMuted: "#93a7c0",
             events: [
                 {
@@ -249,9 +249,9 @@ export default function Historia() {
             timelineCardBorder: "rgba(43, 140, 116, 0.45)",
             timelineCardShadow: "0 30px 80px -32px rgba(12, 24, 22, 0.85)",
             timelineFooterBorderColor: "#2b8c74",
-            textPrimary: "#f8f8f8",
-            textSecondary: "#d8f1ec",
-            textMuted: "#9ed5c4",
+            textPrimary: "#edfdfa",
+            textSecondary: "#c4eee3",
+            textMuted: "#8acfbf",
             events: [
                 {
                     year: "1950–1970",
