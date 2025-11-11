@@ -278,7 +278,7 @@ export default function Historia() {
                     isMajor: false
                 },
                 {
-                    year: "2021–2025",
+                    year: "2021–Presente",
                     title: "Cartagena global y resiliente",
                     description: "Hoy, Cartagena enfrenta el desafío de preservar su patrimonio histórico mientras crece como ciudad tecnológica, turística y cultural. Se trabaja en la inclusión social, sostenibilidad y digitalización del patrimonio.",
                     isMajor: true
