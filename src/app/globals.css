@@ -921,3 +921,116 @@ html {
     transform: translateX(0%);
   }
 }
+
+/* Timeline styles */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Horizontal scrollable timeline */
+.timeline-container {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timeline-container::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.timeline-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #F59E0B, #FCD34D);
+  border-radius: 10px;
+}
+
+.timeline-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(90deg, #D97706, #F59E0B);
+}
+
+/* Ocultar scrollbar cuando se especifica */
+.timeline-container[style*="scrollbarWidth: 'none'"]::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbar for vertical content */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Smooth transitions for timeline */
+.timeline-milestone {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-milestone:hover {
+  transform: translateY(-5px);
+}
+
+/* Enhanced texture patterns */
+.texture-paper {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><pattern id="paper" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%23D4AF37" opacity="0.1"/><path d="M0 0 L100 0 L100 100 L0 100 Z" fill="none" stroke="%23C19A6B" stroke-width="0.5" opacity="0.2"/></pattern></defs><rect width="100%" height="100%" fill="url(%23paper)"/></svg>');
+  background-size: 200px 200px;
+}
+
+.texture-wood {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="wood" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="%238B0000" opacity="0.1"/><path d="M0 0 L40 0 M0 10 L40 10 M0 20 L40 20" stroke="%23A52A2A" stroke-width="0.5" opacity="0.3"/></pattern></defs><rect width="100%" height="100%" fill="url(%23wood)"/></svg>');
+  background-size: 80px 80px;
+}
+
+.texture-marble {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><defs><pattern id="marble" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%231E3A8A" opacity="0.1"/><path d="M0 0 Q50 30 100 0 T200 0" stroke="%233F51B5" stroke-width="1" opacity="0.2" fill="none"/></pattern></defs><rect width="100%" height="100%" fill="url(%23marble)"/></svg>');
+  background-size: 200px 200px;
+}
+
+.texture-concrete {
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="concrete" width="50" height="50" patternUnits="userSpaceOnUse"><rect width="50" height="50" fill="%23FF8C00" opacity="0.05"/><path d="M0 0 L50 50 M50 0 L0 50" stroke="%23FFA500" stroke-width="0.3" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23concrete)"/></svg>');
+  background-size: 100px 100px;
+}
+
+  .timeline-scroll {
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+    -ms-overflow-style: none;
+  }
+
+  .timeline-scroll::-webkit-scrollbar {
+    display: none;
+    height: 0;
+  }
+
+  .historia-nav-link {
+    color: inherit;
+  }
+
+  .historia-nav-link:hover {
+    color: var(--historia-hover-color, #ffd1c3);
+  }
