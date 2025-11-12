@@ -527,8 +527,8 @@ export default function Historia() {
                     
                     {/* Contenido principal unificado */}
                     <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 flex flex-col">
-                        <div className="max-w-6xl mx-auto h-full w-full flex flex-col gap-8">
-                            <div className="flex flex-col items-center text-center gap-2 mt-8 sm:mt-10">
+                        <div className="max-w-6xl mx-auto flex h-full w-full flex-col gap-8 overflow-hidden">
+                            <div className="flex flex-col items-center text-center gap-2 mt-5 sm:mt-7 lg:mt-10">
                                 <h1
                                     className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl"
                                     style={{ color: textPalette.primary }}
@@ -543,8 +543,8 @@ export default function Historia() {
                                 </p>
                             </div>
 
-                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-6 lg:gap-12 mt-8 sm:mt-10">
-                                <aside className="lg:w-4/12 xl:w-1/3 flex flex-col gap-3 lg:pl-2">
+                            <div className="flex-1 min-h-0 mt-6 flex flex-col gap-6 overflow-hidden sm:mt-8 lg:mt-10 lg:flex-row lg:gap-12">
+                                <aside className="flex flex-shrink-0 flex-col gap-3 lg:w-4/12 xl:w-1/3 lg:pl-2">
                                     <div className="flex flex-col items-start gap-2 text-left">
                                         <h2
                                             className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold drop-shadow-xl"
@@ -568,12 +568,12 @@ export default function Historia() {
                                 </aside>
 
                                 {/* Eventos históricos - Slider (un evento a la vez) */}
-                                <div className="flex-1 min-h-0 flex items-center md:items-stretch justify-center px-1 sm:px-2">
+                                <div className="flex-1 min-h-0 px-1 sm:px-2">
                                     {currentEvent && (
-                                        <div className="w-full max-w-5xl mx-auto flex flex-col md:flex-row md:items-stretch gap-6 lg:gap-10">
+                                        <div className="mx-auto flex h-full min-h-[18rem] w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10">
                                             {/* Contenido */}
-                                            <div className="flex-1 flex flex-col gap-4">
-                                                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                                            <div className="flex flex-1 flex-col gap-4">
+                                                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                                                     <h3
                                                         className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]`}
                                                         style={{ color: textPalette.primary }}
@@ -595,12 +595,14 @@ export default function Historia() {
                                                         {currentEvent.year}
                                                     </span>
                                                 </div>
-                                                <p
-                                                    className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
-                                                    style={{ color: textPalette.secondary }}
-                                                >
-                                                    {currentEvent.description}
-                                                </p>
+                                                <div className="max-h-[34vh] overflow-y-auto pr-1 sm:max-h-[40vh] md:max-h-full">
+                                                    <p
+                                                        className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
+                                                        style={{ color: textPalette.secondary }}
+                                                    >
+                                                        {currentEvent.description}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     )}
@@ -615,22 +617,22 @@ export default function Historia() {
 
             {/* Línea de tiempo horizontal - Control del slider */}
             <section
-                className="relative border-t-4 flex-shrink-0 pb-4 transition-colors duration-500"
+                className="relative flex-shrink-0 border-t-4 pb-4 transition-colors duration-500"
                 style={{
-                    minHeight: '260px',
-                    maxHeight: '280px',
+                    minHeight: '240px',
                     borderTopColor: currentPalette.timeline.footerBorder,
                     background: currentPeriod.footerBackground || currentPeriod.timelineCardBg
                 }}
             >
-                <div className="max-w-6xl mx-auto h-full w-full px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col justify-center gap-3">
+                <div className="max-w-6xl mx-auto flex h-full w-full flex-col justify-center gap-3 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
                     {/* Contenedor de timeline - Auto-scroll */}
-                    <div className="relative h-full rounded-2xl backdrop-blur-sm max-w-5xl mx-auto"
+                    <div className="relative mx-auto h-full w-full max-w-5xl rounded-2xl backdrop-blur-sm"
                         style={{
                         background: currentPeriod.timelineCardBg,
                         border: `1px solid ${currentPeriod.timelineCardBorder}`,
                         boxShadow: currentPeriod.timelineCardShadow,
-                        minHeight: '200px'
+                            minHeight: '180px',
+                            maxHeight: '220px'
                         }}
                     >
                         <div 
@@ -660,11 +662,11 @@ export default function Historia() {
                                          const inactiveTitleClass = currentPeriod.timelineInactiveTitleClass
 
                                          return (
-                                             <div
-                                                 key={event.globalIndex}
-                                                 data-global-index={event.globalIndex}
-                                                 className="group relative flex-shrink-0 px-2 h-full"
-                                                 style={{ width: 'clamp(7rem, 18vw, 9.5rem)' }}
+                                            <div
+                                                key={event.globalIndex}
+                                                data-global-index={event.globalIndex}
+                                                className="group relative flex-shrink-0 px-2 h-full"
+                                                style={{ width: 'clamp(6.5rem, 15vw, 9rem)' }}
                                                  onMouseEnter={() => setHoveredTimeline(event.globalIndex)}
                                             onMouseLeave={() => setHoveredTimeline(null)}
                                                  onClick={() => handleEventChange(event.globalIndex)}
