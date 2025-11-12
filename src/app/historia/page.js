@@ -504,10 +504,10 @@ export default function Historia() {
 
     return (
         <div
-            className="fixed inset-0 flex flex-col overflow-hidden z-0"
+            className="relative flex min-h-screen flex-col overflow-x-hidden z-0 lg:fixed lg:inset-0 lg:h-screen lg:min-h-0"
             style={{
-                height: '100vh',
                 paddingTop: '64px',
+                minHeight: '100vh',
                 backgroundColor: currentPeriod.pageBackgroundColor || '#1a1a1a',
                 backgroundImage: pageTextureStyle?.backgroundImage,
                 backgroundSize: pageTextureStyle?.backgroundSize || '200px 200px',
@@ -515,8 +515,8 @@ export default function Historia() {
             }}
         >
             {/* Contenido principal */}
-            <section className="flex-1 relative overflow-hidden min-h-0">
-                <div className="relative h-full w-full">
+            <section className="flex-1 relative lg:overflow-hidden">
+                <div className="relative w-full lg:h-full">
             {/* Fondo del período activo */}
             <div className="absolute inset-0 transition-all duration-700" style={{ background: currentPeriod.pageBackgroundColor || '#1f242d' }}>
                 <div 
@@ -526,8 +526,8 @@ export default function Historia() {
             </div>
                     
                     {/* Contenido principal unificado */}
-                    <div className="relative z-10 h-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 flex flex-col">
-                        <div className="max-w-6xl mx-auto flex h-full w-full flex-col gap-8 overflow-hidden">
+                    <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 sm:pt-7 pb-12 sm:pb-16 flex flex-col lg:h-full">
+                        <div className="max-w-6xl mx-auto flex w-full flex-col gap-8 lg:h-full lg:overflow-hidden">
                             <div className="flex flex-col items-center text-center gap-2 mt-5 sm:mt-7 lg:mt-10">
                                 <h1
                                     className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl"
@@ -543,7 +543,7 @@ export default function Historia() {
                                 </p>
                             </div>
 
-                            <div className="flex-1 min-h-0 mt-6 flex flex-col gap-6 overflow-hidden sm:mt-8 lg:mt-10 lg:flex-row lg:gap-12">
+                                <div className="flex-1 min-h-0 mt-6 flex flex-col gap-6 overflow-visible sm:mt-8 lg:mt-10 lg:flex-row lg:gap-12 lg:overflow-hidden">
                                 <aside className="flex flex-shrink-0 flex-col gap-3 lg:w-4/12 xl:w-1/3 lg:pl-2">
                                     <div className="flex flex-col items-start gap-2 text-left">
                                         <h2
@@ -570,7 +570,7 @@ export default function Historia() {
                                 {/* Eventos históricos - Slider (un evento a la vez) */}
                                 <div className="flex-1 min-h-0 px-1 sm:px-2">
                                     {currentEvent && (
-                                        <div className="mx-auto flex h-full min-h-[18rem] w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10">
+                                        <div className="mx-auto flex min-h-[18rem] w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10 lg:h-full">
                                             {/* Contenido */}
                                             <div className="flex flex-1 flex-col gap-4">
                                                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -595,7 +595,7 @@ export default function Historia() {
                                                         {currentEvent.year}
                                                     </span>
                                                 </div>
-                                                <div className="max-h-[34vh] overflow-y-auto pr-1 sm:max-h-[40vh] md:max-h-full">
+                                                <div className="max-h-[34vh] overflow-y-auto pr-1 sm:max-h-[40vh] md:max-h-full lg:h-full">
                                                     <p
                                                         className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
                                                         style={{ color: textPalette.secondary }}
@@ -700,8 +700,8 @@ export default function Historia() {
                                                          />
                                                 </div>
                                                 
-                                                    <div className="flex w-full items-center justify-center px-1.5 text-center">
-,                                                         <span
+                                                <div className="flex w-full items-center justify-center px-1.5 text-center">
+                                                        <span
                                                              className={`text-[11px] sm:text-xs font-ui font-medium leading-tight transition-colors duration-300 ${
                                                                  isActive ? activeTitleClass : inactiveTitleClass
                                                              }`}
