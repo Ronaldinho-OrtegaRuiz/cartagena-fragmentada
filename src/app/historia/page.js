@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 
 export default function Historia() {
     const timelineRef = useRef(null)
+    const programmaticScrollRef = useRef(false)
+    const scrollResetTimeoutRef = useRef(null)
     const [hoveredTimeline, setHoveredTimeline] = useState(null)
     const [activeEventIndex, setActiveEventIndex] = useState(0)
 
@@ -406,26 +408,29 @@ export default function Historia() {
     const focusEvent = useCallback((globalIndex) => {
         requestAnimationFrame(() => {
             if (!timelineRef.current) return
-                const timelineContainer = timelineRef.current
+            const timelineContainer = timelineRef.current
             const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
-                const activeElement = Array.from(eventElements).find(el => 
+            const activeElement = Array.from(eventElements).find(el =>
                 parseInt(el.getAttribute('data-global-index') || "", 10) === globalIndex
-                )
-                
-                if (activeElement) {
-                    const containerRect = timelineContainer.getBoundingClientRect()
-                    const elementRect = activeElement.getBoundingClientRect()
-                    const scrollLeft = timelineContainer.scrollLeft
-                    const elementLeft = elementRect.left - containerRect.left + scrollLeft
-                    const elementCenter = elementLeft + (elementRect.width / 2)
-                    const containerCenter = containerRect.width / 2
-                    const targetScroll = elementCenter - containerCenter
-                    
-                    timelineContainer.scrollTo({
-                        left: Math.max(0, targetScroll),
-                        behavior: 'smooth'
-                    })
+            )
+
+            if (activeElement) {
+                programmaticScrollRef.current = true
+                if (scrollResetTimeoutRef.current) {
+                    clearTimeout(scrollResetTimeoutRef.current)
                 }
+
+                activeElement.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'nearest',
+                    block: 'nearest'
+                })
+
+                scrollResetTimeoutRef.current = window.setTimeout(() => {
+                    programmaticScrollRef.current = false
+                    scrollResetTimeoutRef.current = null
+                }, 300)
+            }
         })
     }, [])
 
@@ -450,34 +455,36 @@ export default function Historia() {
         let frameId = null
 
         const handleScroll = () => {
+            if (programmaticScrollRef.current) return
             if (frameId) cancelAnimationFrame(frameId)
             frameId = requestAnimationFrame(() => {
                 const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
                 if (!eventElements.length) return
 
-                const containerRect = timelineContainer.getBoundingClientRect()
-                const containerCenter = containerRect.left + (containerRect.width / 2)
+                const { scrollLeft, clientWidth } = timelineContainer
+                const containerLeft = scrollLeft
+                const containerRight = scrollLeft + clientWidth
 
-                let closestIndex = activeEventIndex
-                let minDistance = Number.POSITIVE_INFINITY
+                let bestIndex = activeEventIndex
+                let bestVisibleWidth = -1
 
                 eventElements.forEach((el) => {
                     const indexAttr = el.getAttribute('data-global-index')
                     const parsedIndex = parseInt(indexAttr || "", 10)
                     if (Number.isNaN(parsedIndex)) return
 
-                    const elementRect = el.getBoundingClientRect()
-                    const elementCenter = elementRect.left + (elementRect.width / 2)
-                    const distance = Math.abs(elementCenter - containerCenter)
+                    const elementLeft = el.offsetLeft
+                    const elementRight = elementLeft + el.offsetWidth
+                    const visibleWidth = Math.max(0, Math.min(elementRight, containerRight) - Math.max(elementLeft, containerLeft))
 
-                    if (distance < minDistance) {
-                        minDistance = distance
-                        closestIndex = parsedIndex
+                    if (visibleWidth > bestVisibleWidth) {
+                        bestVisibleWidth = visibleWidth
+                        bestIndex = parsedIndex
                     }
                 })
 
-                if (closestIndex !== activeEventIndex) {
-                    setActiveEventIndex(closestIndex)
+                if (bestIndex !== activeEventIndex && bestVisibleWidth > 0) {
+                    setActiveEventIndex(bestIndex)
                 }
             })
         }
@@ -487,8 +494,13 @@ export default function Historia() {
         return () => {
             timelineContainer.removeEventListener('scroll', handleScroll)
             if (frameId) cancelAnimationFrame(frameId)
+            if (scrollResetTimeoutRef.current) {
+                clearTimeout(scrollResetTimeoutRef.current)
+                scrollResetTimeoutRef.current = null
+            }
+            programmaticScrollRef.current = false
         }
-    }, [activeEventIndex, totalEvents])
+    }, [activeEventIndex, totalEvents, enhancedEvents.length])
 
     return (
         <div
@@ -687,7 +699,7 @@ export default function Historia() {
                                                 </div>
                                                 
                                                     <div className="flex w-full items-center justify-center px-1.5 text-center">
-                                                         <span
+,                                                         <span
                                                              className={`text-[11px] sm:text-xs font-ui font-medium leading-tight transition-colors duration-300 ${
                                                                  isActive ? activeTitleClass : inactiveTitleClass
                                                              }`}
