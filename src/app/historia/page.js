@@ -405,25 +405,80 @@ export default function Historia() {
         }
     }, [activeEventIndex, totalEvents])
 
-    const focusEvent = useCallback((globalIndex) => {
+    // 🔄 Ajustar scroll cuando cambia el evento activo - siempre mostrar 5-6 eventos
+    const scrollToActiveEvent = useCallback(() => {
         requestAnimationFrame(() => {
             if (!timelineRef.current) return
             const timelineContainer = timelineRef.current
             const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
             const activeElement = Array.from(eventElements).find(el =>
-                parseInt(el.getAttribute('data-global-index') || "", 10) === globalIndex
+                parseInt(el.getAttribute('data-global-index') || "", 10) === activeEventIndex
             )
 
-            if (activeElement) {
+            if (!activeElement) return
+
+            const { scrollLeft, clientWidth } = timelineContainer
+            const elementLeft = activeElement.offsetLeft
+            const elementWidth = activeElement.offsetWidth
+            const elementRight = elementLeft + elementWidth
+            const elementCenter = elementLeft + elementWidth / 2
+            const padding = 16 // Padding del contenedor
+            const viewportLeft = scrollLeft
+            const viewportRight = scrollLeft + clientWidth
+
+            // Calcular el ancho real de un evento para determinar cuántos mostrar
+            // Usamos el ancho del evento activo como referencia
+            const eventWidth = elementWidth
+            const gapWidth = 48 // gap entre eventos (24px * 2 por el gap-6 sm:gap-8)
+            const eventWithGap = eventWidth + gapWidth
+            
+            // Queremos mostrar aproximadamente 5-6 eventos
+            const targetVisibleEvents = 5.5
+            const totalEventWidth = eventWithGap * targetVisibleEvents
+            
+            // Verificar si el evento está completamente fuera del viewport
+            const isFullyOutsideLeft = elementRight < viewportLeft + padding
+            const isFullyOutsideRight = elementLeft > viewportRight - padding
+            
+            let newScrollLeft = scrollLeft
+
+            if (isFullyOutsideLeft) {
+                // El evento está completamente a la izquierda, desplazar para mostrarlo
+                newScrollLeft = Math.max(0, elementLeft - padding)
+            } else if (isFullyOutsideRight) {
+                // El evento está completamente a la derecha, desplazar para mostrarlo
+                const maxScroll = timelineContainer.scrollWidth - clientWidth
+                newScrollLeft = Math.min(maxScroll, elementRight - clientWidth + padding)
+            } else {
+                // El evento está visible, centrarlo aproximadamente con eventos alrededor
+                // Queremos que el evento activo esté en el centro, mostrando ~2.5 eventos a cada lado
+                const eventsOnLeft = 2.5
+                const desiredScroll = elementLeft - (eventsOnLeft * eventWithGap) - padding
+                
+                // Verificar límites
+                const maxScroll = timelineContainer.scrollWidth - clientWidth
+                newScrollLeft = Math.max(0, Math.min(maxScroll, desiredScroll))
+                
+                // Si estamos en los extremos, ajustar para mostrar el máximo de eventos posible
+                if (activeEventIndex === 0) {
+                    // Primer evento: mostrar desde el inicio
+                    newScrollLeft = 0
+                } else if (activeEventIndex === totalEvents - 1) {
+                    // Último evento: mostrar hasta el final
+                    newScrollLeft = Math.max(0, timelineContainer.scrollWidth - clientWidth)
+                }
+            }
+
+            // Solo hacer scroll si es necesario (con un margen pequeño para evitar micro-movimientos)
+            if (Math.abs(newScrollLeft - scrollLeft) > 5) {
                 programmaticScrollRef.current = true
                 if (scrollResetTimeoutRef.current) {
                     clearTimeout(scrollResetTimeoutRef.current)
                 }
 
-                activeElement.scrollIntoView({
-                    behavior: 'smooth',
-                    inline: 'nearest',
-                    block: 'nearest'
+                timelineContainer.scrollTo({
+                    left: newScrollLeft,
+                    behavior: 'smooth'
                 })
 
                 scrollResetTimeoutRef.current = window.setTimeout(() => {
@@ -432,14 +487,13 @@ export default function Historia() {
                 }, 300)
             }
         })
-    }, [])
+    }, [activeEventIndex, totalEvents])
 
-    const handleEventChange = (globalIndex) => {
+    const handleEventChange = useCallback((globalIndex) => {
         if (globalIndex < 0 || globalIndex >= enhancedEvents.length) return
         setActiveEventIndex(globalIndex)
         setHoveredTimeline(null)
-        focusEvent(globalIndex)
-    }
+    }, [enhancedEvents.length])
 
     const scrollToPeriod = (periodId) => {
         const targetEvent = enhancedEvents.find(event => event.periodId === periodId)
@@ -448,59 +502,38 @@ export default function Historia() {
         }
     }
 
+    // 🔄 Ajustar scroll cuando cambia activeEventIndex (basado en selección)
     useEffect(() => {
-        const timelineContainer = timelineRef.current
-        if (!timelineContainer || !totalEvents) return undefined
+        if (activeEventIndex < 0 || activeEventIndex >= totalEvents) return
+        scrollToActiveEvent()
+    }, [activeEventIndex, totalEvents, scrollToActiveEvent])
 
-        let frameId = null
-
-        const handleScroll = () => {
-            if (programmaticScrollRef.current) return
-            if (frameId) cancelAnimationFrame(frameId)
-            frameId = requestAnimationFrame(() => {
-                const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
-                if (!eventElements.length) return
-
-                const { scrollLeft, clientWidth } = timelineContainer
-                const containerLeft = scrollLeft
-                const containerRight = scrollLeft + clientWidth
-
-                let bestIndex = activeEventIndex
-                let bestVisibleWidth = -1
-
-                eventElements.forEach((el) => {
-                    const indexAttr = el.getAttribute('data-global-index')
-                    const parsedIndex = parseInt(indexAttr || "", 10)
-                    if (Number.isNaN(parsedIndex)) return
-
-                    const elementLeft = el.offsetLeft
-                    const elementRight = elementLeft + el.offsetWidth
-                    const visibleWidth = Math.max(0, Math.min(elementRight, containerRight) - Math.max(elementLeft, containerLeft))
-
-                    if (visibleWidth > bestVisibleWidth) {
-                        bestVisibleWidth = visibleWidth
-                        bestIndex = parsedIndex
-                    }
-                })
-
-                if (bestIndex !== activeEventIndex && bestVisibleWidth > 0) {
-                    setActiveEventIndex(bestIndex)
-                }
-            })
-        }
-
-        timelineContainer.addEventListener('scroll', handleScroll, { passive: true })
-
-        return () => {
-            timelineContainer.removeEventListener('scroll', handleScroll)
-            if (frameId) cancelAnimationFrame(frameId)
-            if (scrollResetTimeoutRef.current) {
-                clearTimeout(scrollResetTimeoutRef.current)
-                scrollResetTimeoutRef.current = null
+    // ⌨️ Navegación con flechas del teclado
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            // Solo procesar si no está escribiendo en un input/textarea
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+                return
             }
-            programmaticScrollRef.current = false
+
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault()
+                if (activeEventIndex > 0) {
+                    handleEventChange(activeEventIndex - 1)
+                }
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault()
+                if (activeEventIndex < totalEvents - 1) {
+                    handleEventChange(activeEventIndex + 1)
+                }
+            }
         }
-    }, [activeEventIndex, totalEvents, enhancedEvents.length])
+
+        window.addEventListener('keydown', handleKeyDown)
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown)
+        }
+    }, [activeEventIndex, totalEvents, enhancedEvents.length, handleEventChange])
 
     return (
         <div
@@ -666,7 +699,10 @@ export default function Historia() {
                                                 key={event.globalIndex}
                                                 data-global-index={event.globalIndex}
                                                 className="group relative flex-shrink-0 px-2 h-full"
-                                                style={{ width: 'clamp(6.5rem, 15vw, 9rem)' }}
+                                                style={{ 
+                                                    // Calcular ancho para mostrar 5-6 eventos en el viewport
+                                                    width: 'clamp(8rem, calc((100vw - 4rem) / 6), 12rem)'
+                                                }}
                                                  onMouseEnter={() => setHoveredTimeline(event.globalIndex)}
                                             onMouseLeave={() => setHoveredTimeline(null)}
                                                  onClick={() => handleEventChange(event.globalIndex)}
