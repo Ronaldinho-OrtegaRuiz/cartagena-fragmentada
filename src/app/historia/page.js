@@ -508,14 +508,21 @@ export default function Historia() {
         scrollToActiveEvent()
     }, [activeEventIndex, totalEvents, scrollToActiveEvent])
 
-    // ⌨️ Navegación con flechas del teclado
+    // ⌨️ Navegación con flechas del teclado - siempre activa en la página
     useEffect(() => {
         const handleKeyDown = (event) => {
-            // Solo procesar si no está escribiendo en un input/textarea
-            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+            // Solo procesar si no está escribiendo en un input/textarea/contenteditable
+            const target = event.target
+            if (
+                target.tagName === 'INPUT' || 
+                target.tagName === 'TEXTAREA' || 
+                target.isContentEditable ||
+                target.closest('[contenteditable="true"]')
+            ) {
                 return
             }
 
+            // Permitir navegación con flechas sin necesidad de hacer focus primero
             if (event.key === 'ArrowLeft') {
                 event.preventDefault()
                 if (activeEventIndex > 0) {
@@ -529,9 +536,10 @@ export default function Historia() {
             }
         }
 
-        window.addEventListener('keydown', handleKeyDown)
+        // Agregar listener al document para que funcione en toda la página
+        document.addEventListener('keydown', handleKeyDown)
         return () => {
-            window.removeEventListener('keydown', handleKeyDown)
+            document.removeEventListener('keydown', handleKeyDown)
         }
     }, [activeEventIndex, totalEvents, enhancedEvents.length, handleEventChange])
 
@@ -670,10 +678,13 @@ export default function Historia() {
                     >
                         <div 
                             ref={timelineRef}
-                        className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-1.5 -mb-1.5"
+                        className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-1.5 -mb-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent"
                             style={{
                                 scrollBehavior: 'smooth'
                             }}
+                            tabIndex={0}
+                            role="region"
+                            aria-label="Línea de tiempo histórica - Use las flechas izquierda y derecha para navegar"
                         >
                             <div
                                 className="relative h-full flex items-center px-4 sm:px-5 py-2.5"
