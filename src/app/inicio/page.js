@@ -5,6 +5,41 @@ import { useRouter } from "next/navigation"
 import { sections } from "@/data/sections"
 import HistorySlider from "@/components/ui/HistorySlider"
 
+const historyEpochs = [
+    {
+        id: "colonial",
+        title: "Fundación y Época Colonial",
+        period: "1533–1810",
+        description: "Cartagena se consolida como bastión del Caribe español y fortaleza imprescindible.",
+        image: "https://i.pinimg.com/1200x/0d/15/d1/0d15d11ac9a8adf9e42859d41baada09.jpg",
+        accent: "from-amber-500/30 via-amber-600/40 to-amber-800/60"
+    },
+    {
+        id: "independencia",
+        title: "Independencia y República Temprana",
+        period: "1810–1886",
+        description: "La Heroica resiste asedios y sella su lugar en la independencia del país.",
+        image: "https://i.pinimg.com/1200x/a8/2d/d0/a82dd09a4e33cbc57668ac364247228a.jpg",
+        accent: "from-rose-500/30 via-rose-600/40 to-amber-700/60"
+    },
+    {
+        id: "republica",
+        title: "República Liberal y Modernización",
+        period: "1886–1950",
+        description: "Llegan las grandes obras: expansión urbana, puerto moderno y vida cultural.",
+        image: "https://i.pinimg.com/1200x/b9/3d/c8/b93dc8d7b9ad9f484d8cdbb191ed257c.jpg",
+        accent: "from-sky-500/30 via-slate-600/40 to-slate-800/60"
+    },
+    {
+        id: "contemporanea",
+        title: "Cartagena Contemporánea",
+        period: "1950–Presente",
+        description: "Patrimonio mundial, turismo global y tradiciones vivas en el siglo XXI.",
+        image: "https://i.pinimg.com/1200x/2f/5d/6c/2f5d6c451121c82315109574e87b8c21.jpg",
+        accent: "from-emerald-500/30 via-teal-600/40 to-amber-500/60"
+    }
+]
+
 export default function Inicio() {
     const parallaxRefs = useRef([])
     const sectionRefs = useRef([])
@@ -110,6 +145,13 @@ export default function Inicio() {
         if (el && !parallaxRefs.current.includes(el)) {
             parallaxRefs.current.push(el)
         }
+    }
+
+    const handleHistoryEpochClick = (periodId) => {
+        if (typeof window !== "undefined") {
+            sessionStorage.setItem("historiaPeriod", periodId)
+        }
+        router.push("/historia")
     }
 
     return (
@@ -226,19 +268,26 @@ export default function Inicio() {
                                                 {section.description}
                                             </p>
                                             
-                                            {/* Highlights en formato vertical */}
+                                            {/* Épocas históricas - estilo compacto */}
                                             <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
-                                                {section.highlights.map((highlight, highlightIndex) => (
-                                                    <div 
-                                                        key={highlightIndex}
-                                                        className="glass rounded-lg p-3 sm:p-4 hover:bg-white/20 transition-all duration-300 transform hover:scale-105 animate-fade-in-up"
-                                                        style={{ animationDelay: `${highlightIndex * 0.1}s` }}
+                                                {historyEpochs.map((epoch, epochIndex) => (
+                                                    <button
+                                                        key={epoch.id}
+                                                        onClick={() => handleHistoryEpochClick(epoch.id)}
+                                                        className="glass w-full rounded-2xl border border-white/25 px-4 py-4 sm:px-5 sm:py-5 text-left hover:bg-white/15 transition-all duration-300 animate-fade-in-up focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                                                        style={{ animationDelay: `${epochIndex * 0.1}s` }}
+                                                        aria-label={`Ir a la época ${epoch.title}`}
                                                     >
-                                                        <span className="text-sm sm:text-lg md:text-xl font-ui font-medium flex items-center text-white">
-                                                            <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
-                                                            {highlight}
-                                                        </span>
-                                                    </div>
+                                                        <div className="flex items-center justify-between gap-4">
+                                                            <span className="text-sm sm:text-lg md:text-xl font-ui font-medium flex items-center text-white">
+                                                                <span className="w-2 h-2 bg-yellow-400 rounded-full mr-3"></span>
+                                                                {epoch.title}
+                                                            </span>
+                                                            <span className="text-[11px] sm:text-xs uppercase tracking-[0.35em] text-yellow-200/80 font-ui whitespace-nowrap">
+                                                                {epoch.period}
+                                                            </span>
+                                                        </div>
+                                                    </button>
                                                 ))}
                                             </div>
                                             

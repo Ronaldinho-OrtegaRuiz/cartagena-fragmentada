@@ -1,15 +1,19 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useSearchParams } from "next/navigation"
 
 export default function Historia() {
     const timelineRef = useRef(null)
     const programmaticScrollRef = useRef(false)
     const scrollResetTimeoutRef = useRef(null)
+    const forceTimelineScrollRef = useRef(false)
+    const forceTimelineAlignmentRef = useRef(null)
     const [hoveredTimeline, setHoveredTimeline] = useState(null)
     const [activeEventIndex, setActiveEventIndex] = useState(0)
     const [isInitialAnimationReady, setIsInitialAnimationReady] = useState(false)
     const timelineAnimationSlots = 8
+    const searchParams = useSearchParams()
 
     const periods = useMemo(() => [
         {
@@ -497,7 +501,9 @@ export default function Historia() {
     const scrollToActiveEvent = useCallback(() => {
         requestAnimationFrame(() => {
             // En móvil, no hacer scroll automático - dejar que el usuario controle manualmente
-            if (typeof window !== 'undefined' && window.innerWidth < 768) {
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
+            const forceScroll = forceTimelineScrollRef.current
+            if (isMobile && !forceScroll) {
                 return
             }
             
@@ -535,7 +541,10 @@ export default function Historia() {
             
             let newScrollLeft = scrollLeft
 
-            if (isFullyOutsideLeft) {
+            if (forceScroll && forceTimelineAlignmentRef.current === 'center') {
+                const maxScroll = timelineContainer.scrollWidth - clientWidth
+                newScrollLeft = Math.max(0, Math.min(maxScroll, elementCenter - clientWidth / 2))
+            } else if (isFullyOutsideLeft) {
                 // El evento está completamente a la izquierda, desplazar para mostrarlo
                 newScrollLeft = Math.max(0, elementLeft - padding)
             } else if (isFullyOutsideRight) {
@@ -545,8 +554,13 @@ export default function Historia() {
             } else {
                 // El evento está visible, centrarlo aproximadamente con eventos alrededor
                 // Queremos que el evento activo esté en el centro, mostrando ~2.5 eventos a cada lado
-                const eventsOnLeft = 2.5
-                const desiredScroll = elementLeft - (eventsOnLeft * eventWithGap) - padding
+                let desiredScroll
+                if (forceTimelineAlignmentRef.current === 'center') {
+                    desiredScroll = elementCenter - clientWidth / 2
+                } else {
+                    const eventsOnLeft = 2.5
+                    desiredScroll = elementLeft - (eventsOnLeft * eventWithGap) - padding
+                }
                 
                 // Verificar límites
                 const maxScroll = timelineContainer.scrollWidth - clientWidth
@@ -563,7 +577,8 @@ export default function Historia() {
             }
 
             // Solo hacer scroll si es necesario (con un margen pequeño para evitar micro-movimientos)
-            if (Math.abs(newScrollLeft - scrollLeft) > 5) {
+            const requiresScroll = Math.abs(newScrollLeft - scrollLeft) > 5
+            if (requiresScroll || (forceScroll && forceTimelineAlignmentRef.current === 'center')) {
                 programmaticScrollRef.current = true
                 if (scrollResetTimeoutRef.current) {
                     clearTimeout(scrollResetTimeoutRef.current)
@@ -578,6 +593,8 @@ export default function Historia() {
                     programmaticScrollRef.current = false
                     scrollResetTimeoutRef.current = null
                 }, 300)
+                forceTimelineScrollRef.current = false
+                forceTimelineAlignmentRef.current = null
             }
         })
     }, [activeEventIndex, totalEvents])
@@ -588,18 +605,40 @@ export default function Historia() {
         setHoveredTimeline(null)
     }, [enhancedEvents.length])
 
-    const scrollToPeriod = (periodId) => {
+    const scrollToPeriod = useCallback((periodId) => {
         const targetEvent = enhancedEvents.find(event => event.periodId === periodId)
         if (targetEvent) {
+            const shouldCenter = (targetEvent.periodIndex ?? 0) > 0
+            forceTimelineScrollRef.current = shouldCenter
+            forceTimelineAlignmentRef.current = shouldCenter ? 'center' : null
             handleEventChange(targetEvent.globalIndex)
+            return true
         }
-    }
+        return false
+    }, [enhancedEvents, handleEventChange])
 
     // 🔄 Ajustar scroll cuando cambia activeEventIndex (basado en selección)
     useEffect(() => {
         if (activeEventIndex < 0 || activeEventIndex >= totalEvents) return
         scrollToActiveEvent()
     }, [activeEventIndex, totalEvents, scrollToActiveEvent])
+
+    // 👉 Navegación directa desde Inicio por época
+    const periodFromQuery = searchParams?.get("period") ?? null
+
+    useEffect(() => {
+        if (!periodFromQuery) return
+        scrollToPeriod(periodFromQuery)
+    }, [periodFromQuery, scrollToPeriod])
+
+    useEffect(() => {
+        if (typeof window === "undefined") return
+        const storedPeriod = sessionStorage.getItem("historiaPeriod")
+        if (storedPeriod) {
+            scrollToPeriod(storedPeriod)
+            sessionStorage.removeItem("historiaPeriod")
+        }
+    }, [scrollToPeriod])
 
     // ⌨️ Navegación con flechas del teclado - siempre activa en la página
     useEffect(() => {
