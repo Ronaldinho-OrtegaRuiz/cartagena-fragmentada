@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
-export default function Historia() {
+function HistoriaContent() {
     const timelineRef = useRef(null)
     const programmaticScrollRef = useRef(false)
     const scrollResetTimeoutRef = useRef(null)
@@ -935,5 +935,13 @@ export default function Historia() {
                 </div>
             </section>
         </div>
+    )
+}
+
+export default function Historia() {
+    return (
+        <Suspense fallback={null}>
+            <HistoriaContent />
+        </Suspense>
     )
 }
