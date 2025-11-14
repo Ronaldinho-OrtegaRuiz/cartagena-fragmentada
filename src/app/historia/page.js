@@ -678,13 +678,29 @@ export default function Historia() {
                     >
                         <div 
                             ref={timelineRef}
-                        className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-1.5 -mb-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-transparent"
+                        className="timeline-scroll relative h-full overflow-x-auto overflow-y-hidden pb-1.5 -mb-1.5"
                             style={{
-                                scrollBehavior: 'smooth'
+                                scrollBehavior: 'smooth',
+                                outline: 'none',
+                                WebkitTapHighlightColor: 'transparent',
+                                userSelect: 'none'
                             }}
-                            tabIndex={0}
                             role="region"
                             aria-label="Línea de tiempo histórica - Use las flechas izquierda y derecha para navegar"
+                            onMouseDown={(e) => {
+                                // Prevenir focus visual pero permitir scroll y clicks en eventos
+                                const isClickOnEvent = e.target.closest('[data-global-index]')
+                                if (!isClickOnEvent && e.target === e.currentTarget) {
+                                    e.preventDefault()
+                                }
+                            }}
+                            onTouchStart={(e) => {
+                                // Prevenir highlight en móviles
+                                const isTouchOnEvent = e.target.closest('[data-global-index]')
+                                if (!isTouchOnEvent) {
+                                    e.preventDefault()
+                                }
+                            }}
                         >
                             <div
                                 className="relative h-full flex items-center px-4 sm:px-5 py-2.5"
