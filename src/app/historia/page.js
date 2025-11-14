@@ -500,13 +500,9 @@ function HistoriaContent() {
     // 🔄 Ajustar scroll cuando cambia el evento activo - siempre mostrar 5-6 eventos
     const scrollToActiveEvent = useCallback(() => {
         requestAnimationFrame(() => {
-            // En móvil, no hacer scroll automático - dejar que el usuario controle manualmente
             const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
             const forceScroll = forceTimelineScrollRef.current
-            if (isMobile && !forceScroll) {
-                return
-            }
-            
+        
             if (!timelineRef.current) return
             const timelineContainer = timelineRef.current
             const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
@@ -524,6 +520,7 @@ function HistoriaContent() {
             const padding = 16 // Padding del contenedor
             const viewportLeft = scrollLeft
             const viewportRight = scrollLeft + clientWidth
+            const maxScroll = timelineContainer.scrollWidth - clientWidth
 
             // Calcular el ancho real de un evento para determinar cuántos mostrar
             // Usamos el ancho del evento activo como referencia
@@ -531,49 +528,61 @@ function HistoriaContent() {
             const gapWidth = 48 // gap entre eventos (24px * 2 por el gap-6 sm:gap-8)
             const eventWithGap = eventWidth + gapWidth
             
-            // Queremos mostrar aproximadamente 5-6 eventos
-            const targetVisibleEvents = 5.5
-            const totalEventWidth = eventWithGap * targetVisibleEvents
-            
-            // Verificar si el evento está completamente fuera del viewport
-            const isFullyOutsideLeft = elementRight < viewportLeft + padding
-            const isFullyOutsideRight = elementLeft > viewportRight - padding
-            
             let newScrollLeft = scrollLeft
 
-            if (forceScroll && forceTimelineAlignmentRef.current === 'center') {
-                const maxScroll = timelineContainer.scrollWidth - clientWidth
-                newScrollLeft = Math.max(0, Math.min(maxScroll, elementCenter - clientWidth / 2))
-            } else if (isFullyOutsideLeft) {
-                // El evento está completamente a la izquierda, desplazar para mostrarlo
-                newScrollLeft = Math.max(0, elementLeft - padding)
-            } else if (isFullyOutsideRight) {
-                // El evento está completamente a la derecha, centrarlo para evitar que quede en el borde
-                const maxScroll = timelineContainer.scrollWidth - clientWidth
-                const targetCenter = elementCenter - clientWidth / 2
-                newScrollLeft = Math.min(maxScroll, Math.max(0, targetCenter))
-            } else {
-                // El evento está visible, centrarlo aproximadamente con eventos alrededor
-                // Queremos que el evento activo esté en el centro, mostrando ~2.5 eventos a cada lado
-                let desiredScroll
-                if (forceTimelineAlignmentRef.current === 'center') {
-                    desiredScroll = elementCenter - clientWidth / 2
+            if (isMobile) {
+                const alignmentPreference = forceTimelineAlignmentRef.current || 'start'
+                if (alignmentPreference === 'center') {
+                    newScrollLeft = Math.max(0, Math.min(maxScroll, elementCenter - clientWidth / 2))
                 } else {
-                    const eventsOnLeft = 2.5
-                    desiredScroll = elementLeft - (eventsOnLeft * eventWithGap) - padding
+                    newScrollLeft = Math.max(0, Math.min(maxScroll, elementLeft - padding))
                 }
-                
-                // Verificar límites
-                const maxScroll = timelineContainer.scrollWidth - clientWidth
-                newScrollLeft = Math.max(0, Math.min(maxScroll, desiredScroll))
-                
-                // Si estamos en los extremos, ajustar para mostrar el máximo de eventos posible
+
                 if (activeEventIndex === 0) {
-                    // Primer evento: mostrar desde el inicio
                     newScrollLeft = 0
                 } else if (activeEventIndex === totalEvents - 1) {
-                    // Último evento: mostrar hasta el final
-                    newScrollLeft = Math.max(0, timelineContainer.scrollWidth - clientWidth)
+                    newScrollLeft = Math.max(0, maxScroll)
+                }
+            } else {
+                // Queremos mostrar aproximadamente 5-6 eventos
+                const targetVisibleEvents = 5.5
+                const totalEventWidth = eventWithGap * targetVisibleEvents
+                
+                // Verificar si el evento está completamente fuera del viewport
+                const isFullyOutsideLeft = elementRight < viewportLeft + padding
+                const isFullyOutsideRight = elementLeft > viewportRight - padding
+
+                if (forceScroll && forceTimelineAlignmentRef.current === 'center') {
+                    newScrollLeft = Math.max(0, Math.min(maxScroll, elementCenter - clientWidth / 2))
+                } else if (isFullyOutsideLeft) {
+                    // El evento está completamente a la izquierda, desplazar para mostrarlo
+                    newScrollLeft = Math.max(0, elementLeft - padding)
+                } else if (isFullyOutsideRight) {
+                    // El evento está completamente a la derecha, centrarlo para evitar que quede en el borde
+                    const targetCenter = elementCenter - clientWidth / 2
+                    newScrollLeft = Math.min(maxScroll, Math.max(0, targetCenter))
+                } else {
+                    // El evento está visible, centrarlo aproximadamente con eventos alrededor
+                    // Queremos que el evento activo esté en el centro, mostrando ~2.5 eventos a cada lado
+                    let desiredScroll
+                    if (forceTimelineAlignmentRef.current === 'center') {
+                        desiredScroll = elementCenter - clientWidth / 2
+                    } else {
+                        const eventsOnLeft = 2.5
+                        desiredScroll = elementLeft - (eventsOnLeft * eventWithGap) - padding
+                    }
+                    
+                    // Verificar límites
+                    newScrollLeft = Math.max(0, Math.min(maxScroll, desiredScroll))
+                    
+                    // Si estamos en los extremos, ajustar para mostrar el máximo de eventos posible
+                    if (activeEventIndex === 0) {
+                        // Primer evento: mostrar desde el inicio
+                        newScrollLeft = 0
+                    } else if (activeEventIndex === totalEvents - 1) {
+                        // Último evento: mostrar hasta el final
+                        newScrollLeft = Math.max(0, timelineContainer.scrollWidth - clientWidth)
+                    }
                 }
             }
 
@@ -610,8 +619,13 @@ function HistoriaContent() {
         const targetEvent = enhancedEvents.find(event => event.periodId === periodId)
         if (targetEvent) {
             const shouldCenter = (targetEvent.periodIndex ?? 0) > 0
+            const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
             forceTimelineScrollRef.current = shouldCenter
-            forceTimelineAlignmentRef.current = shouldCenter ? 'center' : null
+            if (shouldCenter) {
+                forceTimelineAlignmentRef.current = isMobile ? 'start' : 'center'
+            } else {
+                forceTimelineAlignmentRef.current = isMobile ? 'start' : null
+            }
             handleEventChange(targetEvent.globalIndex)
             return true
         }
