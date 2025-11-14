@@ -54,37 +54,67 @@ export default function Historia() {
                 {
                     year: "1533",
                     title: "Fundación",
-                    description: "Pedro de Heredia funda Cartagena de Indias el 1 de junio de 1533, sobre un antiguo poblado indígena llamado Calamarí. Su bahía protegida la convierte rápidamente en el principal puerto del Caribe español.",
+                    description: "Pedro de Heredia funda Cartagena de Indias el 1 de junio de 1533 sobre el poblado indígena Calamarí. La bahía protegida y profunda la convierte rápidamente en un puerto estratégico del Caribe español. Desde sus primeros años, la ciudad se proyecta como centro de comercio y defensa, atrayendo pobladores, comerciantes y misioneros.",
                     isMajor: true
+                },
+                {
+                    year: "1543",
+                    title: "Saqueo francés",
+                    description: "Corsarios franceses atacan la ciudad, mostrando la vulnerabilidad inicial de la plaza y la necesidad de fortificaciones.",
+                    isMajor: false
                 },
                 {
                     year: "1552",
                     title: "Incendio devastador",
-                    description: "Un incendio consume la ciudad construida en madera. La reconstrucción marca el inicio de una Cartagena de piedra, con edificaciones más resistentes y plan urbano organizado.",
+                    description: "Un incendio consume la ciudad construida en madera. La tragedia impulsa la reconstrucción en piedra, con un trazado urbano más organizado y edificaciones resistentes, marcando el inicio de la Cartagena monumental que conocemos hoy.",
                     isMajor: false
                 },
                 {
-                    year: "Siglo XVI–XVII",
-                    title: "Auge del comercio y defensa",
-                    description: "Cartagena se consolida como puerto del comercio negrero y nodo clave del sistema económico colonial. Desde aquí partían barcos cargados de oro, plata y esclavos hacia Europa. Para proteger la ciudad de piratas y corsarios, la Corona Española construye un sistema defensivo monumental: murallas, baluartes, fuertes y el célebre Castillo de San Felipe de Barajas, símbolo de resistencia.",
-                    isMajor: true
+                    year: "1568",
+                    title: "Ataque de John Hawkins",
+                    description: "El corsario inglés intenta forzar el comercio en Cartagena, reforzando la política defensiva de la Corona.",
+                    isMajor: false
                 },
                 {
                     year: "1586",
                     title: "Ataque de Francis Drake",
-                    description: "El corsario inglés saquea la ciudad y exige un fuerte rescate. Este hecho impulsa la fortificación de Cartagena como la plaza militar más poderosa del Caribe.",
+                    description: "El corsario inglés saquea la ciudad y exige un fuerte rescate. El impacto del ataque convence a la Corona de reforzar las defensas, iniciando la construcción de murallas, baluartes y el célebre Castillo de San Felipe de Barajas.",
+                    isMajor: true
+                },
+                {
+                    year: "Siglo XVI–XVII",
+                    title: "Auge del comercio esclavista",
+                    description: "Cartagena se consolida como puerto negrero y nodo clave del sistema colonial. Desde aquí partían barcos cargados de oro, plata y esclavos hacia Europa.",
+                    isMajor: true
+                },
+                {
+                    year: "1649",
+                    title: "Construcción del Canal del Dique",
+                    description: "Se abre la conexión entre el río Magdalena y la bahía de Cartagena, vital para el comercio interior.",
+                    isMajor: true
+                },
+                {
+                    year: "Siglo XVII",
+                    title: "Palenques y resistencia cimarrona",
+                    description: "Comunidades de esclavos fugados, como San Basilio de Palenque, desafían el poder colonial y se convierten en símbolos de libertad.",
                     isMajor: true
                 },
                 {
                     year: "1741",
                     title: "Batalla de Cartagena de Indias",
-                    description: "El almirante inglés Edward Vernon ataca con más de 180 barcos y 23.000 hombres. La heroica defensa del almirante Blas de Lezo y las tropas locales logra la victoria española. Este episodio consagra a Cartagena como \"La Heroica\" y es una de las mayores derrotas navales británicas de la historia.",
+                    description: "El almirante inglés Edward Vernon ataca con más de 180 barcos y 23.000 hombres. La heroica defensa de Blas de Lezo y las tropas locales logra una victoria épica.",
                     isMajor: true
+                },
+                {
+                    year: "1777–1778",
+                    title: "Censo del Caribe neogranadino",
+                    description: "Cartagena concentra más del 70% de la población urbana de la región, confirmando su papel como centro demográfico y económico.",
+                    isMajor: false
                 },
                 {
                     year: "Siglo XVIII",
                     title: "Consolidación colonial",
-                    description: "Cartagena alcanza su esplendor: se convierte en sede del Tribunal de la Inquisición, centro religioso y comercial del Caribe, y una de las ciudades más importantes del Virreinato de la Nueva Granada.",
+                    description: "La ciudad alcanza su esplendor: sede del Tribunal de la Inquisición, centro religioso y comercial del Caribe, y una de las urbes más importantes del Virreinato de la Nueva Granada.",
                     isMajor: false
                 }
             ]
@@ -129,14 +159,20 @@ export default function Historia() {
             events: [
                 {
                     year: "1810",
-                    title: "Grito de Independencia",
-                    description: "El 11 de noviembre de 1811, Cartagena proclama su independencia absoluta de España, siendo la primera ciudad de Colombia en hacerlo oficialmente. Este acto la coloca a la vanguardia del movimiento emancipador americano.",
+                    title: "Primer movimiento independentista",
+                    description: "El 22 de mayo de 1810 se forma la Junta Suprema de Gobierno, inicio del proceso emancipador.",
+                    isMajor: false
+                },
+                {
+                    year: "11 de noviembre de 1811",
+                    title: "Independencia absoluta",
+                    description: "Cartagena proclama su independencia total de España, siendo la primera ciudad de Colombia en hacerlo oficialmente.",
                     isMajor: true
                 },
                 {
                     year: "1815",
                     title: "Sitio de Cartagena",
-                    description: "El general español Pablo Morillo reconquista la ciudad tras un sitio de 105 días, causando gran hambruna y destrucción. Miles de cartageneros mueren defendiendo la independencia. Este episodio le otorga el título de \"Ciudad Heroica\".",
+                    description: "El general español Pablo Morillo reconquista la ciudad tras un sitio de 105 días. La hambruna y la destrucción diezman a la población, pero la resistencia heroica otorga a Cartagena el título de \"Ciudad Heroica\".",
                     isMajor: true
                 },
                 {
@@ -146,9 +182,15 @@ export default function Historia() {
                     isMajor: true
                 },
                 {
+                    year: "1823",
+                    title: "Primer plano geométrico republicano",
+                    description: "Se realiza el primer levantamiento urbano de la ciudad en época republicana, reflejando la reorganización tras la independencia.",
+                    isMajor: false
+                },
+                {
                     year: "1830–1886",
                     title: "Repliegue y transformación",
-                    description: "Durante el siglo XIX, Cartagena pierde protagonismo político frente a Bogotá y Barranquilla. Sin embargo, mantiene su vitalidad cultural y portuaria, y conserva su arquitectura colonial, que más tarde sería clave en su renacimiento patrimonial.",
+                    description: "Durante el siglo XIX, Cartagena pierde protagonismo político frente a Bogotá y Barranquilla, pero mantiene su vitalidad cultural y portuaria.",
                     isMajor: false
                 }
             ]
@@ -200,19 +242,25 @@ export default function Historia() {
                 {
                     year: "1902",
                     title: "Fin de la Guerra de los Mil Días",
-                    description: "La ciudad comienza un proceso de reconstrucción y apertura económica, consolidando su papel como puerto comercial moderno.",
+                    description: "La ciudad inicia un proceso de reconstrucción y apertura económica, consolidando su papel como puerto moderno.",
                     isMajor: false
+                },
+                {
+                    year: "1880–1924",
+                    title: "\"Murallicidio\"",
+                    description: "Se derriban partes de las murallas coloniales para expandir la ciudad, hasta que la Ley 32 de 1924 detiene el proceso.",
+                    isMajor: true
                 },
                 {
                     year: "1920–1930",
                     title: "Modernización urbana",
-                    description: "Se amplía el puerto marítimo, se abren avenidas y surgen barrios modernos como Manga y Bocagrande, reflejando la influencia arquitectónica caribeña y republicana.",
+                    description: "Se amplía el puerto marítimo, se abren avenidas y surgen barrios modernos como Manga y Bocagrande.",
                     isMajor: true
                 },
                 {
                     year: "1940–1950",
                     title: "Despertar cultural",
-                    description: "Surgen periódicos, revistas y círculos literarios. Se fortalece la identidad costeña, y Cartagena se proyecta como centro cultural y artístico, preludio del auge turístico posterior.",
+                    description: "Surgen periódicos, revistas y círculos literarios. Se fortalece la identidad costeña y Cartagena se proyecta como centro cultural y artístico.",
                     isMajor: true
                 }
             ]
@@ -258,31 +306,43 @@ export default function Historia() {
                 {
                     year: "1950–1970",
                     title: "Renacimiento patrimonial y turístico",
-                    description: "Empieza la restauración del Centro Histórico, Getsemaní y el Castillo de San Felipe. El turismo nacional crece con fuerza, y la ciudad empieza a reconocerse como joya del Caribe.",
+                    description: "Empieza la restauración del Centro Histórico, Getsemaní y el Castillo de San Felipe. El turismo nacional crece con fuerza.",
+                    isMajor: true
+                },
+                {
+                    year: "1971",
+                    title: "Erradicación del barrio Chambacú",
+                    description: "Transformación urbana con fuerte impacto social, símbolo de la modernización desigual.",
                     isMajor: true
                 },
                 {
                     year: "1984",
                     title: "Patrimonio de la Humanidad",
-                    description: "La UNESCO declara el conjunto histórico, sus fortificaciones y murallas como Patrimonio Cultural de la Humanidad, garantizando su conservación y reconocimiento global.",
+                    description: "La UNESCO declara el conjunto histórico y sus fortificaciones como Patrimonio Cultural de la Humanidad.",
                     isMajor: true
                 },
                 {
                     year: "1990–2000",
                     title: "Expansión internacional",
-                    description: "Cartagena se consolida como destino turístico internacional, sede de eventos como el Festival Internacional de Cine de Cartagena (el más antiguo de Latinoamérica). Empiezan inversiones hoteleras y se potencia la industria de servicios.",
+                    description: "Cartagena se consolida como destino turístico internacional y sede de eventos culturales como el Festival Internacional de Cine.",
                     isMajor: true
+                },
+                {
+                    year: "2007",
+                    title: "Inventario de patrimonio intangible",
+                    description: "Se inicia el registro oficial de tradiciones afrodescendientes y caribeñas como parte del patrimonio cultural de la ciudad.",
+                    isMajor: false
                 },
                 {
                     year: "2010–2020",
                     title: "Innovación y cultura",
-                    description: "La ciudad combina tradición con modernidad: proliferan espacios culturales, proyectos de innovación social y programas de conservación patrimonial. Se refuerza la identidad afrodescendiente y caribeña como parte de su riqueza histórica.",
+                    description: "La ciudad combina tradición con modernidad: proliferan espacios culturales, proyectos de innovación social y programas de conservación patrimonial.",
                     isMajor: false
                 },
                 {
                     year: "2021–Presente",
                     title: "Cartagena global y resiliente",
-                    description: "Hoy, Cartagena enfrenta el desafío de preservar su patrimonio histórico mientras crece como ciudad tecnológica, turística y cultural. Se trabaja en la inclusión social, sostenibilidad y digitalización del patrimonio.",
+                    description: "Hoy, Cartagena enfrenta el desafío de preservar su patrimonio histórico mientras crece como ciudad tecnológica, turística y cultural.",
                     isMajor: true
                 }
             ]
