@@ -440,6 +440,26 @@ export default function Historia() {
         muted: currentPeriod.textMuted || 'rgba(255,255,255,0.6)'
     }), [currentPeriod])
 
+    // Calcular altura mínima basada en la descripción más larga
+    const minContentHeight = useMemo(() => {
+        if (!enhancedEvents.length) return '18rem'
+        
+        // Encontrar la descripción más larga
+        const longestDescription = enhancedEvents.reduce((longest, event) => {
+            return event.description.length > longest.length ? event.description : longest
+        }, enhancedEvents[0].description)
+        
+        // Estimar altura basada en longitud del texto
+        // Aproximadamente 60-70 caracteres por línea, y cada línea ~1.75rem de altura
+        const estimatedLines = Math.ceil(longestDescription.length / 65)
+        const baseHeight = 12 // altura base para título, badge, etc. en rem
+        const textHeight = estimatedLines * 1.75
+        
+        // Altura mínima total en rem, con un mínimo de 18rem
+        const totalHeight = baseHeight + textHeight
+        return `${Math.max(18, Math.ceil(totalHeight))}rem`
+    }, [enhancedEvents])
+
     useEffect(() => {
         if (typeof window === 'undefined') return
 
@@ -468,6 +488,11 @@ export default function Historia() {
     // 🔄 Ajustar scroll cuando cambia el evento activo - siempre mostrar 5-6 eventos
     const scrollToActiveEvent = useCallback(() => {
         requestAnimationFrame(() => {
+            // En móvil, no hacer scroll automático - dejar que el usuario controle manualmente
+            if (typeof window !== 'undefined' && window.innerWidth < 768) {
+                return
+            }
+            
             if (!timelineRef.current) return
             const timelineContainer = timelineRef.current
             const eventElements = timelineContainer.querySelectorAll('[data-global-index]')
@@ -671,7 +696,10 @@ export default function Historia() {
                                 {/* Eventos históricos - Slider (un evento a la vez) */}
                                 <div className="flex-1 min-h-0 px-1 sm:px-2">
                                     {currentEvent && (
-                                        <div className="mx-auto flex min-h-[18rem] w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10 lg:h-full">
+                                        <div 
+                                            className="mx-auto flex w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10 lg:h-full"
+                                            style={{ minHeight: minContentHeight }}
+                                        >
                                             {/* Contenido */}
                                             <div className="flex flex-1 flex-col gap-4">
                                                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
@@ -696,7 +724,7 @@ export default function Historia() {
                                                         {currentEvent.year}
                                                     </span>
                                                 </div>
-                                                <div className="max-h-[34vh] overflow-y-auto pr-1 sm:max-h-[40vh] md:max-h-full lg:h-full">
+                                                <div className="flex-1 overflow-y-auto pr-1">
                                                     <p
                                                         className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
                                                         style={{ color: textPalette.secondary }}
