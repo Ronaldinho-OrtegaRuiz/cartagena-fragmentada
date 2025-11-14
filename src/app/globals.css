@@ -238,6 +238,65 @@
     transform: translateY(30px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+.animate-enter-active,
+.animate-fade-in-up.animate-enter-active,
+.animate-fade-in-up-delayed.animate-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-line {
+  --timeline-line-scale: 0;
+}
+
+.timeline-line::before {
+  transform-origin: left center;
+  transform: scaleX(var(--timeline-line-scale));
+  will-change: transform;
+}
+
+.timeline-line.timeline-line-animate::before {
+  animation: timelineLineDraw 1.4s cubic-bezier(0.3, 0, 0.2, 1) forwards;
+}
+
+@keyframes timelineLineDraw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.timeline-event {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition:
+    opacity 0.7s cubic-bezier(0.3, 0, 0.2, 1),
+    transform 0.7s cubic-bezier(0.3, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.timeline-event.timeline-event-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.horizontal-line-animate {
+  opacity: 0;
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition:
+    opacity 0.6s cubic-bezier(0.3, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0.3, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.horizontal-line-animate.horizontal-line-visible {
+  opacity: 1;
+  transform: scaleX(1);
+}
   
   .animate-fade-in-up-white {
     animation: fadeInUpWhite 1s ease-out forwards;

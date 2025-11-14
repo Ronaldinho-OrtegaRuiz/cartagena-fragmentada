@@ -8,6 +8,8 @@ export default function Historia() {
     const scrollResetTimeoutRef = useRef(null)
     const [hoveredTimeline, setHoveredTimeline] = useState(null)
     const [activeEventIndex, setActiveEventIndex] = useState(0)
+    const [isInitialAnimationReady, setIsInitialAnimationReady] = useState(false)
+    const timelineAnimationSlots = 8
 
     const periods = useMemo(() => [
         {
@@ -479,6 +481,12 @@ export default function Historia() {
     }, [currentPalette])
 
     useEffect(() => {
+        if (typeof window === 'undefined') return
+        const timer = window.setTimeout(() => setIsInitialAnimationReady(true), 50)
+        return () => window.clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
         if (!totalEvents) return
         if (activeEventIndex >= totalEvents) {
             setActiveEventIndex(0)
@@ -656,14 +664,14 @@ export default function Historia() {
                         <div className="max-w-6xl mx-auto flex w-full flex-col gap-8 lg:h-full lg:overflow-hidden">
                             <div className="flex flex-col items-center text-center gap-2 mt-5 sm:mt-7 lg:mt-10">
                                 <h1
-                                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl"
-                                    style={{ color: textPalette.primary }}
+                                    className={`text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl animate-fade-in-up ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                    style={{ color: textPalette.primary, transitionDelay: '0.05s' }}
                                 >
                                     Historia de Cartagena
                                 </h1>
                                 <p
-                                    className="text-base sm:text-lg md:text-xl font-body drop-shadow-lg"
-                                    style={{ color: textPalette.secondary }}
+                                    className={`text-base sm:text-lg md:text-xl font-body drop-shadow-lg animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                    style={{ color: textPalette.secondary, transitionDelay: '0.15s' }}
                                 >
                                     Un viaje a través de los siglos
                                 </p>
@@ -673,20 +681,20 @@ export default function Historia() {
                                 <aside className="flex flex-shrink-0 flex-col gap-3 lg:w-4/12 xl:w-1/3 lg:pl-2">
                                     <div className="flex flex-col items-start gap-2 text-left">
                                         <h2
-                                            className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold drop-shadow-xl"
-                                            style={{ color: textPalette.primary }}
+                                            className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-title font-semibold drop-shadow-xl animate-fade-in-up ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                            style={{ color: textPalette.primary, transitionDelay: '0.1s' }}
                                         >
                                             {currentPeriod.title}
                                         </h2>
                                         <p
-                                            className="text-sm sm:text-base md:text-lg font-body drop-shadow-lg leading-relaxed"
-                                            style={{ color: textPalette.secondary }}
+                                            className={`text-sm sm:text-base md:text-lg font-body drop-shadow-lg leading-relaxed animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                            style={{ color: textPalette.secondary, transitionDelay: '0.2s' }}
                                         >
                                             {currentPeriod.subtitle}
                                         </p>
                                         <p
-                                            className="text-xs sm:text-sm md:text-base font-body drop-shadow-md tracking-wide uppercase"
-                                            style={{ color: textPalette.muted, letterSpacing: '0.18em' }}
+                                            className={`text-xs sm:text-sm md:text-base font-body drop-shadow-md tracking-wide uppercase animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                            style={{ color: textPalette.muted, letterSpacing: '0.18em', transitionDelay: '0.3s' }}
                                         >
                                             {currentPeriod.period}
                                         </p>
@@ -702,32 +710,35 @@ export default function Historia() {
                                         >
                                             {/* Contenido */}
                                             <div className="flex flex-1 flex-col gap-4">
-                                                <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                                                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                                                     <h3
-                                                        className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)]`}
-                                                        style={{ color: textPalette.primary }}
+                                                        className={`text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] ${currentPeriod.fontClass} font-semibold drop-shadow-[0_12px_30px_rgba(0,0,0,0.35)] animate-fade-in-up ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                                        style={{ color: textPalette.primary, transitionDelay: '0.1s' }}
                                                     >
                                                         {currentEvent.title}
                                                     </h3>
-                                                    <div className="flex items-center gap-3">
-                                                        <span className="hidden sm:block h-px bg-white/30 w-12" />
+                                                    <div className="flex items-center gap-3 mt-0 md:pt-1">
+                                                        <span
+                                                            className={`hidden sm:block h-px bg-white/30 w-12 horizontal-line-animate ${isInitialAnimationReady ? 'horizontal-line-visible' : ''}`}
+                                                            style={{ transitionDelay: '0.16s' }}
+                                                        />
                                                         <p
-                                                            className="text-xs sm:text-sm font-ui uppercase tracking-[0.3em] whitespace-nowrap"
-                                                            style={{ color: textPalette.muted }}
+                                                            className={`text-xs sm:text-sm font-ui uppercase tracking-[0.3em] whitespace-nowrap animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                                            style={{ color: textPalette.muted, transitionDelay: '0.18s' }}
                                                         >
                                                             {currentPeriod.period}
                                                         </p>
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <span className={`inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-sm sm:text-base font-ui font-semibold tracking-wide ${currentPeriod.yearBadgeClass}`}>
+                                                    <span className={`inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-sm sm:text-base font-ui font-semibold tracking-wide ${currentPeriod.yearBadgeClass} animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.22s' }}>
                                                         {currentEvent.year}
                                                     </span>
                                                 </div>
                                                 <div className="flex-1 overflow-y-auto pr-1">
                                                     <p
-                                                        className="text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md"
-                                                        style={{ color: textPalette.secondary }}
+                                                        className={`text-base sm:text-lg md:text-[1.05rem] font-body leading-relaxed drop-shadow-md animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`}
+                                                        style={{ color: textPalette.secondary, transitionDelay: '0.3s' }}
                                                     >
                                                         {currentEvent.description}
                                                     </p>
@@ -796,7 +807,7 @@ export default function Historia() {
                             >
                                 {/* Línea de tiempo horizontal y eventos */}
                                 <div
-                                    className={`relative z-20 flex items-stretch gap-6 sm:gap-8 md:gap-10 min-w-max before:absolute before:top-1/2 before:left-0 before:right-0 before:h-1 before:-translate-y-1/2 before:rounded-full before:pointer-events-none ${currentPeriod.timelineGradient}`}
+                                    className={`timeline-line ${isInitialAnimationReady ? 'timeline-line-animate' : ''} relative z-20 flex items-stretch gap-6 sm:gap-8 md:gap-10 min-w-max before:absolute before:top-1/2 before:left-0 before:right-0 before:h-1 before:-translate-y-1/2 before:rounded-full before:pointer-events-none ${currentPeriod.timelineGradient}`}
                                 >
                                      {enhancedEvents.map((event, index) => {
                                          const isActive = activeEventIndex === event.globalIndex
@@ -813,10 +824,10 @@ export default function Historia() {
                                             <div
                                                 key={event.globalIndex}
                                                 data-global-index={event.globalIndex}
-                                                className="group relative flex-shrink-0 px-2 h-full"
+                                                className={`timeline-event ${isInitialAnimationReady ? 'timeline-event-visible' : ''} group relative flex-shrink-0 px-2 h-full`}
                                                 style={{ 
-                                                    // Calcular ancho para mostrar 5-6 eventos en el viewport
-                                                    width: 'clamp(8rem, calc((100vw - 4rem) / 6), 12rem)'
+                                                    width: 'clamp(8rem, calc((100vw - 4rem) / 6), 12rem)',
+                                                    transitionDelay: `${(index % timelineAnimationSlots) * 0.08}s`
                                                 }}
                                                  onMouseEnter={() => setHoveredTimeline(event.globalIndex)}
                                             onMouseLeave={() => setHoveredTimeline(null)}
