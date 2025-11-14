@@ -548,9 +548,10 @@ function HistoriaContent() {
                 // El evento está completamente a la izquierda, desplazar para mostrarlo
                 newScrollLeft = Math.max(0, elementLeft - padding)
             } else if (isFullyOutsideRight) {
-                // El evento está completamente a la derecha, desplazar para mostrarlo
+                // El evento está completamente a la derecha, centrarlo para evitar que quede en el borde
                 const maxScroll = timelineContainer.scrollWidth - clientWidth
-                newScrollLeft = Math.min(maxScroll, elementRight - clientWidth + padding)
+                const targetCenter = elementCenter - clientWidth / 2
+                newScrollLeft = Math.min(maxScroll, Math.max(0, targetCenter))
             } else {
                 // El evento está visible, centrarlo aproximadamente con eventos alrededor
                 // Queremos que el evento activo esté en el centro, mostrando ~2.5 eventos a cada lado
