@@ -9,9 +9,14 @@ function HistoriaContent() {
     const scrollResetTimeoutRef = useRef(null)
     const forceTimelineScrollRef = useRef(false)
     const forceTimelineAlignmentRef = useRef(null)
+    const contentSwipeRef = useRef(null)
     const [hoveredTimeline, setHoveredTimeline] = useState(null)
     const [activeEventIndex, setActiveEventIndex] = useState(0)
     const [isInitialAnimationReady, setIsInitialAnimationReady] = useState(false)
+    const [showSwipeHint, setShowSwipeHint] = useState(false)
+    const [showDelayedSwipeHint, setShowDelayedSwipeHint] = useState(false)
+    const [isDesktopViewport, setIsDesktopViewport] = useState(false)
+    const [hasUsedDesktopNavigation, setHasUsedDesktopNavigation] = useState(false)
     const timelineAnimationSlots = 8
     const searchParams = useSearchParams()
 
@@ -446,6 +451,16 @@ function HistoriaContent() {
         muted: currentPeriod.textMuted || 'rgba(255,255,255,0.6)'
     }), [currentPeriod])
 
+    const swipeHintTheme = useMemo(() => ({
+        accent: currentPeriod.headerAccentColor || '#facc15',
+        accentSoft: currentPeriod.timelineFooterBorderColor || currentPeriod.headerHoverColor || currentPeriod.headerAccentColor || '#facc15',
+        text: currentPeriod.headerTextColor || '#ffffff'
+    }), [currentPeriod])
+
+    const shouldShowDesktopHint = useMemo(() => {
+        return isDesktopViewport && !hasUsedDesktopNavigation
+    }, [isDesktopViewport, hasUsedDesktopNavigation])
+
     // Calcular altura mínima basada en la descripción más larga
     const minContentHeight = useMemo(() => {
         if (!enhancedEvents.length) return '18rem'
@@ -488,6 +503,33 @@ function HistoriaContent() {
         if (typeof window === 'undefined') return
         const timer = window.setTimeout(() => setIsInitialAnimationReady(true), 50)
         return () => window.clearTimeout(timer)
+    }, [])
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+        if (window.innerWidth >= 768) return
+        setShowSwipeHint(true)
+        const hideTimer = window.setTimeout(() => setShowSwipeHint(false), 4800)
+        return () => {
+            window.clearTimeout(hideTimer)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!isInitialAnimationReady) return
+        if (showSwipeHint) return
+        const timer = window.setTimeout(() => setShowDelayedSwipeHint(true), 400)
+        return () => window.clearTimeout(timer)
+    }, [isInitialAnimationReady, showSwipeHint])
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return
+        const updateViewport = () => {
+            setIsDesktopViewport(window.innerWidth >= 1024)
+        }
+        updateViewport()
+        window.addEventListener('resize', updateViewport)
+        return () => window.removeEventListener('resize', updateViewport)
     }, [])
 
     useEffect(() => {
@@ -615,6 +657,86 @@ function HistoriaContent() {
         setHoveredTimeline(null)
     }, [enhancedEvents.length])
 
+    const attachSwipeGesture = useCallback((element) => {
+        if (typeof window === 'undefined') return () => {}
+        if (!element) return () => {}
+        if (window.innerWidth >= 768) return () => {}
+
+        let gestureState = {
+            startX: 0,
+            startY: 0,
+            startTime: 0,
+            isSwiping: false
+        }
+
+        const handleTouchStart = (event) => {
+            if (event.touches.length !== 1) return
+            const touch = event.touches[0]
+            gestureState = {
+                startX: touch.clientX,
+                startY: touch.clientY,
+                startTime: Date.now(),
+                isSwiping: false
+            }
+        }
+
+        const handleTouchMove = (event) => {
+            const touch = event.touches[0]
+            const deltaX = touch.clientX - gestureState.startX
+            const deltaY = touch.clientY - gestureState.startY
+
+            if (!gestureState.isSwiping) {
+                if (Math.abs(deltaX) > 12 && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    gestureState.isSwiping = true
+                } else {
+                    return
+                }
+            }
+
+            if (gestureState.isSwiping) {
+                event.preventDefault()
+            }
+        }
+
+        const handleTouchEnd = (event) => {
+            const touch = event.changedTouches[0]
+            const deltaX = touch.clientX - gestureState.startX
+            const deltaY = touch.clientY - gestureState.startY
+            const absX = Math.abs(deltaX)
+            const absY = Math.abs(deltaY)
+            const duration = Date.now() - gestureState.startTime
+
+            if (absX > 40 && absX > absY && duration < 600) {
+                if (deltaX < 0 && activeEventIndex < totalEvents - 1) {
+                    handleEventChange(activeEventIndex + 1)
+                    setShowSwipeHint(false)
+                    setShowDelayedSwipeHint(false)
+                } else if (deltaX > 0 && activeEventIndex > 0) {
+                    handleEventChange(activeEventIndex - 1)
+                    setShowSwipeHint(false)
+                    setShowDelayedSwipeHint(false)
+                }
+            }
+
+            gestureState = { startX: 0, startY: 0, startTime: 0, isSwiping: false }
+        }
+
+        element.addEventListener('touchstart', handleTouchStart, { passive: true })
+        element.addEventListener('touchmove', handleTouchMove, { passive: false })
+        element.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+        return () => {
+            element.removeEventListener('touchstart', handleTouchStart)
+            element.removeEventListener('touchmove', handleTouchMove)
+            element.removeEventListener('touchend', handleTouchEnd)
+        }
+    }, [activeEventIndex, totalEvents, handleEventChange])
+
+    useEffect(() => {
+        const cleanup = attachSwipeGesture(contentSwipeRef.current)
+        return cleanup
+    }, [attachSwipeGesture])
+
     const scrollToPeriod = useCallback((periodId) => {
         const targetEvent = enhancedEvents.find(event => event.periodId === periodId)
         if (targetEvent) {
@@ -670,16 +792,24 @@ function HistoriaContent() {
             }
 
             // Permitir navegación con flechas sin necesidad de hacer focus primero
+            let usedDesktopNav = false
+
             if (event.key === 'ArrowLeft') {
                 event.preventDefault()
                 if (activeEventIndex > 0) {
                     handleEventChange(activeEventIndex - 1)
+                    usedDesktopNav = true
                 }
             } else if (event.key === 'ArrowRight') {
                 event.preventDefault()
                 if (activeEventIndex < totalEvents - 1) {
                     handleEventChange(activeEventIndex + 1)
+                    usedDesktopNav = true
                 }
+            }
+
+            if (usedDesktopNav) {
+                setHasUsedDesktopNavigation(true)
             }
         }
 
@@ -756,10 +886,10 @@ function HistoriaContent() {
                                 </aside>
 
                                 {/* Eventos históricos - Slider (un evento a la vez) */}
-                                <div className="flex-1 min-h-0 px-1 sm:px-2">
+                                <div className="flex-1 min-h-0 px-1 sm:px-2" ref={contentSwipeRef}>
                                     {currentEvent && (
                                         <div 
-                                            className="mx-auto flex w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10 lg:h-full"
+                                            className="relative mx-auto flex w-full max-w-5xl flex-col justify-between gap-6 md:flex-row md:items-stretch lg:gap-10 lg:h-full"
                                             style={{ minHeight: minContentHeight }}
                                         >
                                             {/* Contenido */}
@@ -771,7 +901,7 @@ function HistoriaContent() {
                                                     >
                                                         {currentEvent.title}
                                                     </h3>
-                                                    <div className="flex items-center gap-3 mt-0 md:pt-1">
+                                <div className="flex items-center gap-3 mt-0 md:pt-1">
                                                         <span
                                                             className={`hidden sm:block h-px bg-white/30 w-12 horizontal-line-animate ${isInitialAnimationReady ? 'horizontal-line-visible' : ''}`}
                                                             style={{ transitionDelay: '0.16s' }}
@@ -784,7 +914,7 @@ function HistoriaContent() {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div className="flex items-center gap-4 flex-wrap">
                                                     <span className={`inline-flex px-4 sm:px-5 py-1.5 sm:py-2 rounded-full text-sm sm:text-base font-ui font-semibold tracking-wide ${currentPeriod.yearBadgeClass} animate-fade-in-up-delayed ${isInitialAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.22s' }}>
                                                         {currentEvent.year}
                                                     </span>
@@ -797,6 +927,30 @@ function HistoriaContent() {
                                                         {currentEvent.description}
                                                     </p>
                                                 </div>
+                                                {(showSwipeHint || showDelayedSwipeHint) && (
+                                                    <div className="mt-3 flex justify-center lg:hidden">
+                                                        <style>{`
+                                                            @keyframes swipeIndicator {
+                                                                0% { letter-spacing: 0.3em; transform: translateX(0); opacity: 0.65; }
+                                                                50% { letter-spacing: 0.5em; transform: translateX(6px); opacity: 1; }
+                                                                100% { letter-spacing: 0.3em; transform: translateX(0); opacity: 0.65; }
+                                                            }
+                                                        `}</style>
+                                                        <span
+                                                            className="text-xs sm:text-sm font-semibold uppercase"
+                                                            style={{
+                                                                color: 'transparent',
+                                                                backgroundImage: `linear-gradient(120deg, rgba(255,255,255,0.9), ${swipeHintTheme.text}, rgba(255,255,255,0.85))`,
+                                                                backgroundClip: 'text',
+                                                                WebkitBackgroundClip: 'text',
+                                                                textShadow: '0 8px 20px rgba(0,0,0,0.35)',
+                                                                animation: 'swipeIndicator 1.6s ease-in-out infinite'
+                                                            }}
+                                                        >
+                                                            ‹ Desliza ›
+                                                        </span>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     )}
@@ -808,7 +962,6 @@ function HistoriaContent() {
                     {/* Elementos decorativos */}
                 </div>
             </section>
-
             {/* Línea de tiempo horizontal - Control del slider */}
             <section
                 className="relative flex-shrink-0 border-t-4 pb-4 transition-colors duration-500"
@@ -818,7 +971,35 @@ function HistoriaContent() {
                     background: currentPeriod.footerBackground || currentPeriod.timelineCardBg
                 }}
             >
-                <div className="max-w-6xl mx-auto flex h-full w-full flex-col justify-center gap-3 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+                <div className="max-w-6xl mx-auto flex h-full w-full flex-col gap-3 px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
+                    <div className="flex flex-col items-center gap-1">
+                        {shouldShowDesktopHint && (
+                            <>
+                                <style>{`
+                                    @keyframes desktopIndicator {
+                                        0% { letter-spacing: 0.3em; transform: translateY(0); opacity: 0.7; }
+                                        50% { letter-spacing: 0.45em; transform: translateY(2px); opacity: 1; }
+                                        100% { letter-spacing: 0.3em; transform: translateY(0); opacity: 0.7; }
+                                    }
+                                `}</style>
+                                <div className="hidden lg:flex justify-center">
+                                    <span
+                                        className="text-xs sm:text-sm font-semibold uppercase"
+                                        style={{
+                                            color: 'transparent',
+                                            backgroundImage: `linear-gradient(120deg, rgba(255,255,255,0.9), ${swipeHintTheme.text}, rgba(255,255,255,0.85))`,
+                                            backgroundClip: 'text',
+                                            WebkitBackgroundClip: 'text',
+                                            textShadow: '0 8px 20px rgba(0,0,0,0.35)',
+                                            animation: 'desktopIndicator 1.6s ease-in-out infinite'
+                                        }}
+                                    >
+                                        ‹ Usa las flechas ›
+                                    </span>
+                                </div>
+                            </>
+                        )}
+                    </div>
                     {/* Contenedor de timeline - Auto-scroll */}
                     <div className="relative mx-auto h-full w-full max-w-5xl rounded-2xl backdrop-blur-sm"
                         style={{
