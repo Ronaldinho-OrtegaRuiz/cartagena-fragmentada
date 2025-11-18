@@ -86,13 +86,14 @@ export default function Header() {
     }
 
     const isHistoriaPage = pathname === '/historia'
+    const isSitiosPage = pathname.startsWith('/sitios-turisticos')
 
     const historiaHeader = historiaPalette?.header
-    const logoTextColor = isHistoriaPage && historiaHeader ? historiaHeader.text : 'white'
-    const logoAccentColor = isHistoriaPage && historiaHeader ? historiaHeader.accent : '#FFD700'
-    const menuTextColor = isHistoriaPage && historiaHeader ? historiaHeader.menuText : (isHydrated ? 'white' : 'white')
-    const menuActiveColor = isHistoriaPage && historiaHeader ? historiaHeader.menuActive : '#FFD700'
-    const menuHoverColor = isHistoriaPage && historiaHeader ? historiaHeader.hover : '#FFD700'
+    const logoTextColor = isHistoriaPage && historiaHeader ? historiaHeader.text : (isSitiosPage ? 'white' : 'white')
+    const logoAccentColor = isHistoriaPage && historiaHeader ? historiaHeader.accent : (isSitiosPage ? 'white' : '#FFD700')
+    const menuTextColor = isHistoriaPage && historiaHeader ? historiaHeader.menuText : (isSitiosPage ? 'white' : (isHydrated ? 'white' : 'white'))
+    const menuActiveColor = isHistoriaPage && historiaHeader ? historiaHeader.menuActive : (isSitiosPage ? 'white' : '#FFD700')
+    const menuHoverColor = isHistoriaPage && historiaHeader ? historiaHeader.hover : (isSitiosPage ? 'white' : '#FFD700')
 
     useEffect(() => {
         if (!isHistoriaPage) {
