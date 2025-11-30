@@ -17,7 +17,9 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/80/07/6f/80076fd43d5e227d1337a863ac58c54d.jpg", alt: "Castillo San Felipe de Barajas" },
             { src: "https://i.pinimg.com/1200x/ee/df/f3/eedff322fa72386cbeede94db69869f6.jpg", alt: "Vista del Castillo San Felipe" },
             { src: "https://i.pinimg.com/736x/b6/a1/bf/b6a1bf4de65a6a83bdb138232a4fa996.jpg", alt: "Fortaleza de San Felipe" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/DA9ygywQmaoRgfFC8",
+        appleMapsUrl: "https://maps.apple/p/QsbBG~TzMQ1TBm"
     },
     {
         id: 2,
@@ -36,7 +38,9 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/ec/e3/20/ece320f43d4486f23ccb552bd6d131c4.jpg", alt: "Vista de la Plaza de Bolívar" },
             { src: "https://i.pinimg.com/736x/85/43/28/8543287d2bb438bb20de6d92c566d9fa.jpg", alt: "Plaza de Bolívar en Cartagena" },
             { src: "https://i.pinimg.com/1200x/17/12/71/1712715a0fa0fb383a8ba146dec0f36a.jpg", alt: "Plaza de Bolívar" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/zzHJo1DhobqewSaN8",
+        appleMapsUrl: "https://maps.apple/p/IVZm_1_xeRPGHk"
     },
     {
         id: 3,
@@ -55,7 +59,9 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/60/72/5f/60725f453c497e75c2175a703f371a04.jpg", alt: "Torre del Reloj" },
             { src: "https://i.pinimg.com/1200x/df/3f/62/df3f620b8e14e1bed6a12e41b80235cc.jpg", alt: "Vista de la Torre del Reloj" },
             { src: "https://i.pinimg.com/1200x/d9/93/85/d9938574777cf01551d7a00a76014cf4.jpg", alt: "Torre del Reloj en Cartagena" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/Q3pzsTkX7YBo5QA59",
+        appleMapsUrl: "https://maps.apple/p/Y-jZg7Wf~M.B~v"
     },
     {
         id: 4,
@@ -74,7 +80,9 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/5f/8a/e3/5f8ae31f1ffd7b36dd433b726c9d0b0d.jpg", alt: "Plaza de Santo Domingo" },
             { src: "https://i.pinimg.com/1200x/01/25/48/01254802c9fb5f9e9b8b301bf5087772.jpg", alt: "Vista de la Plaza de Santo Domingo" },
             { src: "https://i.pinimg.com/1200x/ac/9a/5d/ac9a5d2a3afa9c296db243eb1b68a3c3.jpg", alt: "Plaza de Santo Domingo en Cartagena" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/nQLrfji1gKRDv5ao8",
+        appleMapsUrl: "https://maps.apple/p/Bqh52Wm6hJsYb.z"
     },
     {
         id: 5,
@@ -93,7 +101,9 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/d5/f4/a9/d5f4a9dde37218f56a889132cdc8be5e.jpg", alt: "Convento de la Popa" },
             { src: "https://i.pinimg.com/1200x/42/b4/1a/42b41aa1529c9229402981f640880d8a.jpg", alt: "Vista del Convento de la Popa" },
             { src: "https://i.pinimg.com/1200x/ea/53/47/ea5347000f8113c42d6f89916bd03f2d.jpg", alt: "Convento de la Popa en Cartagena" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/DU2ifn7XvLdjgocs7",
+        appleMapsUrl: "https://maps.apple/p/epSA1jmE2-6rb3"
     },
     {
         id: 6,
@@ -112,7 +122,9 @@ export const sites = [
             { src: "https://i.pinimg.com/736x/aa/ab/4e/aaab4eb4d633725e3dead288da3a60e6.jpg", alt: "Las Bóvedas" },
             { src: "https://i.pinimg.com/736x/4e/29/4c/4e294c42d25c3a3ad3ffef0fe0ea4cb8.jpg", alt: "Vista de Las Bóvedas" },
             { src: "https://i.pinimg.com/736x/37/a4/3b/37a43b88e62269feefe67b3be78bf230.jpg", alt: "Las Bóvedas en Cartagena" }
-        ]
+        ],
+        googleMapsUrl: "https://maps.app.goo.gl/SBRMJa7pPpHR2zxf7",
+        appleMapsUrl: "https://maps.apple/p/rH5XiuuuLiEoBe"
     }
 ]
 
