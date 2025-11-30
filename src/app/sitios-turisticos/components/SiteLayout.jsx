@@ -57,7 +57,7 @@ export default function SiteLayout({ site, children }) {
                             className={`text-base sm:text-lg md:text-xl font-body drop-shadow-lg animate-fade-in-up-delayed ${isAnimationReady ? 'animate-enter-active' : ''}`}
                             style={{ color: '#c0ccd9', transitionDelay: '0.15s' }}
                         >
-                            {site.description}
+                            {site.subtitle || site.description}
                         </p>
                     </div>
 

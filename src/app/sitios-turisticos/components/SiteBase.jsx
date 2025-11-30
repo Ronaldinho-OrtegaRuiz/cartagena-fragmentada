@@ -25,8 +25,8 @@ export default function SiteBase({ site }) {
             id: 1,
             title: "Navegación",
             links: [
-                { name: "Google Maps", url: "#", icon: "🗺️" },
-                { name: "Apple Maps", url: "#", icon: "📍" }
+                { name: "Google Maps", url: "#" },
+                { name: "Apple Maps", url: "#" }
             ]
         },
         {
@@ -46,8 +46,10 @@ export default function SiteBase({ site }) {
         }
     ]
 
-    // Imágenes para el slider (por ahora solo la imagen principal, luego se pueden agregar más)
-    const sliderImages = site.image ? [{ src: site.image, alt: site.name }] : []
+    // Imágenes para el slider - usar gallery si existe, sino usar la imagen principal
+    const sliderImages = site.gallery && site.gallery.length > 0 
+        ? site.gallery 
+        : (site.image ? [{ src: site.image, alt: site.name }] : [])
 
     return (
         <div className="flex flex-col gap-8">
@@ -56,31 +58,34 @@ export default function SiteBase({ site }) {
                 {/* Texto a la izquierda */}
                 <div className="flex-1 text-white">
                     <div className={`space-y-4 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.2s' }}>
-                        <p className="text-lg sm:text-xl font-body leading-relaxed" style={{ color: '#e3dcd3' }}>
-                            Este emblemático sitio turístico forma parte del rico patrimonio histórico y cultural de Cartagena de Indias. 
-                            Su arquitectura y significado histórico lo convierten en uno de los lugares más importantes de la ciudad.
-                        </p>
-                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
-                            Descubre la historia, la arquitectura y los detalles que hacen de este lugar un destino imperdible 
-                            para quienes visitan la Heroica. Cada rincón cuenta una historia que se remonta a siglos de tradición 
-                            y cultura caribeña.
-                        </p>
-                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
-                            Este sitio se encuentra ubicado en el corazón del centro histórico de Cartagena de Indias, 
-                            una zona declarada Patrimonio de la Humanidad por la UNESCO. Su acceso es público durante 
-                            los horarios establecidos, lo que lo convierte en un destino accesible tanto para turistas 
-                            como para locales que desean conocer más sobre la rica historia de la ciudad.
-                        </p>
-                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
-                            Te invitamos a explorar y conocer más sobre este fascinante lugar que forma parte del legado 
-                            histórico de Cartagena. Cada visita ofrece una oportunidad única de sumergirse en la cultura y 
-                            tradición que han definido a esta ciudad a lo largo de los siglos.
-                        </p>
+                        {site.content && site.content.length > 0 ? (
+                            site.content.map((paragraph, index) => (
+                                <p 
+                                    key={index}
+                                    className={`${index === 0 ? 'text-lg sm:text-xl' : 'text-base sm:text-lg'} font-body leading-relaxed`}
+                                    style={{ color: index === 0 ? '#e3dcd3' : '#c0ccd9' }}
+                                >
+                                    {paragraph}
+                                </p>
+                            ))
+                        ) : (
+                            <>
+                                <p className="text-lg sm:text-xl font-body leading-relaxed" style={{ color: '#e3dcd3' }}>
+                                    Este emblemático sitio turístico forma parte del rico patrimonio histórico y cultural de Cartagena de Indias. 
+                                    Su arquitectura y significado histórico lo convierten en uno de los lugares más importantes de la ciudad.
+                                </p>
+                                <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
+                                    Descubre la historia, la arquitectura y los detalles que hacen de este lugar un destino imperdible 
+                                    para quienes visitan la Heroica. Cada rincón cuenta una historia que se remonta a siglos de tradición 
+                                    y cultura caribeña.
+                                </p>
+                            </>
+                        )}
                     </div>
                 </div>
 
                 {/* Slider a la derecha */}
-                <div className={`flex-1 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.3s' }}>
+                <div className="flex-1">
                     <SiteSlider images={sliderImages} />
                 </div>
             </div>
@@ -111,15 +116,14 @@ export default function SiteBase({ site }) {
                                             <a
                                                 key={linkIndex}
                                                 href={link.url}
-                                                className="flex items-center gap-2 text-sm sm:text-base font-body hover:text-white transition-colors duration-200"
+                                                className="text-sm sm:text-base font-body hover:text-white transition-colors duration-200"
                                                 style={{ color: '#c0ccd9' }}
                                                 onClick={(e) => {
                                                     e.preventDefault()
                                                     // Los enlaces todavía no funcionan
                                                 }}
                                             >
-                                                <span>{link.icon}</span>
-                                                <span>{link.name}</span>
+                                                {link.name}
                                             </a>
                                         ))}
                                     </div>

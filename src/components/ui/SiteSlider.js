@@ -43,11 +43,10 @@ export default function SiteSlider({ images = [] }) {
     }
 
     return (
-        <div className="relative w-full h-full animate-fade-in-up">
+        <div className="relative w-full">
             {/* Contenedor principal del slider */}
             <div 
-                className="relative w-full h-96 md:h-[500px] rounded-2xl overflow-hidden group animate-scale-in"
-                style={{ animationDelay: '0.3s' }}
+                className="relative w-full h-96 md:h-[500px] rounded-2xl overflow-hidden group"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
