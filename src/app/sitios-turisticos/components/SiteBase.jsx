@@ -32,7 +32,7 @@ export default function SiteBase({ site }) {
         {
             id: 2,
             title: "Ubicación",
-            description: "Centro histórico de Cartagena de Indias, Colombia"
+            description: site.location || "Centro histórico de Cartagena de Indias, Colombia"
         },
         {
             id: 3,
