@@ -1,90 +1,150 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import SiteSlider from "@/components/ui/SiteSlider"
+
 /**
  * Estructura base común para todas las páginas de sitios turísticos
  * Esta es la plantilla que todos los sitios comparten por defecto
  */
 export default function SiteBase({ site }) {
+    const [isAnimationReady, setIsAnimationReady] = useState(false)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsAnimationReady(true)
+        }, 100)
+        return () => clearTimeout(timer)
+    }, [])
+
     if (!site) return null
 
+    // Lista de 4 items para la sección del mapa
+    const mapItems = [
+        {
+            id: 1,
+            title: "Navegación",
+            links: [
+                { name: "Google Maps", url: "#", icon: "🗺️" },
+                { name: "Apple Maps", url: "#", icon: "📍" }
+            ]
+        },
+        {
+            id: 2,
+            title: "Ubicación",
+            description: "Centro histórico de Cartagena de Indias, Colombia"
+        },
+        {
+            id: 3,
+            title: "Horarios",
+            description: "Lunes a Domingo: 8:00 AM - 6:00 PM"
+        },
+        {
+            id: 4,
+            title: "Tipo de Sitio",
+            description: "Monumento histórico - Patrimonio UNESCO"
+        }
+    ]
+
+    // Imágenes para el slider (por ahora solo la imagen principal, luego se pueden agregar más)
+    const sliderImages = site.image ? [{ src: site.image, alt: site.name }] : []
+
     return (
-        <div className="space-y-12">
-            {/* Sección Hero / Descripción Principal */}
-            <section className="bg-white/60 backdrop-blur-sm rounded-xl p-8 shadow-lg">
-                <div className="prose prose-lg max-w-none">
-                    <p className="text-xl text-gray-800 dark:text-gray-200 leading-relaxed text-center">
-                        {site.description}
-                    </p>
+        <div className="flex flex-col gap-8">
+            {/* Sección de texto y slider */}
+            <div className="flex-1 min-h-0 mt-6 flex flex-col gap-6 overflow-visible sm:mt-8 lg:mt-10 lg:flex-row lg:gap-12">
+                {/* Texto a la izquierda */}
+                <div className="flex-1 text-white">
+                    <div className={`space-y-4 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.2s' }}>
+                        <p className="text-lg sm:text-xl font-body leading-relaxed" style={{ color: '#e3dcd3' }}>
+                            Este emblemático sitio turístico forma parte del rico patrimonio histórico y cultural de Cartagena de Indias. 
+                            Su arquitectura y significado histórico lo convierten en uno de los lugares más importantes de la ciudad.
+                        </p>
+                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
+                            Descubre la historia, la arquitectura y los detalles que hacen de este lugar un destino imperdible 
+                            para quienes visitan la Heroica. Cada rincón cuenta una historia que se remonta a siglos de tradición 
+                            y cultura caribeña.
+                        </p>
+                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
+                            Este sitio se encuentra ubicado en el corazón del centro histórico de Cartagena de Indias, 
+                            una zona declarada Patrimonio de la Humanidad por la UNESCO. Su acceso es público durante 
+                            los horarios establecidos, lo que lo convierte en un destino accesible tanto para turistas 
+                            como para locales que desean conocer más sobre la rica historia de la ciudad.
+                        </p>
+                        <p className="text-base sm:text-lg font-body leading-relaxed" style={{ color: '#c0ccd9' }}>
+                            Te invitamos a explorar y conocer más sobre este fascinante lugar que forma parte del legado 
+                            histórico de Cartagena. Cada visita ofrece una oportunidad única de sumergirse en la cultura y 
+                            tradición que han definido a esta ciudad a lo largo de los siglos.
+                        </p>
+                    </div>
                 </div>
-            </section>
 
-            {/* Sección de Información */}
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-                    <h2 className="text-2xl font-title font-semibold mb-4 text-gray-800 dark:text-gray-100">
-                        Información General
+                {/* Slider a la derecha */}
+                <div className={`flex-1 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.3s' }}>
+                    <SiteSlider images={sliderImages} />
+                </div>
+            </div>
+
+            {/* Sección de mapa y lista */}
+            <div className="mt-12 sm:mt-16 flex flex-col lg:flex-row gap-8 lg:gap-12">
+                {/* Lista a la izquierda */}
+                <div className="flex-1">
+                    <h2 
+                        className={`text-2xl sm:text-3xl font-title font-bold mb-6 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`}
+                        style={{ color: '#e3dcd3', transitionDelay: '0.4s' }}
+                    >
+                        Información
                     </h2>
-                    <div className="space-y-3 text-gray-700 dark:text-gray-300">
-                        <div>
-                            <span className="font-semibold">Ubicación:</span>
-                            <span className="ml-2">Cartagena de Indias</span>
-                        </div>
-                        <div>
-                            <span className="font-semibold">Tipo:</span>
-                            <span className="ml-2">Sitio Turístico</span>
-                        </div>
-                        {/* Aquí se pueden agregar más campos cuando tengamos más datos */}
+                    <div className="space-y-4">
+                        {mapItems.map((item, index) => (
+                            <div
+                                key={item.id}
+                                className={`glass rounded-2xl border border-white/25 px-4 py-4 sm:px-5 sm:py-5 hover:bg-white/15 transition-all duration-300 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`}
+                                style={{ animationDelay: `${0.5 + index * 0.1}s` }}
+                            >
+                                <h3 className="text-lg sm:text-xl font-title font-semibold mb-3" style={{ color: '#e3dcd3' }}>
+                                    {item.title}
+                                </h3>
+                                {item.links ? (
+                                    <div className="flex flex-col gap-2">
+                                        {item.links.map((link, linkIndex) => (
+                                            <a
+                                                key={linkIndex}
+                                                href={link.url}
+                                                className="flex items-center gap-2 text-sm sm:text-base font-body hover:text-white transition-colors duration-200"
+                                                style={{ color: '#c0ccd9' }}
+                                                onClick={(e) => {
+                                                    e.preventDefault()
+                                                    // Los enlaces todavía no funcionan
+                                                }}
+                                            >
+                                                <span>{link.icon}</span>
+                                                <span>{link.name}</span>
+                                            </a>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-sm sm:text-base font-body" style={{ color: '#c0ccd9' }}>
+                                        {item.description}
+                                    </p>
+                                )}
+                            </div>
+                        ))}
                     </div>
                 </div>
 
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-6 shadow-lg">
-                    <h2 className="text-2xl font-title font-semibold mb-4 text-gray-800 dark:text-gray-100">
-                        Características
-                    </h2>
-                    <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-                        <li className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>Patrimonio histórico</span>
-                        </li>
-                        <li className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>Accesible al público</span>
-                        </li>
-                        <li className="flex items-start">
-                            <span className="mr-2">•</span>
-                            <span>Ubicación céntrica</span>
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            {/* Sección de Galería (Placeholder) */}
-            <section className="bg-white/60 backdrop-blur-sm rounded-xl p-8 shadow-lg">
-                <h2 className="text-2xl font-title font-semibold mb-6 text-gray-800 dark:text-gray-100">
-                    Galería
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">Imagen 1</span>
-                    </div>
-                    <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">Imagen 2</span>
-                    </div>
-                    <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                        <span className="text-gray-500 dark:text-gray-400">Imagen 3</span>
+                {/* Espacio para mapa a la derecha */}
+                <div className="flex-1">
+                    <div 
+                        className={`w-full h-96 md:h-[500px] rounded-2xl border border-white/25 bg-white/5 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''} flex items-center justify-center`}
+                        style={{ transitionDelay: '0.6s' }}
+                    >
+                        <p className="text-white/50 font-body text-center px-4">
+                            Mapa interactivo próximamente
+                        </p>
                     </div>
                 </div>
-            </section>
-
-            {/* Sección de Mapa (Placeholder) */}
-            <section className="bg-white/60 backdrop-blur-sm rounded-xl p-8 shadow-lg">
-                <h2 className="text-2xl font-title font-semibold mb-6 text-gray-800 dark:text-gray-100">
-                    Ubicación
-                </h2>
-                <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <span className="text-gray-500 dark:text-gray-400">Mapa (Google Maps se integrará aquí)</span>
-                </div>
-            </section>
+            </div>
         </div>
     )
 }
