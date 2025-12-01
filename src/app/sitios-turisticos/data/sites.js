@@ -20,7 +20,8 @@ export const sites = [
         ],
         location: "Cielo mar, La Boquilla, Cl. 31, Pie Del Cerro, Cartagena de Indias, Cartagena, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/DA9ygywQmaoRgfFC8",
-        appleMapsUrl: "https://maps.apple/p/QsbBG~TzMQ1TBm"
+        appleMapsUrl: "https://maps.apple/p/QsbBG~TzMQ1TBm",
+        hours: "Lunes a domingo: 7:00 AM - 6:00 PM"
     },
     {
         id: 2,
@@ -42,7 +43,9 @@ export const sites = [
         ],
         location: "Cra. 5 #33-15, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/zzHJo1DhobqewSaN8",
-        appleMapsUrl: "https://maps.apple/p/IVZm_1_xeRPGHk"
+        appleMapsUrl: "https://maps.apple/p/IVZm_1_xeRPGHk",
+        hours: "Abierto las 24 horas del día, todos los días",
+        siteType: "Plaza histórica - Centro cívico y cultural"
     },
     {
         id: 3,
@@ -64,7 +67,9 @@ export const sites = [
         ],
         location: "Boca del Puente, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/Q3pzsTkX7YBo5QA59",
-        appleMapsUrl: "https://maps.apple/p/Y-jZg7Wf~M.B~v"
+        appleMapsUrl: "https://maps.apple/p/Y-jZg7Wf~M.B~v",
+        hours: "Abierto las 24 horas del día, todos los días",
+        siteType: "Puerta de entrada - Símbolo arquitectónico"
     },
     {
         id: 4,
@@ -86,7 +91,9 @@ export const sites = [
         ],
         location: "Cl. 35, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/nQLrfji1gKRDv5ao8",
-        appleMapsUrl: "https://maps.apple/p/Bqh52Wm6hJsYb.z"
+        appleMapsUrl: "https://maps.apple/p/Bqh52Wm6hJsYb.z",
+        hours: "Abierto las 24 horas del día, todos los días",
+        siteType: "Plaza colonial - Espacio gastronómico y artístico"
     },
     {
         id: 5,
@@ -108,7 +115,9 @@ export const sites = [
         ],
         location: "Cl. 37, Cartagena de Indias, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/DU2ifn7XvLdjgocs7",
-        appleMapsUrl: "https://maps.apple/p/epSA1jmE2-6rb3"
+        appleMapsUrl: "https://maps.apple/p/epSA1jmE2-6rb3",
+        hours: "Todos los días: 8:30 AM - 5:30 PM",
+        siteType: "Santuario religioso - Mirador panorámico"
     },
     {
         id: 6,
@@ -130,7 +139,9 @@ export const sites = [
         ],
         location: "San Diego, Cartagena de Indias, Provincia de Cartagena, Bolívar",
         googleMapsUrl: "https://maps.app.goo.gl/SBRMJa7pPpHR2zxf7",
-        appleMapsUrl: "https://maps.apple/p/rH5XiuuuLiEoBe"
+        appleMapsUrl: "https://maps.apple/p/rH5XiuuuLiEoBe",
+        hours: "Todos los días: 8:00 AM - 6:30 PM",
+        siteType: "Arquitectura militar - Mercado artesanal"
     }
 ]
 

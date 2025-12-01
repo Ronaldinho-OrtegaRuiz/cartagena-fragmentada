@@ -37,12 +37,12 @@ export default function SiteBase({ site }) {
         {
             id: 3,
             title: "Horarios",
-            description: "Lunes a Domingo: 8:00 AM - 6:00 PM"
+            description: site.hours || "Lunes a Domingo: 8:00 AM - 6:00 PM"
         },
         {
             id: 4,
             title: "Tipo de Sitio",
-            description: "Monumento histórico - Patrimonio UNESCO"
+            description: site.siteType || "Monumento histórico - Patrimonio UNESCO"
         }
     ]
 
