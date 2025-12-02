@@ -15,12 +15,18 @@ Una aplicación web que fragmenta y reconstruye la experiencia de Cartagena de I
 - **React 19.1.0** - Biblioteca de interfaz de usuario
 - **Tailwind CSS 4** - Framework de CSS utilitario
 - **Turbopack** - Bundler ultra-rápido para desarrollo
+- **@react-google-maps/api** - Integración de Google Maps
+- **Google Maps JavaScript API** - API de mapas de Google
 
 ## 📦 Instalación
 
 ```bash
 # Instalar dependencias
 npm install
+
+# Configurar variables de entorno
+# Crea un archivo .env.local en la raíz del proyecto con:
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=tu_api_key_aqui
 
 # Ejecutar en modo desarrollo
 npm run dev
@@ -31,6 +37,24 @@ npm run build
 # Ejecutar en producción
 npm start
 ```
+
+## 🗺️ Configuración de Google Maps
+
+Para que el mapa funcione correctamente, necesitas:
+
+1. **Obtener una API Key de Google Maps:**
+   - Ve a [Google Cloud Console](https://console.cloud.google.com/)
+   - Crea un nuevo proyecto o selecciona uno existente
+   - Habilita la API **Maps JavaScript API**
+   - Crea una credencial (API Key)
+   - Configura restricciones de dominio si es necesario
+
+2. **Configurar la variable de entorno:**
+   - Crea un archivo `.env.local` en la raíz del proyecto
+   - Agrega: `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=tu_api_key_aqui`
+   - Reinicia el servidor de desarrollo
+
+**API utilizada:** `Maps JavaScript API` de Google Cloud Platform
 
 ## 🏗️ Estructura del Proyecto
 

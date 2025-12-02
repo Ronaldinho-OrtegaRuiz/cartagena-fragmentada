@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { sites } from "./data/sites"
+import SitesMap from "./components/SitesMap"
 
 export default function SitiosTuristicos() {
     const [hoveredPair, setHoveredPair] = useState(null) // [rowIndex, cardIndex]
@@ -87,6 +88,25 @@ export default function SitiosTuristicos() {
                                 </div>
                             )
                         })}
+                    </div>
+                </div>
+
+                {/* Sección del Mapa */}
+                <div className="relative z-10 pb-8 sm:pb-20 mt-12 sm:mt-16">
+                    <div className="flex justify-center">
+                        <div className="w-[80%]">
+                            <div className="mb-8 text-center">
+                                <h2 className="text-3xl sm:text-4xl font-title font-bold mb-4 text-white">
+                                    Ubicación de los Sitios
+                                </h2>
+                                <p className="text-lg sm:text-xl font-body text-white/90">
+                                    Explora la ubicación de todos los sitios turísticos en el mapa
+                                </p>
+                            </div>
+                            <div className="w-full">
+                                <SitesMap />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -19,6 +19,7 @@ export const sites = [
             { src: "https://i.pinimg.com/736x/b6/a1/bf/b6a1bf4de65a6a83bdb138232a4fa996.jpg", alt: "Fortaleza de San Felipe" }
         ],
         location: "Cielo mar, La Boquilla, Cl. 31, Pie Del Cerro, Cartagena de Indias, Cartagena, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4236, lng: -75.5361 },
         googleMapsUrl: "https://maps.app.goo.gl/DA9ygywQmaoRgfFC8",
         appleMapsUrl: "https://maps.apple/p/QsbBG~TzMQ1TBm",
         hours: "Lunes a domingo: 7:00 AM - 6:00 PM"
@@ -42,6 +43,7 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/17/12/71/1712715a0fa0fb383a8ba146dec0f36a.jpg", alt: "Plaza de Bolívar" }
         ],
         location: "Cra. 5 #33-15, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4192, lng: -75.5514 },
         googleMapsUrl: "https://maps.app.goo.gl/zzHJo1DhobqewSaN8",
         appleMapsUrl: "https://maps.apple/p/IVZm_1_xeRPGHk",
         hours: "Abierto las 24 horas del día, todos los días",
@@ -66,6 +68,7 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/d9/93/85/d9938574777cf01551d7a00a76014cf4.jpg", alt: "Torre del Reloj en Cartagena" }
         ],
         location: "Boca del Puente, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4200, lng: -75.5500 },
         googleMapsUrl: "https://maps.app.goo.gl/Q3pzsTkX7YBo5QA59",
         appleMapsUrl: "https://maps.apple/p/Y-jZg7Wf~M.B~v",
         hours: "Abierto las 24 horas del día, todos los días",
@@ -90,6 +93,7 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/ac/9a/5d/ac9a5d2a3afa9c296db243eb1b68a3c3.jpg", alt: "Plaza de Santo Domingo en Cartagena" }
         ],
         location: "Cl. 35, El Centro, Cartagena de Indias, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4208, lng: -75.5508 },
         googleMapsUrl: "https://maps.app.goo.gl/nQLrfji1gKRDv5ao8",
         appleMapsUrl: "https://maps.apple/p/Bqh52Wm6hJsYb.z",
         hours: "Abierto las 24 horas del día, todos los días",
@@ -114,6 +118,7 @@ export const sites = [
             { src: "https://i.pinimg.com/1200x/ea/53/47/ea5347000f8113c42d6f89916bd03f2d.jpg", alt: "Convento de la Popa en Cartagena" }
         ],
         location: "Cl. 37, Cartagena de Indias, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4283, lng: -75.5367 },
         googleMapsUrl: "https://maps.app.goo.gl/DU2ifn7XvLdjgocs7",
         appleMapsUrl: "https://maps.apple/p/epSA1jmE2-6rb3",
         hours: "Todos los días: 8:30 AM - 5:30 PM",
@@ -138,6 +143,7 @@ export const sites = [
             { src: "https://i.pinimg.com/736x/37/a4/3b/37a43b88e62269feefe67b3be78bf230.jpg", alt: "Las Bóvedas en Cartagena" }
         ],
         location: "San Diego, Cartagena de Indias, Provincia de Cartagena, Bolívar",
+        coordinates: { lat: 10.4217, lng: -75.5483 },
         googleMapsUrl: "https://maps.app.goo.gl/SBRMJa7pPpHR2zxf7",
         appleMapsUrl: "https://maps.apple/p/rH5XiuuuLiEoBe",
         hours: "Todos los días: 8:00 AM - 6:30 PM",
