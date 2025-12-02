@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 /**
  * Layout base para las páginas de sitios turísticos
@@ -41,6 +42,22 @@ export default function SiteLayout({ site, children }) {
                     backgroundRepeat: 'repeat'
                 }}
             />
+
+            {/* Botón de volver */}
+            <Link
+                href="/sitios-turisticos"
+                className="absolute top-20 left-4 sm:left-6 lg:left-8 z-20 flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg border border-white/20 transition-all duration-200 group"
+            >
+                <svg 
+                    className="w-5 h-5 text-white group-hover:-translate-x-1 transition-transform duration-200" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="text-white font-body text-sm sm:text-base">Volver a Sitios</span>
+            </Link>
 
             {/* Contenido principal */}
             <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 sm:pt-7 pb-12 sm:pb-16 flex flex-col">
