@@ -72,7 +72,7 @@ export default function SitiosTuristicos() {
                                             <Link 
                                                 key={site.id} 
                                                 href={`/sitios-turisticos/${site.slug}`}
-                                                className={`relative block min-h-[280px] sm:min-h-[320px] md:min-h-[350px] overflow-hidden transition-all duration-500 ease-in-out ${
+                                                className={`relative block min-h-[280px] sm:min-h-[320px] md:min-h-[450px] lg:min-h-[500px] overflow-hidden transition-all duration-500 ease-in-out ${
                                                     isLastRow ? '' : 'border-b md:border-b-0'
                                                 } ${isLeft ? 'md:border-r' : ''}`}
                                                 style={{ 
