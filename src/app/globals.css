@@ -167,7 +167,6 @@
     min-height: 100vh;
   }
   body {
-    @apply text-foreground;
     font-family: var(--font-lora), serif;
     background: transparent;
     min-height: 100vh;

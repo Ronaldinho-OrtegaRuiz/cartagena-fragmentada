@@ -1,12 +1,24 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { sites } from "./data/sites"
 import SitesMap from "./components/SitesMap"
 
 export default function SitiosTuristicos() {
     const [hoveredPair, setHoveredPair] = useState(null) // [rowIndex, cardIndex]
+    const [isMobile, setIsMobile] = useState(false)
+    
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768)
+        }
+        
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+        
+        return () => window.removeEventListener('resize', checkMobile)
+    }, [])
     
     // Agrupar sites en pares (filas de 2)
     const sitePairs = []
@@ -20,17 +32,17 @@ export default function SitiosTuristicos() {
             <div className="absolute inset-0 bg-black/30 z-0" />
             
             <div className="relative z-10 w-full">
-                <div className="max-w-6xl mx-auto mb-12 pt-8 sm:pt-20 px-8 sm:px-20">
-                    <h1 className="text-4xl sm:text-6xl font-title font-bold mb-4 text-center text-white" style={{ color: 'white' }}>
+                <div className="max-w-6xl mx-auto mb-8 sm:mb-12 pt-20 sm:pt-28 px-4 sm:px-8 md:px-20">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl font-title font-bold mb-3 sm:mb-4 text-center text-white">
                         Sitios Turísticos
                     </h1>
-                    <p className="text-lg sm:text-xl text-center font-body text-white/90">
+                    <p className="text-base sm:text-lg md:text-xl text-center font-body px-2" style={{ color: '#ffffff' }}>
                         Descubre los monumentos y lugares emblemáticos de la Heroica
                     </p>
                 </div>
                 
                 <div className="relative z-10 pb-8 sm:pb-20 flex justify-center">
-                    <div className="w-[80%] space-y-0">
+                    <div className="w-full sm:w-[90%] md:w-[80%] space-y-0 px-4 sm:px-0">
                         {sitePairs.map((pair, rowIndex) => {
                             const isLastRow = rowIndex === sitePairs.length - 1
                             
@@ -51,22 +63,26 @@ export default function SitiosTuristicos() {
                                             <Link 
                                                 key={site.id} 
                                                 href={`/sitios-turisticos/${site.slug}`}
-                                                className={`relative block min-h-[300px] sm:min-h-[350px] overflow-hidden transition-all duration-500 ease-in-out ${
+                                                className={`relative block min-h-[280px] sm:min-h-[320px] md:min-h-[350px] overflow-hidden transition-all duration-500 ease-in-out ${
                                                     isLastRow ? '' : 'border-b md:border-b-0'
                                                 } ${isLeft ? 'md:border-r' : ''}`}
                                                 style={{ 
                                                     borderColor: 'rgba(255, 255, 255, 0.2)',
                                                     borderWidth: '2px',
-                                                    width: isHovered ? '80%' : (hoveredPair && hoveredPair.startsWith(`${rowIndex}-`) ? '20%' : '50%')
+                                                    width: isMobile ? '100%' : (isHovered ? '80%' : (hoveredPair && hoveredPair.startsWith(`${rowIndex}-`) ? '20%' : '50%'))
                                                 }}
-                                                onMouseEnter={() => setHoveredPair(pairKey)}
+                                                onMouseEnter={() => {
+                                                    if (!isMobile) {
+                                                        setHoveredPair(pairKey)
+                                                    }
+                                                }}
                                             >
                                                 {/* Imagen de fondo */}
                                                 <div 
                                                     className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-500"
                                                     style={{ 
                                                         backgroundImage: `url(${site.image})`,
-                                                        transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+                                                        transform: isMobile ? 'scale(1)' : (isHovered ? 'scale(1.05)' : 'scale(1)')
                                                     }}
                                                 />
                                                 
@@ -74,11 +90,11 @@ export default function SitiosTuristicos() {
                                                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
                                                 
                                                 {/* Contenido */}
-                                                <div className="relative h-full flex flex-col justify-end p-6 sm:p-8 text-white">
-                                                    <h2 className="text-xl sm:text-2xl font-title font-bold mb-2">
+                                                <div className="relative h-full flex flex-col justify-end p-4 sm:p-6 md:p-8 text-white">
+                                                    <h2 className="text-lg sm:text-xl md:text-2xl font-title font-bold mb-1 sm:mb-2">
                                                         {site.name}
                                                     </h2>
-                                                    <p className="text-sm sm:text-base font-body opacity-90 leading-relaxed">
+                                                    <p className="text-xs sm:text-sm md:text-base font-body opacity-90 leading-relaxed">
                                                         {site.description}
                                                     </p>
                                                 </div>
@@ -92,14 +108,14 @@ export default function SitiosTuristicos() {
                 </div>
 
                 {/* Sección del Mapa */}
-                <div className="relative z-10 pb-8 sm:pb-20 mt-12 sm:mt-16">
+                <div className="relative z-10 pb-8 sm:pb-20 mt-8 sm:mt-12 md:mt-16">
                     <div className="flex justify-center">
-                        <div className="w-[80%]">
-                            <div className="mb-8 text-center">
-                                <h2 className="text-3xl sm:text-4xl font-title font-bold mb-4 text-white">
+                        <div className="w-full sm:w-[90%] md:w-[80%] px-4 sm:px-0">
+                            <div className="mb-6 sm:mb-8 text-center">
+                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-title font-bold mb-3 sm:mb-4 text-white">
                                     Ubicación de los Sitios
                                 </h2>
-                                <p className="text-lg sm:text-xl font-body text-white/90">
+                                <p className="text-base sm:text-lg md:text-xl font-body px-2" style={{ color: '#ffffff' }}>
                                     Explora la ubicación de todos los sitios turísticos en el mapa
                                 </p>
                             </div>
