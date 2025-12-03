@@ -86,7 +86,7 @@ export default function SiteBase({ site }) {
                 </div>
 
                 {/* Slider a la derecha */}
-                <div className="flex-1">
+                <div className={`flex-1 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.3s' }}>
                     <SiteSlider images={sliderImages} />
                 </div>
             </div>

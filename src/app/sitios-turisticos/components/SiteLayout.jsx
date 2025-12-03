@@ -46,7 +46,8 @@ export default function SiteLayout({ site, children }) {
             {/* Botón de volver */}
             <Link
                 href="/sitios-turisticos"
-                className="absolute top-20 left-4 sm:left-6 lg:left-8 z-20 flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg border border-white/20 transition-all duration-200 group"
+                className={`absolute top-20 left-4 sm:left-6 lg:left-8 z-20 flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-lg border border-white/20 transition-all duration-200 group animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`}
+                style={{ transitionDelay: '0.1s' }}
             >
                 <svg 
                     className="w-5 h-5 text-white group-hover:-translate-x-1 transition-transform duration-200" 
@@ -60,10 +61,10 @@ export default function SiteLayout({ site, children }) {
             </Link>
 
             {/* Contenido principal */}
-            <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-5 sm:pt-7 pb-12 sm:pb-16 flex flex-col">
+            <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-20 sm:pt-24 pb-12 sm:pb-16 flex flex-col">
                 <div className="max-w-6xl mx-auto flex w-full flex-col gap-8">
                     {/* Título y frase alusiva */}
-                    <div className="flex flex-col items-center text-center gap-2 mt-5 sm:mt-7 lg:mt-10">
+                    <div className="flex flex-col items-center text-center gap-2">
                         <h1
                             className={`text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] font-title font-bold drop-shadow-2xl animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`}
                             style={{ color: '#e3dcd3', transitionDelay: '0.05s' }}

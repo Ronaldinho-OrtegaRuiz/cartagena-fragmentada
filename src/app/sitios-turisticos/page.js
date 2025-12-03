@@ -8,6 +8,7 @@ import SitesMap from "./components/SitesMap"
 export default function SitiosTuristicos() {
     const [hoveredPair, setHoveredPair] = useState(null) // [rowIndex, cardIndex]
     const [isMobile, setIsMobile] = useState(false)
+    const [isAnimationReady, setIsAnimationReady] = useState(false)
     
     useEffect(() => {
         const checkMobile = () => {
@@ -18,6 +19,13 @@ export default function SitiosTuristicos() {
         window.addEventListener('resize', checkMobile)
         
         return () => window.removeEventListener('resize', checkMobile)
+    }, [])
+    
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsAnimationReady(true)
+        }, 100)
+        return () => clearTimeout(timer)
     }, [])
     
     // Agrupar sites en pares (filas de 2)
@@ -33,10 +41,10 @@ export default function SitiosTuristicos() {
             
             <div className="relative z-10 w-full">
                 <div className="max-w-6xl mx-auto mb-8 sm:mb-12 pt-20 sm:pt-28 px-4 sm:px-8 md:px-20">
-                    <h1 className="text-3xl sm:text-5xl md:text-6xl font-title font-bold mb-3 sm:mb-4 text-center text-white">
+                    <h1 className={`text-3xl sm:text-5xl md:text-6xl font-title font-bold mb-3 sm:mb-4 text-center text-white animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: '0.1s' }}>
                         Sitios Turísticos
                     </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-center font-body px-2" style={{ color: '#ffffff' }}>
+                    <p className={`text-base sm:text-lg md:text-xl text-center font-body px-2 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ color: '#ffffff', transitionDelay: '0.2s' }}>
                         Descubre los monumentos y lugares emblemáticos de la Heroica
                     </p>
                 </div>
@@ -49,7 +57,8 @@ export default function SitiosTuristicos() {
                             return (
                                 <div 
                                     key={rowIndex}
-                                    className="flex flex-col md:flex-row"
+                                    className={`flex flex-col md:flex-row animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`}
+                                    style={{ transitionDelay: `${0.3 + rowIndex * 0.1}s` }}
                                     onMouseLeave={() => setHoveredPair(null)}
                                 >
                                     {pair.map((site, cardIndex) => {
@@ -108,18 +117,18 @@ export default function SitiosTuristicos() {
                 </div>
 
                 {/* Sección del Mapa */}
-                <div className="relative z-10 pb-8 sm:pb-20 mt-8 sm:mt-12 md:mt-16">
+                <div className={`relative z-10 pb-8 sm:pb-20 mt-8 sm:mt-12 md:mt-16 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: `${0.3 + sitePairs.length * 0.1 + 0.2}s` }}>
                     <div className="flex justify-center">
                         <div className="w-full sm:w-[90%] md:w-[80%] px-4 sm:px-0">
                             <div className="mb-6 sm:mb-8 text-center">
-                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-title font-bold mb-3 sm:mb-4 text-white">
+                                <h2 className={`text-2xl sm:text-3xl md:text-4xl font-title font-bold mb-3 sm:mb-4 text-white animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: `${0.3 + sitePairs.length * 0.1 + 0.3}s` }}>
                                     Ubicación de los Sitios
                                 </h2>
-                                <p className="text-base sm:text-lg md:text-xl font-body px-2" style={{ color: '#ffffff' }}>
+                                <p className={`text-base sm:text-lg md:text-xl font-body px-2 animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ color: '#ffffff', transitionDelay: `${0.3 + sitePairs.length * 0.1 + 0.4}s` }}>
                                     Explora la ubicación de todos los sitios turísticos en el mapa
                                 </p>
                             </div>
-                            <div className="w-full">
+                            <div className={`w-full animate-fade-in-up ${isAnimationReady ? 'animate-enter-active' : ''}`} style={{ transitionDelay: `${0.3 + sitePairs.length * 0.1 + 0.5}s` }}>
                                 <SitesMap />
                             </div>
                         </div>
