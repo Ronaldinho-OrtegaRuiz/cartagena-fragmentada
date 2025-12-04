@@ -1,5 +1,5 @@
 import { useMemo } from "react"
-import getTextureStyle from "../utils/textures"
+import getTextureStyle from "@/utils/textures"
 
 export default function useHistoriaPalettes(currentPeriod) {
     const currentPalette = useMemo(() => ({
