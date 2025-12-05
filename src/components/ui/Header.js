@@ -87,13 +87,15 @@ export default function Header() {
 
     const isHistoriaPage = pathname === '/historia'
     const isSitiosPage = pathname.startsWith('/sitios-turisticos')
+    const isPlayasPage = pathname === '/playas'
 
     const historiaHeader = historiaPalette?.header
-    const logoTextColor = isHistoriaPage && historiaHeader ? historiaHeader.text : (isSitiosPage ? 'white' : 'white')
-    const logoAccentColor = isHistoriaPage && historiaHeader ? historiaHeader.accent : (isSitiosPage ? 'white' : '#FFD700')
-    const menuTextColor = isHistoriaPage && historiaHeader ? historiaHeader.menuText : (isSitiosPage ? 'white' : (isHydrated ? 'white' : 'white'))
-    const menuActiveColor = isHistoriaPage && historiaHeader ? historiaHeader.menuActive : (isSitiosPage ? 'white' : '#FFD700')
-    const menuHoverColor = isHistoriaPage && historiaHeader ? historiaHeader.hover : (isSitiosPage ? 'white' : '#FFD700')
+    // Para playas: logo con color amber-900 (como el título), menú blanco
+    const logoTextColor = isHistoriaPage && historiaHeader ? historiaHeader.text : (isSitiosPage ? 'white' : (isPlayasPage ? '#78350f' : 'white'))
+    const logoAccentColor = isHistoriaPage && historiaHeader ? historiaHeader.accent : (isSitiosPage ? 'white' : (isPlayasPage ? '#78350f' : '#FFD700'))
+    const menuTextColor = isHistoriaPage && historiaHeader ? historiaHeader.menuText : (isSitiosPage ? 'white' : (isPlayasPage ? 'white' : (isHydrated ? 'white' : 'white')))
+    const menuActiveColor = isHistoriaPage && historiaHeader ? historiaHeader.menuActive : (isSitiosPage ? 'white' : (isPlayasPage ? 'white' : '#FFD700'))
+    const menuHoverColor = isHistoriaPage && historiaHeader ? historiaHeader.hover : (isSitiosPage ? 'white' : (isPlayasPage ? 'white' : '#FFD700'))
 
     useEffect(() => {
         if (!isHistoriaPage) {
@@ -125,11 +127,15 @@ export default function Header() {
         <header 
             className={`fixed top-0 left-0 right-0 z-[100] h-16 transition-all duration-500 ease-in-out ${
                 isHydrated && isHeaderVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'
-            }`}
+            } ${isPlayasPage ? 'overflow-hidden' : ''}`}
             style={isHistoriaPage && historiaPalette ? {
                 background: historiaPalette.header.background,
                 borderBottom: isHydrated && isHeaderVisible ? `1px solid ${historiaPalette.header.border}` : 'none',
                 boxShadow: '0 25px 50px -25px rgba(0,0,0,0.6)'
+            } : isPlayasPage ? {
+                background: 'none',
+                borderBottom: 'none',
+                boxShadow: 'none'
             } : { 
                 background: isHydrated ? 'rgba(0, 0, 0, 0.1)' : 'transparent',
                 backdropFilter: isHydrated && isHeaderVisible ? 'blur(8px)' : 'none',
@@ -137,7 +143,7 @@ export default function Header() {
                 borderBottom: isHydrated && isHeaderVisible ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
             }}
         >
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 h-full">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 h-full relative z-10">
                 <div className="flex justify-between items-center h-full">
                     {/* Logo */}
                     <Link 

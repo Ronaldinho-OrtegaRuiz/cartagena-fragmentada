@@ -1,70 +1,137 @@
+"use client"
+
+import { useEffect } from "react"
+
 export default function Playas() {
+    useEffect(() => {
+        // Activate fade-in animations on mount
+        const timer = setTimeout(() => {
+            const fadeElements = document.querySelectorAll('.animate-fade-in-up, .animate-fade-in-up-delayed')
+            fadeElements.forEach(el => {
+                el.classList.add('animate-enter-active')
+            })
+        }, 100)
+        
+        return () => clearTimeout(timer)
+    }, [])
+
     return (
-        <div className="min-h-screen p-8 sm:p-20" style={{ background: 'linear-gradient(135deg, var(--cartagena-sand) 0%, #E8DCC0 100%)' }}>
-            <div className="max-w-6xl mx-auto">
-                <h1 className="text-4xl sm:text-6xl font-title font-bold mb-8 text-center text-title-large" style={{ color: 'var(--cartagena-gold)' }}>
-                    Playas de Cartagena
-                </h1>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Playa de Bocagrande
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            La playa más popular de la ciudad, con hoteles de lujo, 
-                            restaurantes y una vibrante vida nocturna.
-                        </p>
-                    </div>
+        <div className="relative min-h-screen overflow-hidden" style={{
+            background: "linear-gradient(135deg, #A7E3E2 0%, #8DD4D0 25%, #7FD1C3 50%, #6BC5D6 75%, #5BC0DE 100%)",
+            animation: "waveBackground 18s ease-in-out infinite"
+        }}>
+            {/* Wave layers */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="wave-layer wave-1"></div>
+                <div className="wave-layer wave-2"></div>
+                <div className="wave-layer wave-3"></div>
+                <div className="wave-layer wave-4"></div>
+            </div>
 
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Playa de Castillogrande
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            Playa más tranquila y familiar, ideal para relajarse 
-                            y disfrutar del mar Caribe.
-                        </p>
-                    </div>
+            {/* Capa de arena horizontal - cubre toda la página */}
+            <div
+                className="absolute inset-0 pointer-events-none z-10"
+                style={{
+                    background: "linear-gradient(to right, #F5E6D3 0%, #E8D5B7 25%, #D4C4A8 50%, transparent 100%)"
+                }}
+            />
 
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Islas del Rosario
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            Archipiélago de 27 islas con aguas cristalinas, 
-                            perfectas para buceo y snorkel.
-                        </p>
+            {/* Header section */}
+            <div
+                className="relative w-full z-20"
+                style={{
+                    minHeight: "40vh"
+                }}
+            >
+                <div className="relative z-30 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-12" style={{ minHeight: "40vh" }}>
+                    <div className="text-left max-w-3xl">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-title font-bold mb-4 sm:mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
+                            Playas de Cartagena
+                        </h1>
+                        <div className="space-y-4 sm:space-y-5 animate-fade-in-up-delayed">
+                            <p className="text-base sm:text-lg md:text-xl font-body text-amber-900/90 drop-shadow-md leading-relaxed animate-text-breeze">
+                                Cartagena no tiene playas. Tiene memorias líquidas. Cada rincón costero guarda un suspiro del Caribe: Bocagrande vibra entre luces y espuma, Castillogrande susurra calma familiar, Playa Blanca brilla como un secreto de arena y cielo.
+                            </p>
+                            <p className="text-base sm:text-lg md:text-xl font-body text-amber-900/90 drop-shadow-md leading-relaxed animate-text-breeze-delayed">
+                                Y más allá, donde el mar se vuelve cristal, las Islas del Rosario y Cholón te invitan a sumergirte, no solo en agua, sino en ritmo, color y libertad.
+                            </p>
+                            <p className="text-base sm:text-lg md:text-xl font-body text-amber-900/90 drop-shadow-sm leading-relaxed">
+                                Aquí, cada ola es una historia. Cada playa, una emoción distinta. Cartagena se fragmenta en orillas, y tú decides por cuál empezar.
+                            </p>
+                        </div>
                     </div>
+                </div>
+            </div>
 
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Playa Blanca
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            Arena blanca y aguas turquesas en la isla de Barú, 
-                            considerada una de las mejores playas de Colombia.
-                        </p>
-                    </div>
+            {/* Content section */}
+            <div className="relative z-20 w-full pt-8 sm:pt-12 pb-8 sm:pb-20 min-h-[60vh]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                        {/* Playas en la arena (lado izquierdo) */}
+                        <div className="flex flex-col gap-6 sm:gap-8">
+                            {/* Playa de Bocagrande */}
+                            <div className="flex items-center gap-4 beach-card-floating">
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/bocagrande.svg" alt="Bocagrande" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                    Playa de Bocagrande
+                                </h2>
+                            </div>
 
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Playa de Manzanillo
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            Playa virgen y tranquila, ideal para quienes buscan 
-                            paz y contacto con la naturaleza.
-                        </p>
-                    </div>
+                            {/* Playa de Castillogrande */}
+                            <div className="flex items-center gap-4 beach-card-floating" style={{ animationDelay: '0.5s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/castillogrande.svg" alt="Castillogrande" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                    Playa de Castillogrande
+                                </h2>
+                            </div>
 
-                    <div className="p-6 rounded-lg card-base card-hover">
-                        <h2 className="text-xl font-title font-semibold mb-3 text-primary">
-                            Cholón
-                        </h2>
-                        <p className="font-body text-elegant text-base">
-                            Isla privada conocida por sus fiestas en el mar, 
-                            con música, baile y ambiente festivo.
-                        </p>
+                            {/* Playa de Manzanillo */}
+                            <div className="flex items-center gap-4 beach-card-floating" style={{ animationDelay: '1s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/manzanillo.svg" alt="Manzanillo" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                    Playa de Manzanillo
+                                </h2>
+                            </div>
+
+                            {/* Playa Blanca */}
+                            <div className="flex items-center gap-4 beach-card-floating" style={{ animationDelay: '1.5s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/playa-blanca.svg" alt="Playa Blanca" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                    Playa Blanca
+                                </h2>
+                            </div>
+                        </div>
+
+                        {/* Islas flotando en el agua (lado derecho) */}
+                        <div className="flex flex-col gap-6 sm:gap-8 items-end">
+                            {/* Islas del Rosario */}
+                            <div className="flex items-center gap-4 beach-card-floating" style={{ animationDelay: '2s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/islas-rosario.svg" alt="Islas del Rosario" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg">
+                                    Islas del Rosario
+                                </h2>
+                            </div>
+
+                            {/* Cholón */}
+                            <div className="flex items-center gap-4 beach-card-floating" style={{ animationDelay: '2.5s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/cholon.svg" alt="Cholón" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg">
+                                    Cholón
+                                </h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
