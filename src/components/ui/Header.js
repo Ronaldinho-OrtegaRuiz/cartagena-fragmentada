@@ -22,8 +22,8 @@ export default function Header() {
     useEffect(() => {
         if (!isHydrated) return
 
-        // En la página de historia, header siempre visible (no hay scroll vertical en window)
-        if (pathname === '/historia') {
+        // En la página de historia y playas, header siempre visible (no hay scroll vertical en window)
+        if (pathname === '/historia' || pathname === '/playas') {
             setIsHeaderVisible(true)
             if (timeoutRef.current) {
                 clearTimeout(timeoutRef.current)

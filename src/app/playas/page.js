@@ -16,7 +16,7 @@ export default function Playas() {
     }, [])
 
     return (
-        <div className="relative min-h-screen overflow-hidden" style={{
+        <div className="relative h-screen overflow-hidden flex flex-col" style={{
             background: "linear-gradient(135deg, #A7E3E2 0%, #8DD4D0 25%, #7FD1C3 50%, #6BC5D6 75%, #5BC0DE 100%)",
             animation: "waveBackground 18s ease-in-out infinite"
         }}>
@@ -38,12 +38,9 @@ export default function Playas() {
 
             {/* Header section */}
             <div
-                className="relative w-full z-20"
-                style={{
-                    minHeight: "40vh"
-                }}
+                className="relative w-full z-20 flex-shrink-0"
             >
-                <div className="relative z-30 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-12" style={{ minHeight: "40vh" }}>
+                <div className="relative z-30 flex items-start justify-start px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-8 sm:pb-12">
                     <div className="text-left max-w-3xl">
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-title font-bold mb-4 sm:mb-6 text-amber-900 drop-shadow-lg animate-fade-in-up">
                             Playas de Cartagena
@@ -64,9 +61,9 @@ export default function Playas() {
             </div>
 
             {/* Content section */}
-            <div className="relative z-20 w-full pt-8 sm:pt-12 pb-8 sm:pb-20 min-h-[60vh]">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className="relative z-20 w-full flex-1 overflow-hidden">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full py-4 sm:py-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 h-full">
                         {/* Playas en la arena (lado izquierdo) */}
                         <div className="flex flex-col gap-6 sm:gap-8">
                             {/* Playa de Bocagrande */}
