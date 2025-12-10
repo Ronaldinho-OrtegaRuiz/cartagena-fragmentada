@@ -65,9 +65,19 @@ export default function Playas() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full py-4 sm:py-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 h-full">
                         {/* Playas en la arena (lado izquierdo) */}
-                        <div className="flex flex-col gap-6 sm:gap-8">
+                        <div className="flex flex-col gap-6 sm:gap-8 items-end">
+                            {/* Playa de Manzanillo */}
+                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '1s', transitionDelay: '0.3s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
+                                    <img src="/svgs/playas/manzanillo.svg" alt="Manzanillo" className="w-full h-full" />
+                                </div>
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                    Playa de Manzanillo
+                                </h2>
+                            </div>
+
                             {/* Playa de Bocagrande */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ transitionDelay: '0.3s' }}>
+                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ transitionDelay: '0.5s' }}>
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
                                     <img src="/svgs/playas/bocagrande.svg" alt="Bocagrande" className="w-full h-full" />
                                 </div>
@@ -77,7 +87,7 @@ export default function Playas() {
                             </div>
 
                             {/* Playa de Castillogrande */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ animationDelay: '0.5s', transitionDelay: '0.5s' }}>
+                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '0.5s', transitionDelay: '0.7s' }}>
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
                                     <img src="/svgs/playas/castillogrande.svg" alt="Castillogrande" className="w-full h-full" />
                                 </div>
@@ -86,18 +96,8 @@ export default function Playas() {
                                 </h2>
                             </div>
 
-                            {/* Playa de Manzanillo */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ animationDelay: '1s', transitionDelay: '0.7s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/manzanillo.svg" alt="Manzanillo" className="w-full h-full" />
-                                </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
-                                    Playa de Manzanillo
-                                </h2>
-                            </div>
-
                             {/* Playa Blanca */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ animationDelay: '1.5s', transitionDelay: '0.9s' }}>
+                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '1.5s', transitionDelay: '0.9s', marginRight: '2rem' }}>
                                 <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
                                     <img src="/svgs/playas/playa-blanca.svg" alt="Playa Blanca" className="w-full h-full" />
                                 </div>
