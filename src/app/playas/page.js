@@ -32,7 +32,7 @@ export default function Playas() {
             <div
                 className="absolute inset-0 pointer-events-none z-10"
                 style={{
-                    background: "linear-gradient(to right, #F5E6D3 0%, #E8D5B7 25%, #D4C4A8 50%, transparent 100%)"
+                    background: "linear-gradient(to right, #F5E6D3 0%, #E8D5B7 20%, #D4C4A8 40%, transparent 100%)"
                 }}
             />
 
