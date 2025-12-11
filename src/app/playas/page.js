@@ -67,41 +67,41 @@ export default function Playas() {
                         {/* Playas en la arena (lado izquierdo) */}
                         <div className="flex flex-col gap-6 sm:gap-8 items-end">
                             {/* Playa de Manzanillo */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '1s', transitionDelay: '0.3s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/manzanillo.svg" alt="Manzanillo" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ animationDelay: '1s', transitionDelay: '0.3s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/manzanillo.svg" alt="Manzanillo" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900 text-left">
                                     Playa de Manzanillo
                                 </h2>
                             </div>
 
                             {/* Playa de Bocagrande */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ transitionDelay: '0.5s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/bocagrande.svg" alt="Bocagrande" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ transitionDelay: '0.5s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/bocagrande.svg" alt="Bocagrande" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900 text-left">
                                     Playa de Bocagrande
                                 </h2>
                             </div>
 
                             {/* Playa de Castillogrande */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '0.5s', transitionDelay: '0.7s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/castillogrande.svg" alt="Castillogrande" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ animationDelay: '0.5s', transitionDelay: '0.7s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/castillogrande.svg" alt="Castillogrande" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900 text-left">
                                     Playa de Castillogrande
                                 </h2>
                             </div>
 
                             {/* Playa Blanca */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up justify-end" style={{ animationDelay: '1.5s', transitionDelay: '0.9s', marginRight: '2rem' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/playa-blanca.svg" alt="Playa Blanca" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ animationDelay: '1.5s', transitionDelay: '0.9s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/playa-blanca.svg" alt="Playa Blanca" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-amber-900 text-left">
                                     Playa Blanca
                                 </h2>
                             </div>
@@ -110,21 +110,21 @@ export default function Playas() {
                         {/* Islas flotando en el agua (lado derecho) */}
                         <div className="flex flex-col gap-6 sm:gap-8 items-end">
                             {/* Islas del Rosario */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ animationDelay: '2s', transitionDelay: '1.1s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/islas-rosario.svg" alt="Islas del Rosario" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ animationDelay: '2s', transitionDelay: '1.1s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/islas-rosario.svg" alt="Islas del Rosario" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg text-left">
                                     Islas del Rosario
                                 </h2>
                             </div>
 
                             {/* Cholón */}
-                            <div className="flex items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up" style={{ animationDelay: '2.5s', transitionDelay: '1.3s' }}>
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
-                                    <img src="/svgs/playas/cholon.svg" alt="Cholón" className="w-full h-full" />
+                            <div className="grid grid-cols-[auto_1fr] items-center gap-4 beach-card-floating beach-fade-in animate-fade-in-up ml-auto" style={{ animationDelay: '2.5s', transitionDelay: '1.3s' }}>
+                                <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 flex items-center justify-center">
+                                    <img src="/svgs/playas/cholon.svg" alt="Cholón" className="w-full h-full object-contain" />
                                 </div>
-                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg">
+                                <h2 className="text-lg sm:text-xl font-title font-semibold text-white drop-shadow-lg text-left">
                                     Cholón
                                 </h2>
                             </div>
