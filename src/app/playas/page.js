@@ -5,6 +5,7 @@ import { beaches } from "./data/beaches"
 import BeachSection from "./components/BeachSection"
 import EmptyBeachSection from "./components/EmptyBeachSection"
 import HeroBeachSection from "./components/HeroBeachSection"
+import SeaOnlySection from "./components/SeaOnlySection"
 
 export default function Playas() {
     useEffect(() => {
@@ -32,18 +33,39 @@ export default function Playas() {
     ]
 
     return (
-        <div className="relative overflow-hidden">
-            {/* Sección inicial con header */}
-            <HeroBeachSection />
-            
-            {/* Secciones intercaladas */}
-            {sections.map((section, index) => {
-                if (section.type === 'empty') {
-                    return <EmptyBeachSection key={section.id} />
-                } else {
-                    return <BeachSection key={section.beach.id} beach={section.beach} />
-                }
-            })}
+        <div className="relative overflow-auto" style={{ height: "100vh", width: "100vw" }}>
+            <div className="flex flex-col">
+                {/* Fila 1: Hero + Mar */}
+                <div className="flex flex-shrink-0" style={{ width: "200vw" }}>
+                    <div className="flex-shrink-0" style={{ width: "100vw" }}>
+                        <HeroBeachSection />
+                    </div>
+                    <div className="flex-shrink-0" style={{ width: "100vw", height: "100vh" }}>
+                        <SeaOnlySection />
+                    </div>
+                </div>
+                
+                {/* Filas: Secciones + Mar */}
+                {sections.map((section, index) => {
+                    return (
+                        <div key={section.id || section.beach.id} className="flex flex-shrink-0" style={{ width: "200vw" }}>
+                            {/* Sección de playa */}
+                            <div className="flex-shrink-0" style={{ width: "100vw" }}>
+                                {section.type === 'empty' ? (
+                                    <EmptyBeachSection />
+                                ) : (
+                                    <BeachSection beach={section.beach} />
+                                )}
+                            </div>
+                            
+                            {/* Sección de solo mar */}
+                            <div className="flex-shrink-0" style={{ width: "100vw", height: "100vh" }}>
+                                <SeaOnlySection />
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 }
